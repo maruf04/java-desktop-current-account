@@ -6,6 +6,7 @@ package views;
 
 import model.UserImpl;
 import props.User;
+import view.UserPanel;
 
 import java.awt.*;
 import java.awt.event.*;

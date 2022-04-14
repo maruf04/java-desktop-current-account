@@ -5,7 +5,7 @@ import props.User;
 import utils.DB;
 import utils.Util;
 import views.UserChangePassword;
-import views.UserPanel;
+import view.UserPanel;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
