@@ -62,7 +62,7 @@ public class UserPanel extends JFrame {
         msg="\n\n\t\tVerification Code: "+userImpl.verificationCode;
         Util.sendMail(to,sub,msg);
 
-       new views.UserChangePassword().setVisible(true);
+       new view.UserChangePassword().setVisible(true);
        dispose();
     }
 
@@ -72,7 +72,7 @@ public class UserPanel extends JFrame {
         msg="\n\n\t\tVerification Code: "+userImpl.verificationCode;
         Util.sendMail(to,sub,msg);
 
-        new views.UserChangePassword().setVisible(true);
+        new view.UserChangePassword().setVisible(true);
         dispose();
     }
 
