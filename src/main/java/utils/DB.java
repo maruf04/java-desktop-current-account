@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class DB {
     private final String driver = "org.sqlite.JDBC";
     private String url = "jdbc:sqlite:db/";
-    private final String dbName ="proje.db";
+    private final String dbName ="projec.db";
 
     //Connection class
     private Connection conn = null;
