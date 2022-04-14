@@ -14,7 +14,7 @@ public class UserImpl implements IUser{
     DB db=new DB();
     public static String name="";
     public static String emailAddress="";
-    public static String password="";
+    public static String userPassword="";
     public static int uid=0;
 
     public static int verificationCode = new Random().nextInt(900000) + 100000;
@@ -149,7 +149,7 @@ public class UserImpl implements IUser{
             ResultSet rs=pre.executeQuery();
             status= rs.next();
             if(status)
-                password=rs.getString("password");
+                userPassword=rs.getString("password");
 
         }catch (Exception e){
             System.err.println("userPassword Error"+e);

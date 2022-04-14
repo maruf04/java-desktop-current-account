@@ -127,6 +127,7 @@ public class UserPanel extends JFrame {
 
         //======== this ========
         setResizable(false);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         Container contentPane = getContentPane();
 
         //---- label1 ----

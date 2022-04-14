@@ -62,7 +62,7 @@ public class UserChangePassword extends JFrame {
         }else if(oldPassword.equals("")){
             lblError.setText("Please Enter Old Password");
             txtOldPassword.requestFocus();
-        }else if(!oldPassword.equals(UserImpl.password)){
+        }else if(!oldPassword.equals(UserImpl.userPassword)){
             lblError.setText("Password Want to Change Does Not Match");
             txtOldPassword.requestFocus();
         }else if(newPassword.equals("")){

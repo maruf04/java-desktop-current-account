@@ -1,13 +1,15 @@
 package utils;
 
+import model.UserImpl;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
 
 public class Mail {
     public static void send(String to,String sub,String msg){
-        String from="test123@gmail.com";//Kullanıcı adı
-        String pwd ="test123";//şifre
+        String from= "javaproject.sendmail@gmail.com";//Kullanıcı adı
+        String pwd ="JavaProject123";//şifre
         //Properties
         Properties p = new Properties();
         p.put("mail.smtp.host", "smtp.gmail.com");

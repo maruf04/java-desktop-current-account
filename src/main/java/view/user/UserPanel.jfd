@@ -9,6 +9,7 @@ new FormModel {
 		} ) {
 			name: "this"
 			"resizable": false
+			"defaultCloseOperation": 2
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/lblEmailIcon.png" )
