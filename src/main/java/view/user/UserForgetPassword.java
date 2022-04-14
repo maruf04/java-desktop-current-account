@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Thu Apr 14 02:47:49 TRT 2022
  */
 
-package views;
+package view.user;
 
 import model.UserImpl;
 import props.User;
