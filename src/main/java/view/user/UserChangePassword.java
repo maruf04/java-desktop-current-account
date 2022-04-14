@@ -25,12 +25,14 @@ public class UserChangePassword extends JFrame {
 
     public UserChangePassword() {
         initComponents();
-        txtEmail.setText(UserPanel.emailChange);
+        txtEmail.setText(UserImpl.emailAddress);
     }
 
     private void thisWindowClosing(WindowEvent e) {
         new UserPanel().setVisible(true);
     }
+
+
 
     private void btnChangePasswordClicked(ActionEvent e) {
 
@@ -38,34 +40,43 @@ public class UserChangePassword extends JFrame {
 
         int answer=JOptionPane.showConfirmDialog(this,"Are you sure you want to update?","Update Window",JOptionPane.YES_OPTION);
         if(answer==0){
-            if(txtverificationCode.equals(UserImpl.verificationCode)){
                 userImpl.userChangePassword(user);
-            }else{
-                lblError.setText("Verification Code is Wrong");
-            }
         }else{
-            JOptionPane.showMessageDialog(this,"Please Choose!"); //this kendini burada ortala
+            JOptionPane.showMessageDialog(this,"Please Choose!");
         }
     }
 
     public User fncDataValid(){
 
         String email=txtEmail.getText().trim().toLowerCase(Locale.ROOT);
-        String verificationCode=txtverificationCode.getText().trim();
-        String password=txtPassword.getText();
+        String oldPassword=txtOldPassword.getText();
+        String newPassword=txtNewPassword.getText();
+        String rePassword=txtRePassword.getText();
 
         if(email.equals("")){
            lblError.setText("Please Enter Email");
             txtEmail.requestFocus();
-        }else if(verificationCode.equals("")){
-            lblError.setText("Please Enter Verification Code");
-            txtverificationCode.requestFocus();
-        }else if(password.equals("")){
+        }else if(!email.equals(UserImpl.emailAddress)){
+            lblError.setText("Please Enter a Valid Email Address");
+            txtEmail.requestFocus();
+        }else if(oldPassword.equals("")){
+            lblError.setText("Please Enter Old Password");
+            txtOldPassword.requestFocus();
+        }else if(!oldPassword.equals(UserImpl.password)){
+            lblError.setText("Password Want to Change Does Not Match");
+            txtOldPassword.requestFocus();
+        }else if(newPassword.equals("")){
             lblError.setText("Please Enter New Password");
-            txtPassword.requestFocus();
+            txtNewPassword.requestFocus();
+        }else if(rePassword.equals("")){
+            lblError.setText("Please Enter RePassword");
+            txtRePassword.requestFocus();
+        }else if(!newPassword.equals(rePassword)){
+            lblError.setText("New Password and RePassword do not Match");
+            txtNewPassword.requestFocus();
         }else {
             lblError.setText("");
-            User user=new User(email,password);
+            User user=new User(email,rePassword);
 
             return user;
         }
@@ -74,13 +85,22 @@ public class UserChangePassword extends JFrame {
 
 
 
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+        label1 = new JLabel();
+        label2 = new JLabel();
+        label3 = new JLabel();
+        panel1 = new JPanel();
+        label5 = new JLabel();
         txtEmail = new JTextField();
-        txtverificationCode = new JTextField();
+        txtNewPassword = new JTextField();
+        txtRePassword = new JTextField();
         btnChangePassword = new JButton();
         lblError = new JLabel();
-        txtPassword = new JTextField();
+        label4 = new JLabel();
+        txtOldPassword = new JTextField();
 
         //======== this ========
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -92,6 +112,41 @@ public class UserChangePassword extends JFrame {
         });
         Container contentPane = getContentPane();
 
+        //---- label1 ----
+        label1.setText("EMAIL");
+        label1.setHorizontalAlignment(SwingConstants.CENTER);
+
+        //---- label2 ----
+        label2.setText("NEW PASSWORD");
+        label2.setHorizontalAlignment(SwingConstants.CENTER);
+
+        //---- label3 ----
+        label3.setText("REPASSWORD");
+        label3.setHorizontalAlignment(SwingConstants.CENTER);
+
+        //======== panel1 ========
+        {
+            panel1.setForeground(SystemColor.activeCaption);
+            panel1.setBackground(SystemColor.activeCaption);
+
+            GroupLayout panel1Layout = new GroupLayout(panel1);
+            panel1.setLayout(panel1Layout);
+            panel1Layout.setHorizontalGroup(
+                panel1Layout.createParallelGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+            );
+            panel1Layout.setVerticalGroup(
+                panel1Layout.createParallelGroup()
+                    .addGap(0, 130, Short.MAX_VALUE)
+            );
+        }
+
+        //---- label5 ----
+        label5.setText("CHANGE PASSWORD");
+        label5.setHorizontalAlignment(SwingConstants.CENTER);
+        label5.setFont(new Font("Yu Gothic UI", Font.BOLD, 36));
+        label5.setForeground(Color.cyan);
+
         //---- btnChangePassword ----
         btnChangePassword.setText("CHANGE");
         btnChangePassword.addActionListener(e -> btnChangePasswordClicked(e));
@@ -99,38 +154,74 @@ public class UserChangePassword extends JFrame {
         //---- lblError ----
         lblError.setText(" ");
 
+        //---- label4 ----
+        label4.setText("OLD PASSWORD");
+        label4.setHorizontalAlignment(SwingConstants.CENTER);
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
+                .addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addGroup(contentPaneLayout.createParallelGroup()
+                        .addComponent(lblError, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(145, 145, 145)
-                            .addComponent(btnChangePassword))
+                            .addContainerGap()
+                            .addGroup(contentPaneLayout.createParallelGroup()
+                                .addComponent(label5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                                    .addComponent(label1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                        .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(label2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtNewPassword, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                                        .addComponent(txtRePassword, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)))))
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(67, 67, 67)
-                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtEmail)
-                                .addComponent(lblError, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                                .addComponent(txtverificationCode)
-                                .addComponent(txtPassword, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))))
-                    .addContainerGap(171, Short.MAX_VALUE))
+                            .addGroup(contentPaneLayout.createParallelGroup()
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addGap(144, 144, 144)
+                                    .addComponent(btnChangePassword))
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(label4, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtOldPassword, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(28, 28, 28)
-                    .addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(txtverificationCode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                    .addComponent(btnChangePassword)
+                    .addComponent(label5, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label4, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtOldPassword, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNewPassword, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtRePassword, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(btnChangePassword)
+                    .addGap(18, 18, 18)
                     .addComponent(lblError)
-                    .addGap(19, 19, 19))
+                    .addContainerGap())
         );
         pack();
         setLocationRelativeTo(getOwner());
@@ -138,10 +229,17 @@ public class UserChangePassword extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    private JLabel label1;
+    private JLabel label2;
+    private JLabel label3;
+    private JPanel panel1;
+    private JLabel label5;
     private JTextField txtEmail;
-    private JTextField txtverificationCode;
+    private JTextField txtNewPassword;
+    private JTextField txtRePassword;
     private JButton btnChangePassword;
     private JLabel lblError;
-    private JTextField txtPassword;
+    private JLabel label4;
+    private JTextField txtOldPassword;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

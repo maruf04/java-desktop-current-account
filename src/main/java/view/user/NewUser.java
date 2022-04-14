@@ -84,13 +84,15 @@ public class NewUser extends JFrame {
         label1 = new JLabel();
         label2 = new JLabel();
         label3 = new JLabel();
-        label4 = new JLabel();
+        lblError = new JLabel();
         txtName = new JTextField();
         txtSurname = new JTextField();
         txtEmail = new JTextField();
-        btnAdd = new JButton();
+        label4 = new JLabel();
         txtPassword = new JTextField();
-        lblError = new JLabel();
+        btnAdd = new JButton();
+        panel1 = new JPanel();
+        label5 = new JLabel();
 
         //======== this ========
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -104,77 +106,107 @@ public class NewUser extends JFrame {
 
         //---- label1 ----
         label1.setText("NAME");
+        label1.setHorizontalAlignment(SwingConstants.CENTER);
 
         //---- label2 ----
         label2.setText("SURNAME");
+        label2.setHorizontalAlignment(SwingConstants.CENTER);
 
         //---- label3 ----
         label3.setText("EMA\u0130L");
+        label3.setHorizontalAlignment(SwingConstants.CENTER);
+
+        //---- lblError ----
+        lblError.setText(" ");
 
         //---- label4 ----
         label4.setText("PASSWORD");
+        label4.setHorizontalAlignment(SwingConstants.CENTER);
 
         //---- btnAdd ----
         btnAdd.setText("ADD");
         btnAdd.addActionListener(e -> btnAddClicked(e));
 
-        //---- lblError ----
-        lblError.setText("text");
+        //======== panel1 ========
+        {
+            panel1.setForeground(SystemColor.activeCaption);
+            panel1.setBackground(SystemColor.activeCaption);
+
+            GroupLayout panel1Layout = new GroupLayout(panel1);
+            panel1.setLayout(panel1Layout);
+            panel1Layout.setHorizontalGroup(
+                panel1Layout.createParallelGroup()
+                    .addGap(0, 403, Short.MAX_VALUE)
+            );
+            panel1Layout.setVerticalGroup(
+                panel1Layout.createParallelGroup()
+                    .addGap(0, 130, Short.MAX_VALUE)
+            );
+        }
+
+        //---- label5 ----
+        label5.setText("NEW USER");
+        label5.setHorizontalAlignment(SwingConstants.CENTER);
+        label5.setFont(new Font("Yu Gothic UI", Font.BOLD, 36));
+        label5.setForeground(Color.cyan);
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(17, Short.MAX_VALUE)
+                    .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup()
+                        .addComponent(label5, GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGroup(contentPaneLayout.createParallelGroup()
-                                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-                                    .addGap(6, 6, 6))
-                                .addComponent(label3, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label4, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(contentPaneLayout.createParallelGroup()
-                                .addComponent(txtName, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtSurname, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtPassword, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                                    .addComponent(txtEmail, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addComponent(lblError, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(213, Short.MAX_VALUE))
+                            .addComponent(lblError, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 94, Short.MAX_VALUE))
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addComponent(label4, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                .addComponent(label2, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                .addComponent(label1, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtName)
+                                .addComponent(txtSurname)
+                                .addComponent(txtEmail)
+                                .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap())
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(113, 113, 113)
+                    .addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(140, Short.MAX_VALUE))
+                .addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(34, 34, 34)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtName, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
-                    .addGap(8, 8, 8)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtSurname, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(contentPaneLayout.createParallelGroup()
+                    .addComponent(label5, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtName, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSurname, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(label3, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-                            .addGap(9, 9, 9)
-                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(label4, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))))
-                    .addGap(57, 57, 57)
+                        .addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label4, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(btnAdd)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                    .addGap(24, 24, 24)
                     .addComponent(lblError)
-                    .addGap(46, 46, 46))
+                    .addContainerGap())
         );
         pack();
         setLocationRelativeTo(getOwner());
@@ -185,12 +217,14 @@ public class NewUser extends JFrame {
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;
-    private JLabel label4;
+    private JLabel lblError;
     private JTextField txtName;
     private JTextField txtSurname;
     private JTextField txtEmail;
-    private JButton btnAdd;
+    private JLabel label4;
     private JTextField txtPassword;
-    private JLabel lblError;
+    private JButton btnAdd;
+    private JPanel panel1;
+    private JLabel label5;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

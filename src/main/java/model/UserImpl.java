@@ -13,8 +13,9 @@ import java.util.Random;
 public class UserImpl implements IUser{
     DB db=new DB();
     public static String name="";
+    public static String emailAddress="";
+    public static String password="";
     public static int uid=0;
-
 
     public static int verificationCode = new Random().nextInt(900000) + 100000;
 
@@ -109,7 +110,49 @@ public class UserImpl implements IUser{
             status=pre.executeUpdate();
 
         }catch (Exception e){
-            System.out.println("userChangePasswordSendMail Error: "+e);
+            System.out.println("userForgetPasswordSendMail Error: "+e);
+        }finally {
+            db.close();
+        }
+        return status;
+    }
+
+    @Override
+    public boolean userEmail(String email) {
+        boolean status=false;
+        try {
+            String sql="Select * from user where email=?";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            pre.setString(1,email);
+
+            ResultSet rs=pre.executeQuery();
+            status= rs.next();
+            if(status)
+                emailAddress=rs.getString("email");
+
+        }catch (Exception e){
+            System.err.println("userEmail Error"+e);
+        }finally {
+            db.close();
+        }
+        return status;
+    }
+
+    @Override
+    public boolean userPassword(String password) {
+        boolean status=false;
+        try {
+            String sql="Select  from user where password=?";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            pre.setString(1,password);
+
+            ResultSet rs=pre.executeQuery();
+            status= rs.next();
+            if(status)
+                password=rs.getString("password");
+
+        }catch (Exception e){
+            System.err.println("userPassword Error"+e);
         }finally {
             db.close();
         }

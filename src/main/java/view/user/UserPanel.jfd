@@ -4,17 +4,18 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :p:53:p, par l {seq {par l {comp label1:::::x, seq {space :0:0:x, comp label2:::p:72:p}}, space s:::p, par l {comp txtEmail:::p:124:p, comp txtPassword:::::x}, space ::311:x}, seq l {par t:::p {comp btnForgetPassword::l::150:x, comp btnChangePassword::l::150:x, comp btnNewUser::l::150:x, comp btnLogin::l::150:x}, space ::375:x}}}, seq l {space :p:45:p, comp lblError:::p:477:p, space :0:56:x}}"
-			"$verticalGroup": "par l {seq l {space :p:28:p, comp lblError:::p::p, space s:::p, par b {comp txtEmail::b:p::p, comp label1::b:p::p}, par l {seq {space :p:22:p, comp label2:::p::p}, seq {space u:::p, comp txtPassword:::p:31:p}}, space :p:34:p, comp btnLogin:::p::p, space u:::p, comp btnNewUser:::p::p, space s:::p, comp btnChangePassword:::p::p, space s:::p, comp btnForgetPassword:::p::p, space ::31:x}}"
+			"$horizontalGroup": "par l {seq {space :p:54:p, par l:::p {comp lblError::l:::x, seq l {comp btnForgetPassword:::p:113:p, space :::p, comp btnChangePassword::::0:x}, comp btnNewUser:::p:226:p, comp btnLogin::l:::x, seq t {comp label2:::p:40:p, space :::p, comp txtPassword:::::x}, seq l {comp label1:::p:40:p, space :::p, comp txtEmail:::::x}}, space ::48:x}, comp panel1::l:::x}"
+			"$verticalGroup": "par l {seq l {comp panel1:::p::p, space :p:81:p, par l {comp label1:::p:40:p, comp txtEmail:::::x}, space u:::p, par l {seq l {space :p:4:p, comp txtPassword:::p:40:p}, comp label2::l:p:41:p}, space u:::p, comp btnLogin:::p::p, space u:::p, comp btnNewUser:::p::p, space u:::p, par b {comp btnForgetPassword::b:p::p, comp btnChangePassword::b:p::p}, space u:::p, comp lblError:::p::p, space :p:27:p}}"
 		} ) {
 			name: "this"
+			"resizable": false
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
-				"text": "EMAIL"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/lblEmailIcon.png" )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label2"
-				"text": "PASSWORD"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/lblPasswordIcon.png" )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "txtEmail"
@@ -30,27 +31,37 @@ new FormModel {
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnLoginClicked", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnNewUser"
-				"text": "NEW USER"
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnNewUserClicked", true ) )
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnChangePassword"
-				"text": "CHANGE PASSWORD"
+				"text": "Change Password"
+				"font": new java.awt.Font( "Segoe UI", 0, 9 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnChangePasswordClicked", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnForgetPassword"
-				"text": "FORGET PASSWORD"
+				"text": "Forget Password?"
+				"font": new java.awt.Font( "Segoe UI", 0, 9 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnForgetPasswordClicked", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "lblError"
 				"text": " "
 			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnNewUser"
+				"text": "NEW USER"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnNewUserClicked", true ) )
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+				"$horizontalGroup": "par l {space :0:328:x}"
+				"$verticalGroup": "par l {space :0:130:x}"
+			} ) {
+				name: "panel1"
+				"foreground": sfield java.awt.SystemColor activeCaption
+				"background": sfield java.awt.SystemColor activeCaption
+			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 580, 410 )
+			"location": new java.awt.Point( 155, 25 )
+			"size": new java.awt.Dimension( 330, 450 )
 		} )
 	}
 }

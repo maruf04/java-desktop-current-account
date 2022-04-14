@@ -23,7 +23,7 @@ public class UserPanel extends JFrame {
     public static String to="";
     public static String sub="";
     public static String msg="";
-    public static String emailChange="";
+
     public static void main(String[] args) {
         new UserPanel().setVisible(true);
     }
@@ -32,8 +32,7 @@ public class UserPanel extends JFrame {
         initComponents();
         txtPassword.setText("JavaProject123");
         txtEmail.setText("javaproject96@gmail.com");
-        btnChangePassword.setVisible(false);
-        btnForgetPassword.setVisible(false);
+
     }
 
     private void btnLoginClicked(ActionEvent e) {
@@ -87,9 +86,7 @@ public class UserPanel extends JFrame {
             txtPassword.requestFocus();
             lblError.setText("E-Mail Format Error");
         }else if(password.length()==0){
-            btnChangePassword.setVisible(true);
-            btnForgetPassword.setVisible(true);
-            emailChange= txtEmail.getText();
+
             txtPassword.requestFocus();
             lblError.setText("Please Enter Password");
         }else {
