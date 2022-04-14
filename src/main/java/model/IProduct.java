@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface IProduct {
     int productInsert(Product product);
-    int productUpdate(Product customer);
-    int productDelete(int cid);
+    int productUpdate(Product product);
+    int productDelete(int pid);
     List<Product> productList();
     DefaultTableModel productTable(String data);
 }
