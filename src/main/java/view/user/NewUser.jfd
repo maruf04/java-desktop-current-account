@@ -1,0 +1,55 @@
+JFDML JFormDesigner: "7.0.5.4.420" Java: "11.0.13" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space ::17:x, par l {seq {par l {seq t {par t {comp label1::t:p:87:p, comp label2::t:p:87:p}, space :p:6:p}, comp label3::t:p:87:p, comp label4::t:p:87:p}, space u:::p, par l {comp txtName:::p:99:p, comp txtSurname:::p:99:p, comp btnAdd::l:p:169:p, par t:l::p {comp txtPassword::l::99:x, comp txtEmail::l::99:x}}}, seq {space :6:6:p, comp lblError:::p:297:p}}, space ::213:x}}"
+			"$verticalGroup": "par l {seq l {space :p:34:p, par t {comp label1:::p:26:p, comp txtName:::p:28:p}, space :p:8:p, par b {comp txtSurname::b:p:28:p, comp label2::b:p:26:p}, space :::p, par l {comp label3:::p:26:p, seq l {comp txtEmail:::p:28:p, space :9:9:p, par b {comp label4::b:p:26:p, comp txtPassword::b:p:26:p}}}, space :p:57:p, comp btnAdd:::p::p, space ::52:x, comp lblError:::p::p, space :p:46:p}}"
+		} ) {
+			name: "this"
+			"defaultCloseOperation": 2
+			addEvent( new FormEvent( "java.awt.event.WindowListener", "windowClosing", "thisWindowClosing", true ) )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "NAME"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "SURNAME"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "EMAİL"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "PASSWORD"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtName"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtSurname"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtEmail"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnAdd"
+				"text": "ADD"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAddClicked", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtPassword"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblError"
+				"text": "text"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 30, 35 )
+			"size": new java.awt.Dimension( 535, 400 )
+		} )
+	}
+}

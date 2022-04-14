@@ -1,0 +1,56 @@
+JFDML JFormDesigner: "7.0.5.4.420" Java: "11.0.13" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:53:p, par l {seq {par l {comp label1:::::x, seq {space :0:0:x, comp label2:::p:72:p}}, space s:::p, par l {comp txtEmail:::p:124:p, comp txtPassword:::::x}, space ::311:x}, seq l {par t:::p {comp btnForgetPassword::l::150:x, comp btnChangePassword::l::150:x, comp btnNewUser::l::150:x, comp btnLogin::l::150:x}, space ::375:x}}}, seq l {space :p:45:p, comp lblError:::p:477:p, space :0:56:x}}"
+			"$verticalGroup": "par l {seq l {space :p:28:p, comp lblError:::p::p, space s:::p, par b {comp txtEmail::b:p::p, comp label1::b:p::p}, par l {seq {space :p:22:p, comp label2:::p::p}, seq {space u:::p, comp txtPassword:::p:31:p}}, space :p:34:p, comp btnLogin:::p::p, space u:::p, comp btnNewUser:::p::p, space s:::p, comp btnChangePassword:::p::p, space s:::p, comp btnForgetPassword:::p::p, space ::31:x}}"
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "EMAIL"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "PASSWORD"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "txtEmail"
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "txtEmailKeyReleased", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "txtPassword"
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "txtPasswordKeyReleased", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnLogin"
+				"text": "LOGIN"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnLoginClicked", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnNewUser"
+				"text": "NEW USER"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnNewUserClicked", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnChangePassword"
+				"text": "CHANGE PASSWORD"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnChangePasswordClicked", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnForgetPassword"
+				"text": "FORGET PASSWORD"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnForgetPasswordClicked", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblError"
+				"text": " "
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 580, 410 )
+		} )
+	}
+}
