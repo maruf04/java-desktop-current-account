@@ -4,7 +4,6 @@ package model;
 import props.User;
 import utils.DB;
 import utils.Util;
-import views.UserChangePassword;
 import view.UserPanel;
 
 import java.sql.PreparedStatement;

@@ -8,6 +8,7 @@ import java.awt.event.*;
 import model.UserImpl;
 import utils.Util;
 import view.NewUser;
+import view.user.UserChangePassword;
 
 import java.awt.*;
 import java.util.Locale;
@@ -62,7 +63,7 @@ public class UserPanel extends JFrame {
         msg="\n\n\t\tVerification Code: "+userImpl.verificationCode;
         Util.sendMail(to,sub,msg);
 
-       new view.UserChangePassword().setVisible(true);
+       new UserChangePassword().setVisible(true);
        dispose();
     }
 
@@ -72,7 +73,7 @@ public class UserPanel extends JFrame {
         msg="\n\n\t\tVerification Code: "+userImpl.verificationCode;
         Util.sendMail(to,sub,msg);
 
-        new view.UserChangePassword().setVisible(true);
+        new UserChangePassword().setVisible(true);
         dispose();
     }
 
