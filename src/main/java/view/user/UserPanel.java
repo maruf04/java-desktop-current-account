@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Thu Apr 14 00:30:01 TRT 2022
  */
 
-package views;
+package view.user;
 
 import java.awt.event.*;
 import model.UserImpl;
