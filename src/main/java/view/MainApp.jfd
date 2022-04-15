@@ -1,108 +1,679 @@
-JFDML JFormDesigner: "7.0.5.1.409" Java: "11.0.14.1" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.5.1.409" Java: "11.0.13" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq t {space ::52:x, comp tabbedPane1:::p:577:p, space :p:49:p}}"
-			"$verticalGroup": "par l {seq t {space ::42:x, comp tabbedPane1:::p:476:p, space :p:30:p}}"
+			"$horizontalGroup": "par l {seq l {space :::p, par t {seq {comp label45:::p:130:p, space :::p, comp btnExit:::p::p}, comp tabbedPane1:::p:686:p}, space ::16:x}}"
+			"$verticalGroup": "par l {seq l {space :::p, par b {comp btnExit::b:p::p, comp label45::b:p::p}, space :p:1:p, comp tabbedPane1:::p:475:p, space ::56:x}}"
 		} ) {
 			name: "this"
 			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
 				name: "tabbedPane1"
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :::p, comp panel7:::::x, space :::p}}"
-					"$verticalGroup": "par l {seq l {space :::p, comp panel7:::p::p, space ::333:x}}"
+					"$horizontalGroup": "par l {seq l {space :p:28:p, par l {seq l {comp pnlAddCustomer:::p::p, space u:::p, comp pnlEditCustomer:::p::p}, comp panel19:::p::p}, space ::35:x}}"
+					"$verticalGroup": "par l {seq l {space :p:19:p, comp panel19:::p::p, space :::p, par l {comp pnlAddCustomer:::p:239:p, comp pnlEditCustomer:::p:239:p}, space ::27:x}}"
 				} ) {
 					name: "panel1"
 					"background": new java.awt.Color( 102, 255, 255, 255 )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq t {space :::p, comp scrollPane1:::p::p, space :::x, comp panel8:::p::p, space :::p}}"
-						"$verticalGroup": "par l {seq l {space :::p, par l {comp scrollPane1:::p:92:p, comp panel8:::::x}, space ::7:x}}"
+						"$horizontalGroup": "par l {seq l {space :p:45:p, comp scrollPane4:::p:435:p, space s:::p, comp panel20:::::x, space :p:25:p}}"
+						"$verticalGroup": "par l {seq l {space :p:14:p, par t {comp scrollPane4:::p:132:p, comp panel20:::p::p}, space :::x}}"
 					} ) {
-						name: "panel7"
-						"background": new java.awt.Color( 51, 255, 153, 255 )
+						name: "panel19"
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane4"
+							add( new FormComponent( "javax.swing.JTable" ) {
+								name: "tblCustomer"
+							} )
+						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-							"$horizontalGroup": "par l {space :0:74:x}"
-							"$verticalGroup": "par l {space :0:0:x}"
+							"$horizontalGroup": "par l {seq {space :::p, par l {comp btnCustomerListEdit:::::x, seq l {comp btnCustomerListDelete:::p::p, space :0:0:x}}, space :::p}}"
+							"$verticalGroup": "par l {seq l {space :::x, comp btnCustomerListEdit:::p:39:p, space :::p, comp btnCustomerListDelete:::p:39:p, space :p:15:p}}"
 						} ) {
-							name: "panel8"
-							"background": new java.awt.Color( 153, 153, 255, 255 )
+							name: "panel20"
+							"border": &TitledBorder0 new javax.swing.border.TitledBorder( "Operations" )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnCustomerListEdit"
+								"text": "Edit"
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnCustomerListDelete"
+								"text": "Delete"
+							} )
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq t {space :::p, par t {seq {comp lblAddCustomer:::p:121:p, space :::x, comp btnAddCustomer:::p::p}, seq {par l {seq l {comp lblAddCName:::p::p, space :::x}, seq t {par l {comp lblAddCSurname::l:p::p, comp label28::l:p:47:p, comp label29::l:p:53:p, comp l::l:p:47:p}, space :p:24:p}}, par l {comp txtAddCustomerAddress:::p:170:p, comp txtAddCustomerSurname:::p:170:p, comp txtAddCustomerName:::p:170:p, comp txtAddCustomerEmail::l:p:170:p, comp txtAddCustomerPhone::l:p:170:p}}}, space :p:28:p}}"
+						"$verticalGroup": "par l {seq l {space :::x, par b {comp lblAddCName::b:p:24:p, comp txtAddCustomerName::b:p::p}, space :p:9:p, par b {comp lblAddCSurname::b:p:24:p, comp txtAddCustomerSurname::b:p::p}, space :::p, par b {comp l::b:p:24:p, comp txtAddCustomerEmail::b:p::p}, space :::p, par b {comp label28::b:p:24:p, comp txtAddCustomerPhone::b:p::p}, space :::p, par b {comp label29::b:p:24:p, comp txtAddCustomerAddress::b:p::p}, space :::p, par b {comp btnAddCustomer::b:p::p, comp lblAddCustomer::b:p::p}}}"
+					} ) {
+						name: "pnlAddCustomer"
+						"border": new javax.swing.border.TitledBorder( null, "Add Customer", 4, 2 )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblAddCName"
+							"text": "Name"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "l"
+							"text": "E-Mail"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblAddCSurname"
+							"text": "Surname"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label28"
+							"text": "Phone"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label29"
+							"text": "Address"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddCustomerName"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddCustomerSurname"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddCustomerEmail"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddCustomerPhone"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddCustomerAddress"
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "btnAddCustomer"
+							"text": "Add"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblAddCustomer"
+							"text": "text"
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq t {space :::p, par t {seq {comp lblEditCustomer:::p:121:p, space :::x, comp btnEditCustomer:::p::p}, seq {par l {seq l {comp label30:::p::p, space :::x}, seq t {par l {comp label32::l:p::p, comp label33::l:p:47:p, comp label34::l:p:53:p, comp label31::l:p:47:p}, space :p:24:p}}, par l {comp txtEditCustomerAddress:::p:170:p, comp txtEditCustomerSurname:::p:170:p, comp txtEditCustomerName:::p:170:p, comp txtEditCustomerEmail::l:p:170:p, comp txtEditCustomerPhone::l:p:170:p}}}, space :p:28:p}}"
+						"$verticalGroup": "par l {seq l {space :::x, par b {comp label30::b:p:24:p, comp txtEditCustomerName::b:p::p}, space :p:9:p, par b {comp label32::b:p:24:p, comp txtEditCustomerSurname::b:p::p}, space :::p, par b {comp label31::b:p:24:p, comp txtEditCustomerEmail::b:p::p}, space :::p, par b {comp label33::b:p:24:p, comp txtEditCustomerPhone::b:p::p}, space :::p, par b {comp label34::b:p:24:p, comp txtEditCustomerAddress::b:p::p}, space :::p, par b {comp btnEditCustomer::b:p::p, comp lblEditCustomer::b:p::p}}}"
+					} ) {
+						name: "pnlEditCustomer"
+						"border": new javax.swing.border.TitledBorder( null, "Edit Customer", 4, 2 )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label30"
+							"text": "Name"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label31"
+							"text": "E-Mail"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label32"
+							"text": "Surname"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label33"
+							"text": "Phone"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label34"
+							"text": "Address"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditCustomerName"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditCustomerSurname"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditCustomerEmail"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditCustomerPhone"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditCustomerAddress"
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "btnEditCustomer"
+							"text": "Edit"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblEditCustomer"
+							"text": "text"
+						} )
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "Customers"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+					"$horizontalGroup": "par l {seq {par l {seq l {space :p:13:p, par l {comp panel12:::::x, seq l {comp panel13:::p::p, space :::p, comp panel14:::::x}}}, seq l {space :::p, comp panel10:::::x}}, space :::p}}"
+					"$verticalGroup": "par l {seq l {space :p:16:p, comp panel10:::p::p, space :::p, comp panel12:::p:142:p, space :::p, par l:::p {comp panel13:::::x, comp panel14:::::x}, space ::14:x}}"
+				} ) {
+					name: "panel2"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {space :::p, par l:::p {seq l {comp label1:::p:116:p, space s:::p, comp radioButton1:::p::p, space s:::p, comp radioButton2:::p::p, space s:::p, comp radioButton3:::p::p}, seq l {comp label2:::p::p, space s:::p, comp txtSearchReport:::p:520:p}, seq l {comp label62:::p:76:p, space :::p, par l:::p {comp label63::::50:x, comp spnDay1::::50:x}, space u:::p, par l {seq l {comp label65:::p:50:p, space :::p, comp label64:::p:50:p}, seq l {comp spnMonth1:::p:50:p, space :::p, comp spnYear1:::p:50:p, space :p:69:p, comp label66:::p::p}}, space :::x, par l {seq {comp label67:::p:50:p, space :::p, comp label68:::p:50:p, space :::p, comp label69:::p:50:p}, seq {comp snpDay2:::p:50:p, space :::p, comp spnMonth2:::p:50:p, space :::p, comp spnYear2:::p:50:p}}}}, space :::x}}"
+						"$verticalGroup": "par l {seq l {par b {comp label1::b:p::p, comp radioButton1::b:p::p, comp radioButton2::b:p::p, comp radioButton3::b:p::p}, space s:::p, par b {comp label2::b:p::p, comp txtSearchReport::b:p::p}, space :::p, par b {comp label63::b:p::p, comp label65::b:p::p, comp label64::b:p::p, comp label67::b:p::p, comp label68::b:p::p, comp label69::b:p::p}, space :::x, par b {comp label62::b:p:24:p, comp spnDay1::b:p::p, comp spnMonth1::b:p::p, comp spnYear1::b:p::p, comp label66::b:p::p, comp snpDay2::b:p::p, comp spnMonth2::b:p::p, comp spnYear2::b:p::p}, space :p:17:p}}"
+					} ) {
+						name: "panel10"
+						"border": new javax.swing.border.TitledBorder( "Filters" )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label1"
+							"text": "Search Location"
+						} )
+						add( new FormComponent( "javax.swing.JRadioButton" ) {
+							name: "radioButton1"
+							"text": "Customers"
+						} )
+						add( new FormComponent( "javax.swing.JRadioButton" ) {
+							name: "radioButton2"
+							"text": "Products"
+						} )
+						add( new FormComponent( "javax.swing.JRadioButton" ) {
+							name: "radioButton3"
+							"text": "Categories"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label2"
+							"text": "Search"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtSearchReport"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label62"
+							"text": "Date Range"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label63"
+							"text": "day"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label64"
+							"text": "year"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label65"
+							"text": "month"
+						} )
+						add( new FormComponent( "javax.swing.JSpinner" ) {
+							name: "spnDay1"
+						} )
+						add( new FormComponent( "javax.swing.JSpinner" ) {
+							name: "spnMonth1"
+						} )
+						add( new FormComponent( "javax.swing.JSpinner" ) {
+							name: "spnYear1"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label66"
+							"text": "and"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label67"
+							"text": "day"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label68"
+							"text": "month"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label69"
+							"text": "year"
+						} )
+						add( new FormComponent( "javax.swing.JSpinner" ) {
+							name: "snpDay2"
+						} )
+						add( new FormComponent( "javax.swing.JSpinner" ) {
+							name: "spnMonth2"
+						} )
+						add( new FormComponent( "javax.swing.JSpinner" ) {
+							name: "spnYear2"
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq l {space :::p, comp scrollPane2:::::x, space :::p}}"
+						"$verticalGroup": "par l {seq l {space :::p, comp scrollPane2:::p:109:p, space :::x}}"
+					} ) {
+						name: "panel12"
+						"border": new javax.swing.border.TitledBorder( "Results" )
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane2"
+							add( new FormComponent( "javax.swing.JTable" ) {
+								name: "tblReport"
+							} )
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq l {space :::p, comp lblStatement:::p:310:p, space ::14:x}}"
+						"$verticalGroup": "par l {seq l {space :::p, comp lblStatement::::58:x, space :::p}}"
+					} ) {
+						name: "panel13"
+						"border": new javax.swing.border.TitledBorder( "Profit-Loss Statement" )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblStatement"
+							"text": "text"
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {space :::p, par l {comp lblSold::l:::x, seq l {comp lblReportsInfo:::p:309:p, space :0:0:x}}, space :::p}}"
+						"$verticalGroup": "par l {seq l {space :::p, comp lblSold:::p:37:p, space ::7:x, comp lblReportsInfo:::p:37:p, space :::p}}"
+					} ) {
+						name: "panel14"
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblSold"
+							"text": "Quantity Sold"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblReportsInfo"
+							"text": "Info"
+						} )
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"title": "Reports"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+					"$horizontalGroup": "par l {seq l {space :p:24:p, comp panel15:::p::p, space ::24:x}}"
+					"$verticalGroup": "par l {seq l {space :p:25:p, comp panel15:::p::p, space ::18:x}}"
+				} ) {
+					name: "panel3"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {par l {seq {space :::p, comp cmbList:::p:295:p, space s:::p, comp btnSaleList:::p::p}, seq l {space :p:12:p, par t {seq {comp lblSaleList:::p:219:p, space :p:329:p}, comp scrollPane9::l:p:548:p, comp lblSales::t:p:211:p, comp panel29::l:p::p}}}, space ::68:x}}"
+						"$verticalGroup": "par l {seq l {space :::p, par b {comp cmbList::b:p::p, comp btnSaleList::b:p::p}, space :::p, comp lblSaleList:::p::p, space :::p, comp scrollPane9:::p:128:p, space :::p, comp lblSales:::p::p, space :::p, comp panel29:::p::p, space ::16:x}}"
+					} ) {
+						name: "panel15"
+						"border": new javax.swing.border.TitledBorder( "Sales Screen" )
+						add( new FormComponent( "javax.swing.JComboBox" ) {
+							name: "cmbList"
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "btnSaleList"
+							"text": "List"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblSaleList"
+							"text": "text"
 						} )
 						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-							name: "scrollPane1"
+							name: "scrollPane9"
 							add( new FormComponent( "javax.swing.JTable" ) {
-								name: "table1"
+								name: "tblSale"
+							} )
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblSales"
+							"text": "text"
+						} )
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {seq l {space :::p, par t:::p {comp label50::::64:x, comp label49::::64:x, comp label48::::64:x}, space u:::p, par l:::p {comp txtSaleSelect::::161:x, comp txtSalePiece::::161:x, comp cmbSaleCustomer::::161:x}, space s:::p, comp btnSaleProcess:::p::p, space ::50:x}}"
+							"$verticalGroup": "par l {seq l {space :::p, par b {comp label48::b:p::p, comp txtSaleSelect::b:p::p}, space :::p, par b {comp label49::b:p::p, comp txtSalePiece::b:p::p}, space :::p, par l {comp label50:::p::p, par b {comp cmbSaleCustomer::b:p::p, comp btnSaleProcess::b:p::p}}, space ::10:x}}"
+						} ) {
+							name: "panel29"
+							"border": new javax.swing.border.TitledBorder( "Sales Process" )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label48"
+								"text": "Selected"
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "txtSaleSelect"
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label49"
+								"text": "Piece"
+							} )
+							add( new FormComponent( "javax.swing.JTextField" ) {
+								name: "txtSalePiece"
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "label50"
+								"text": "Customer"
+							} )
+							add( new FormComponent( "javax.swing.JComboBox" ) {
+								name: "cmbSaleCustomer"
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnSaleProcess"
+								"text": "Complete"
 							} )
 						} )
 					} )
 				}, new FormLayoutConstraints( null ) {
-					"title": "Müşteriler"
+					"title": "Sales Management"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq {space :0:266:x, comp label2:::p::p, space :0:265:x}}"
-					"$verticalGroup": "par l {seq {space :0:214:x, comp label2:::p::p, space :0:214:x}}"
-				} ) {
-					name: "panel2"
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label2"
-						"text": "Raporlar"
-					} )
-				}, new FormLayoutConstraints( null ) {
-					"title": "Raporlar"
-				} )
-				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:402:p, comp label6:::p::p, space ::100:x}}"
-					"$verticalGroup": "par l {seq l {space :p:201:p, comp label6:::p::p, space ::227:x}}"
-				} ) {
-					name: "panel3"
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label6"
-						"text": "Satış Yönetimi"
-					} )
-				}, new FormLayoutConstraints( null ) {
-					"title": "Satış Yönetimi"
-				} )
-				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:366:p, comp label5:::p::p, space ::136:x}}"
-					"$verticalGroup": "par l {seq l {space :p:185:p, comp label5:::p::p, space ::243:x}}"
+					"$horizontalGroup": "par l {seq l {space :p:20:p, par l {comp panel11:::p::p, seq {comp panel17:::p::p, space :::p, comp panel18:::p::p}}, space ::33:x}}"
+					"$verticalGroup": "par l {seq l {space :::p, comp panel11:::p::p, space :::p, par l {comp panel17::::0:x, seq {comp panel18:::p:282:p, space :0:0:x}}, space :::p}}"
 				} ) {
 					name: "panel4"
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label5"
-						"text": "Ürün Yönetimi"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq l {space :p:45:p, comp scrollPane3:::p:435:p, space s:::p, comp panel16:::::x, space :p:25:p}}"
+						"$verticalGroup": "par l {seq l {par t {comp scrollPane3::t:p:103:p, comp panel16:::p:117:p}, space :0:3:x}}"
+					} ) {
+						name: "panel11"
+						"border": new javax.swing.border.TitledBorder( "Product List" )
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane3"
+							add( new FormComponent( "javax.swing.JTable" ) {
+								name: "tblProdutcs"
+							} )
+						} )
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {seq {space :::p, par l {comp btnProductListEdit:::::x, seq l {comp btnProductListDelete:::p::p, space :0:0:x}}, space :::p}}"
+							"$verticalGroup": "par l {seq l {space :::x, comp btnProductListEdit:::p:39:p, space :::p, comp btnProductListDelete:::p:39:p, space :p:15:p}}"
+						} ) {
+							name: "panel16"
+							"border": #TitledBorder0
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnProductListEdit"
+								"text": "Edit"
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnProductListDelete"
+								"text": "Delete"
+							} )
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {space :::p, par l {seq {par l {seq l {comp lblAddProduct:::p:111:p, space :::x, comp btnAddProduct:::p::p}, seq {par l {seq l {comp label55:::p:65:p, space u:::p, comp txtAddProductStatement:::p:190:p}, seq l {comp label54:::p:65:p, space u:::p, comp txtAddProductStock:::p:190:p}, seq l {comp label53:::p:65:p, space u:::p, comp txtAddProductSelling:::p:190:p}, seq l {comp label43:::p:65:p, space u:::p, comp txtAddProductBuying:::p:190:p}}, space :0:6:x}}, space :0:6:x}, seq {par l:::p {seq l {comp label52:::p:65:p, space u:::p, comp txtAddProductName:::p:190:p}, seq l {comp label36:::p:65:p, space u:::p, comp cmbAddProductCategory:::::x}}, space :::x}}}}"
+						"$verticalGroup": "par l {seq l {space :::p, par b {comp label52::b:p:24:p, comp txtAddProductName::b:p::p}, space :::p, par b {comp label36::b:p:24:p, comp cmbAddProductCategory::b:p::p}, space :::p, par b {comp label43::b:p:24:p, comp txtAddProductBuying::b:p::p}, space :p:9:p, par b {comp label53::b:p:24:p, comp txtAddProductSelling::b:p::p}, space :p:9:p, par b {comp label54::b:p:24:p, comp txtAddProductStock::b:p::p}, space :::p, par b {comp label55::b:p:24:p, comp txtAddProductStatement::b:p::p}, space :p:9:p, par b {comp btnAddProduct::b:p::p, comp lblAddProduct::b:p::p}, space :::x}}"
+					} ) {
+						name: "panel17"
+						"border": new javax.swing.border.TitledBorder( null, "Add New Product", 4, 2 )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddProductName"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label36"
+							"text": "Category"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label52"
+							"text": "Product"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label43"
+							"text": "Buying"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label53"
+							"text": "Selling"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label54"
+							"text": "Stock"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label55"
+							"text": "Statement"
+						} )
+						add( new FormComponent( "javax.swing.JComboBox" ) {
+							name: "cmbAddProductCategory"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddProductBuying"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddProductSelling"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddProductStock"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddProductStatement"
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "btnAddProduct"
+							"text": "Add"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblAddProduct"
+							"text": "text"
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {space :::p, par l {seq {par l {seq l {comp lblEditProduct:::p:111:p, space :::x, comp btnEditProduct:::p::p}, seq {par l {seq l {comp label60:::p:65:p, space u:::p, comp txtEditProductStatement:::p:190:p}, seq l {comp label59:::p:65:p, space u:::p, comp txtEditProductStock:::p:190:p}, seq l {comp label58:::p:65:p, space u:::p, comp txtEditProductSelling:::p:190:p}, seq l {comp label44:::p:65:p, space u:::p, comp txtEditProductBuying:::p:190:p}}, space :0:3:x}}, space :0:9:x}, seq {par l:::p {seq l {comp label57:::p:65:p, space u:::p, comp txtEditProductName:::p:190:p}, seq l {comp label37:::p:65:p, space u:::p, comp cmbEditProductCategory:::::x}}, space :::x}}}}"
+						"$verticalGroup": "par l {seq l {space :::p, par b {comp label57::b:p:24:p, comp txtEditProductName::b:p::p}, space :::p, par b {comp label37::b:p:24:p, comp cmbEditProductCategory::b:p::p}, space :::p, par b {comp label44::b:p:24:p, comp txtEditProductBuying::b:p::p}, space :p:9:p, par b {comp label58::b:p:24:p, comp txtEditProductSelling::b:p::p}, space :p:9:p, par b {comp label59::b:p:24:p, comp txtEditProductStock::b:p::p}, space :::p, par b {comp label60::b:p:24:p, comp txtEditProductStatement::b:p::p}, space :p:9:p, par b {comp btnEditProduct::b:p::p, comp lblEditProduct::b:p::p}, space :::x}}"
+					} ) {
+						name: "panel18"
+						"border": new javax.swing.border.TitledBorder( null, "Edit Product", 4, 2 )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditProductName"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label37"
+							"text": "Category"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label57"
+							"text": "Product"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label44"
+							"text": "Buying"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label58"
+							"text": "Selling"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label59"
+							"text": "Stock"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label60"
+							"text": "Statement"
+						} )
+						add( new FormComponent( "javax.swing.JComboBox" ) {
+							name: "cmbEditProductCategory"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditProductBuying"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditProductSelling"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditProductStock"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditProductStatement"
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "btnEditProduct"
+							"text": "Edit"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblEditProduct"
+							"text": "text"
+						} )
 					} )
 				}, new FormLayoutConstraints( null ) {
-					"title": "Ürün Yönetimi"
+					"title": "Produtcs"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:370:p, comp label4:::p::p, space ::111:x}}"
-					"$verticalGroup": "par l {seq l {space :p:177:p, comp label4:::p::p, space ::251:x}}"
+					"$horizontalGroup": "par l {seq l {space :p:25:p, par t {comp panel25::l::0:x, seq {space :0:0:x, par t {comp panel23:::p::p, comp panel26:::p::p}}}, space ::28:x}}"
+					"$verticalGroup": "par l {seq l {space :p:22:p, comp panel23:::p::p, space :::p, comp panel25:::p:121:p, space :::p, comp panel26:::p:114:p, space ::31:x}}"
 				} ) {
 					name: "panel5"
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label4"
-						"text": "Kategori Yönetimi"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq l {space :p:45:p, comp scrollPane5:::p:435:p, space s:::p, comp panel24:::::x, space :p:25:p}}"
+						"$verticalGroup": "par l {seq l {par t {comp scrollPane5::t:p:103:p, comp panel24:::p:117:p}, space :0:3:x}}"
+					} ) {
+						name: "panel23"
+						"border": new javax.swing.border.TitledBorder( "Category List" )
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane5"
+							add( new FormComponent( "javax.swing.JTable" ) {
+								name: "tblCategoryList"
+							} )
+						} )
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {seq {space :::p, par l {seq {comp btnDeleteCategoryList:::p::p, space :0:0:x}, comp btnEditCategoryList::t:::x}, space :::p}}"
+							"$verticalGroup": "par l {seq l {comp btnEditCategoryList:::p:39:p, space :::x, comp btnDeleteCategoryList:::p:39:p, space :p:15:p}}"
+						} ) {
+							name: "panel24"
+							"border": #TitledBorder0
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnEditCategoryList"
+								"text": "Edit"
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnDeleteCategoryList"
+								"text": "Delete"
+							} )
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {space :::x, par l {seq {comp label38:::p:115:p, space :::p, comp txtAddCategory:::p:400:p}, seq {comp label39:::p:115:p, space :::p, comp scrollPane6:::::x}}, space :::p, comp btnAddCategory:::p::p, space :p:30:p}}"
+						"$verticalGroup": "par l {seq l {space :::p, par b {comp label38::b:p:27:p, comp txtAddCategory::b:p::p}, par l {seq {space :::p, comp label39:::p:27:p, space :::x}, seq t {space :::x, comp scrollPane6:::p:41:p, space :p:23:p}}}, seq l {space :p:20:p, comp btnAddCategory:::p:55:p, space :0:0:x}}"
+					} ) {
+						name: "panel25"
+						"border": new javax.swing.border.TitledBorder( "Add New Category" )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label38"
+							"text": "Category Name"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label39"
+							"text": "Explanation"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtAddCategory"
+						} )
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane6"
+							add( new FormComponent( "javax.swing.JTextArea" ) {
+								name: "txtAddCategoryExplanation"
+							} )
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "btnAddCategory"
+							"text": "Add"
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {space :::p, par l {seq {comp label40:::p:115:p, space :::p, comp txtEditCategory:::p:400:p}, seq {comp label41:::p:115:p, space :::p, comp scrollPane7:::::x}}, space :::p, comp btnEditCategory:::p::p, space ::12:x}}"
+						"$verticalGroup": "par l {seq l {space :::p, par b {comp label40::b:p:27:p, comp txtEditCategory::b:p::p}, par l {seq {space :::p, comp label41:::p:27:p, space :::x}, seq t {space :::x, comp scrollPane7:::p:42:p, space :p:22:p}}}, seq l {space :p:19:p, comp btnEditCategory:::p:55:p, space :0:0:x}}"
+					} ) {
+						name: "panel26"
+						"border": new javax.swing.border.TitledBorder( "Edit Category" )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label40"
+							"text": "Category Name"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label41"
+							"text": "Explanation"
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "txtEditCategory"
+						} )
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane7"
+							add( new FormComponent( "javax.swing.JTextArea" ) {
+								name: "txtEditCategoryExplanation"
+							} )
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "btnEditCategory"
+							"text": "Edit"
+						} )
 					} )
 				}, new FormLayoutConstraints( null ) {
-					"title": "Kategori Yönetimi"
+					"title": "Categories"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:403:p, comp label3:::p::p, space ::85:x}}"
-					"$verticalGroup": "par l {seq l {space :p:177:p, comp label3:::p::p, space ::251:x}}"
+					"$horizontalGroup": "par l {seq l {space :p:30:p, par l {comp panel27:::p::p, comp panel30:::p::p}, space ::25:x}}"
+					"$verticalGroup": "par l {seq l {space :p:43:p, comp panel27:::p::p, space :::p, comp panel30:::p:177:p, space :::x}}"
 				} ) {
 					name: "panel6"
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label3"
-						"text": "Kullanıcı Ayarları"
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {space :::p, par l {seq l {comp scrollPane8:::p:430:p, space :::p, comp panel28:::p:165:p}, comp label42::l:p:224:p}, space ::14:x}}"
+						"$verticalGroup": "par l {seq l {space :::p, par l:::p {comp panel28:::::x, comp scrollPane8::::0:x}, space :::p, comp label42:::::x, space :p::p}}"
+					} ) {
+						name: "panel27"
+						"border": new javax.swing.border.TitledBorder( "User List" )
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane8"
+							add( new FormComponent( "javax.swing.JTable" ) {
+								name: "tblUserList"
+							} )
+						} )
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+							"$horizontalGroup": "par l {seq {space :::p, par l {comp btnAddUser::l:p:144:p, comp btnDltUser::l:p:144:p, comp btnUpdateUser::l:p:144:p}, space :::p}}"
+							"$verticalGroup": "par l {seq l {space :p:20:p, comp btnAddUser:::p::p, space :::p, comp btnDltUser:::p::p, space :::p, comp btnUpdateUser:::p::p, space ::15:x}}"
+						} ) {
+							name: "panel28"
+							"border": new javax.swing.border.TitledBorder( "Operations" )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnAddUser"
+								"text": "Add User"
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnDltUser"
+								"text": "Delete User"
+							} )
+							add( new FormComponent( "javax.swing.JButton" ) {
+								name: "btnUpdateUser"
+								"text": "Update Password"
+							} )
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label42"
+							"text": "text"
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+						"$horizontalGroup": "par l {seq {space :::p, par l:::p {seq l {space :p:6:p, comp lblResetPassword::::114:x}, comp label72::::120:x, comp label71::l::120:x, comp label70::l::120:x}, par l {seq t {space :p:169:p, comp btnResetPassword:::p::p}, seq {space u:::p, par l {seq l {par l {comp txtNewPassword:::p:235:p, comp txtResetPassword:::p:235:p}, space :0:0:x}, seq t {space :0:0:x, comp txtAgainPassword:::p:235:p}}}}, space :::p}}"
+						"$verticalGroup": "par l {seq l {space :p:22:p, par b {comp label70::b:p:26:p, comp txtResetPassword::b:p::p}, space :::p, par b {comp label71::b:p:26:p, comp txtNewPassword::b:p::p}, space :p:6:p, par b {comp label72::b:p:26:p, comp txtAgainPassword::b:p::p}, space :p:7:p, par b {comp btnResetPassword::b:p::p, comp lblResetPassword::b:p::p}, space :::x}}"
+					} ) {
+						name: "panel30"
+						"border": new javax.swing.border.TitledBorder( "Reset Password" )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label70"
+							"text": "Password"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label71"
+							"text": "New Password"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label72"
+							"text": "New Password Again"
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "btnResetPassword"
+							"text": "Change"
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblResetPassword"
+							"text": "text"
+						} )
+						add( new FormComponent( "javax.swing.JPasswordField" ) {
+							name: "txtResetPassword"
+						} )
+						add( new FormComponent( "javax.swing.JPasswordField" ) {
+							name: "txtNewPassword"
+						} )
+						add( new FormComponent( "javax.swing.JPasswordField" ) {
+							name: "txtAgainPassword"
+						} )
 					} )
 				}, new FormLayoutConstraints( null ) {
-					"title": "Kullanıcı Ayarları"
+					"title": "User Settings"
 				} )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnExit"
+				"text": "Exit"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label45"
+				"text": "Admin"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 680, 580 )
+			"size": new java.awt.Dimension( 710, 600 )
 		} )
 	}
 }
