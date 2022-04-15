@@ -4,7 +4,8 @@ package model;
 import props.User;
 import utils.DB;
 import utils.Util;
-import view.UserPanel;
+import view.user.UserPanel;
+import view.user.UserChangePassword;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +16,6 @@ public class UserImpl implements IUser{
     public static String name="";
     public static String emailAddress="";
     public static String userPassword="";
-    public static int uid=0;
-
     public static int verificationCode = new Random().nextInt(900000) + 100000;
 
     @Override
@@ -31,7 +30,6 @@ public class UserImpl implements IUser{
             status=rs.next();
             if(status){
                 name=rs.getString("name")+" "+rs.getString("surname");
-                uid=rs.getInt("uid");
             }
         }catch (Exception e){
             System.out.println("UserLogin Error: "+e);
@@ -87,12 +85,13 @@ public class UserImpl implements IUser{
         try {
             String sql="update user set password=? where email=?";
             PreparedStatement pre=db.connect().prepareStatement(sql);
-            pre.setString(1,Util.MD5(user.getPassword()));
-            pre.setString(2,user.getEmail());
+            pre.setString(1,Util.MD5(UserChangePassword.rePassword));
+            pre.setString(2,emailAddress);
             status=pre.executeUpdate();
 
+
         }catch (Exception e){
-            System.out.println("userChangePasswordSendMail Error: "+e);
+            System.out.println("userChangePassword Error: "+e);
         }finally {
             db.close();
         }
@@ -105,12 +104,12 @@ public class UserImpl implements IUser{
         try {
             String sql="update user set password=? where email=?";
             PreparedStatement pre=db.connect().prepareStatement(sql);
-            pre.setString(1,Util.MD5(user.getPassword()));
-            pre.setString(2,user.getEmail());
+            pre.setString(1,Util.MD5(UserChangePassword.rePassword));
+            pre.setString(2,emailAddress);
             status=pre.executeUpdate();
 
         }catch (Exception e){
-            System.out.println("userForgetPasswordSendMail Error: "+e);
+            System.out.println("userForgetPassword Error: "+e);
         }finally {
             db.close();
         }
@@ -118,7 +117,7 @@ public class UserImpl implements IUser{
     }
 
     @Override
-    public boolean userEmail(String email) {
+    public boolean userGetEmail(String email) {
         boolean status=false;
         try {
             String sql="Select * from user where email=?";
@@ -127,11 +126,12 @@ public class UserImpl implements IUser{
 
             ResultSet rs=pre.executeQuery();
             status= rs.next();
-            if(status)
+            if(status){
                 emailAddress=rs.getString("email");
+            }
 
         }catch (Exception e){
-            System.err.println("userEmail Error"+e);
+            System.err.println("userGetEmail Error"+e);
         }finally {
             db.close();
         }

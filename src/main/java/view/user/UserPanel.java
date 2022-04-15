@@ -8,10 +8,12 @@ import java.awt.event.*;
 import javax.swing.border.*;
 import model.UserImpl;
 import utils.Util;
+import view.MainApp;
 //import view.UserChangePassword;
 
 import java.awt.*;
 import java.util.Locale;
+import java.util.Random;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 
@@ -20,10 +22,14 @@ import javax.swing.GroupLayout;
  */
 public class UserPanel extends JFrame {
     UserImpl userImpl=new UserImpl();
-    public static String to="";
-    public static String sub="";
-    public static String msg="";
+   // public static String to="";
+    //public static String sub="";
+    //public static String msg="";
     public static String emailChange="";
+    boolean status=false;
+    public static String verificationCode="";
+
+
     public static void main(String[] args) {
         new UserPanel().setVisible(true);
     }
@@ -50,31 +56,34 @@ public class UserPanel extends JFrame {
         }
     }
 
-    private void btnNewUserClicked(ActionEvent e) {
-        new NewUser().setVisible(true);
-        dispose();
-    }
+
 
     private void btnChangePasswordClicked(ActionEvent e) {
-        if(!txtEmail.equals(UserImpl.emailAddress)){
-            lblError.setText("Please Enter a Valid Email Address");
-        }else{
+        String email=txtEmail.getText().trim().toLowerCase(Locale.ROOT);
+        status=userImpl.userGetEmail(email);
+        if(status){
             new UserChangePassword().setVisible(true);
             dispose();
+        }else{
+            lblError.setText("Please Enter a Valid Email Address");
         }
     }
 
     private void btnForgetPasswordClicked(ActionEvent e) {
-        if(!txtEmail.equals(UserImpl.emailAddress)){
-            lblError.setText("Please Enter a Valid Email Address");
-        }else {
-            to= UserImpl.emailAddress;
-            sub="Java Project Forget Password";
-            msg="\n\n\t\tVerification Code: "+userImpl.verificationCode;
-            Util.sendMail(to,sub,msg);
+        String email=txtEmail.getText().trim().toLowerCase(Locale.ROOT);
+        status=userImpl.userGetEmail(email);
+        if(status){
+            // String to= UserImpl.emailAddress;
+            //String sub="Java Project Forget Password";
+            //String msg="\n\n\t\tVerification Code: "+userImpl.verificationCode;
+
+            System.out.println(userImpl.verificationCode);
+            //Util.sendMail(to,sub,msg);
 
             new UserForgetPassword().setVisible(true);
             dispose();
+        }else{
+            lblError.setText("Please Enter a Valid Email Address");
         }
     }
 
@@ -97,16 +106,13 @@ public class UserPanel extends JFrame {
             lblError.setText("");
             boolean status=userImpl.userLogin(email,password);
             if(status){
-                lblError.setText("!!!! BAŞARILI !!!!");
+                new MainApp().setVisible(true);
+                dispose();
             }else{
-                lblError.setText("!!!! BAŞARISIZ !!!!");
+                lblError.setText("Email or Password Incorrect");
             }
         }
     }
-
-
-
-
 
 
 
@@ -122,7 +128,6 @@ public class UserPanel extends JFrame {
         btnChangePassword = new JButton();
         btnForgetPassword = new JButton();
         lblError = new JLabel();
-        btnNewUser = new JButton();
         panel1 = new JPanel();
 
         //======== this ========
@@ -169,10 +174,6 @@ public class UserPanel extends JFrame {
         //---- lblError ----
         lblError.setText(" ");
 
-        //---- btnNewUser ----
-        btnNewUser.setText("NEW USER");
-        btnNewUser.addActionListener(e -> btnNewUserClicked(e));
-
         //======== panel1 ========
         {
             panel1.setForeground(SystemColor.activeCaption);
@@ -201,8 +202,7 @@ public class UserPanel extends JFrame {
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addComponent(btnForgetPassword, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnChangePassword, GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))
-                        .addComponent(btnNewUser, GroupLayout.PREFERRED_SIZE, 226, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnChangePassword, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
                         .addComponent(btnLogin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addComponent(label2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -231,13 +231,11 @@ public class UserPanel extends JFrame {
                         .addComponent(label2, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(btnLogin)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(btnNewUser)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGap(35, 35, 35)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(btnForgetPassword)
                         .addComponent(btnChangePassword))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGap(31, 31, 31)
                     .addComponent(lblError)
                     .addGap(27, 27, 27))
         );
@@ -255,7 +253,6 @@ public class UserPanel extends JFrame {
     private JButton btnChangePassword;
     private JButton btnForgetPassword;
     private JLabel lblError;
-    private JButton btnNewUser;
     private JPanel panel1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

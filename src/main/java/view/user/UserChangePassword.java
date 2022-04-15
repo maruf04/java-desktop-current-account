@@ -7,7 +7,7 @@ package view.user;
 import model.UserImpl;
 import props.User;
 import utils.Util;
-import view.UserPanel;
+import view.user.UserPanel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -22,6 +22,7 @@ public class UserChangePassword extends JFrame {
 
 
     UserImpl userImpl=new UserImpl();
+    public static String rePassword="";
 
     public UserChangePassword() {
         initComponents();
@@ -51,7 +52,7 @@ public class UserChangePassword extends JFrame {
         String email=txtEmail.getText().trim().toLowerCase(Locale.ROOT);
         String oldPassword=txtOldPassword.getText();
         String newPassword=txtNewPassword.getText();
-        String rePassword=txtRePassword.getText();
+        rePassword=txtRePassword.getText();
 
         if(email.equals("")){
            lblError.setText("Please Enter Email");
@@ -75,7 +76,7 @@ public class UserChangePassword extends JFrame {
             lblError.setText("New Password and RePassword do not Match");
             txtNewPassword.requestFocus();
         }else {
-            lblError.setText("");
+            lblError.setText("Password Change Succesfull");
             User user=new User(email,rePassword);
 
             return user;

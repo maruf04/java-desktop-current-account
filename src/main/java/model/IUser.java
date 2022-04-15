@@ -9,7 +9,7 @@ int userInsert(User user);
 int userUpdate(User user);
 int userChangePassword(User user);
 int userForgetPassword(User user);
-boolean userEmail(String email);
+boolean userGetEmail(String email);
 boolean userPassword(String password);
 
 

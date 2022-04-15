@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:54:p, par l:::p {comp lblError::l:::x, seq l {comp btnForgetPassword:::p:113:p, space :::p, comp btnChangePassword::::0:x}, comp btnNewUser:::p:226:p, comp btnLogin::l:::x, seq t {comp label2:::p:40:p, space :::p, comp txtPassword:::::x}, seq l {comp label1:::p:40:p, space :::p, comp txtEmail:::::x}}, space ::48:x}, comp panel1::l:::x}"
-			"$verticalGroup": "par l {seq l {comp panel1:::p::p, space :p:81:p, par l {comp label1:::p:40:p, comp txtEmail:::::x}, space u:::p, par l {seq l {space :p:4:p, comp txtPassword:::p:40:p}, comp label2::l:p:41:p}, space u:::p, comp btnLogin:::p::p, space u:::p, comp btnNewUser:::p::p, space u:::p, par b {comp btnForgetPassword::b:p::p, comp btnChangePassword::b:p::p}, space u:::p, comp lblError:::p::p, space :p:27:p}}"
+			"$horizontalGroup": "par l {seq {space :p:54:p, par l:::p {comp lblError::l:::x, seq l {comp btnForgetPassword:::p:113:p, space :::p, comp btnChangePassword:::p:107:p}, comp btnLogin::l:::x, seq t {comp label2:::p:40:p, space :::p, comp txtPassword:::::x}, seq l {comp label1:::p:40:p, space :::p, comp txtEmail:::::x}}, space ::48:x}, comp panel1::l:::x}"
+			"$verticalGroup": "par l {seq l {comp panel1:::p::p, space :p:81:p, par l {comp label1:::p:40:p, comp txtEmail:::::x}, space u:::p, par l {seq l {space :p:4:p, comp txtPassword:::p:40:p}, comp label2::l:p:41:p}, space u:::p, comp btnLogin:::p::p, space :p:35:p, par b {comp btnForgetPassword::b:p::p, comp btnChangePassword::b:p::p}, space :p:31:p, comp lblError:::p::p, space :p:27:p}}"
 		} ) {
 			name: "this"
 			"resizable": false
@@ -46,11 +46,6 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "lblError"
 				"text": " "
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnNewUser"
-				"text": "NEW USER"
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnNewUserClicked", true ) )
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 				"$horizontalGroup": "par l {space :0:328:x}"

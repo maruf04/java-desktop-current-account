@@ -4,7 +4,6 @@ import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.nio.file.StandardWatchEventKinds;
 import java.util.Properties;
 
 public class Util {

@@ -6,7 +6,7 @@ package view.user;
 
 import model.UserImpl;
 import props.User;
-import view.UserPanel;
+import view.user.UserPanel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -58,7 +58,7 @@ public class UserForgetPassword extends JFrame {
             lblError.setText("Please Enter New Password");
             txtPassword.requestFocus();
         }else {
-            lblError.setText("");
+            lblError.setText("Password Change Succesfull");
             User user=new User(email,password);
 
             return user;
