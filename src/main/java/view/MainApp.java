@@ -4,7 +4,9 @@
 
 package view;
 
+import model.ProductCategoryImpl;
 import model.UserImpl;
+import props.ProductCategory;
 import props.User;
 
 import java.awt.*;
@@ -13,18 +15,42 @@ import java.util.Locale;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.border.*;
+import javax.swing.table.TableModel;
 
 /**
  * @author mrf
  */
 public class MainApp extends JFrame {
+    ProductCategoryImpl productCategoryImpl=new ProductCategoryImpl();
+    int row=-1;
+    int value;
     public static void main(String[] args) {
         MainApp mainApp=new MainApp();
-        mainApp.setVisible(true);
+        //mainApp.setVisible(true);
     }
     UserImpl userImpl=new UserImpl();
+    ProductCategory productCategory=new ProductCategory();
+
+    public void startCategoryTable(){
+        tblCategory.setModel(productCategoryImpl.categoryTableModel());
+    }
+
     public MainApp() {
         initComponents();
+        tblCategory.setModel(productCategoryImpl.categoryTableModel());
+    }
+    public void rowValueCategory() {
+        int column = 0;
+        row = tblCategory.getSelectedRow();
+        value = (int) tblCategory.getModel().getValueAt(row, column);
+        String cid = String.valueOf(tblCategory.getValueAt(row, 0));
+        String categoryName = String.valueOf(tblCategory.getValueAt(row, 1));
+        String categoryInfo = String.valueOf(tblCategory.getValueAt(row, 2));
+
+        System.out.println("val" + value);
+        txtCategoryName.setText(categoryName);
+        txtCategoryInfo.setText(categoryInfo);
+
     }
 
     private void btnAddUserClicked(ActionEvent e) {
@@ -70,12 +96,93 @@ public class MainApp extends JFrame {
         }
         return null;
     }
+    private ProductCategory fncDataValidCategory(){
+        String categoryName = txtCategoryName.getText().trim();
+        String categoryInfo = txtCategoryInfo.getText().trim();
+        ProductCategory c = new ProductCategory(0,categoryName,categoryInfo);
+        return c;
+
+
+    }
 
     public void fncTextClear(){
         txtName.setText("");
         txtSurname.setText("");
         txtEmail.setText("");
         txtPassword.setText("");
+    }
+
+    private void btnAddCategoryClick(ActionEvent e) {
+        ProductCategory c=fncDataValidCategory();
+        int status=productCategoryImpl.categoryInsert(c);
+        if (status>0){
+            System.out.println("Ekleme Başarılı");
+            tblCategory.setModel(productCategoryImpl.categoryTableModel());
+            txtCategoryName.setText("");
+            txtCategoryInfo.setText("");
+
+        }
+        else {
+            if (status==-1){
+                System.out.println("Insert Error");
+
+            }
+
+
+        }
+    }
+
+    private void btnUpdateCategoryClick(ActionEvent e) {
+        //view.MainApp mainApp=new view.MainApp();
+       // row=tblCategory.getSelectedRow();
+
+        String categoryName= txtCategoryName.getText();
+        String categoryInfo= txtCategoryInfo.getText();
+        ProductCategory productCategory1= new ProductCategory(value,categoryName,categoryInfo);
+        if(row!=-1) {
+            int answer = JOptionPane.showConfirmDialog(this, "Are you sure you want to update the customer");
+            if (answer==0){
+                productCategoryImpl.categoryUpdate(productCategory1);
+                tblCategory.setModel(productCategoryImpl.categoryTableModel());
+                txtCategoryName.setText("");
+                txtCategoryInfo.setText("");
+
+                row=-1;
+            }
+
+        }
+        JOptionPane.showMessageDialog(this,"Please Choose");
+    }
+
+    private void btnDeleteCategoryClick(ActionEvent e) {
+        if (row !=-1){
+            int answer=JOptionPane.showConfirmDialog(this,"Are you sure you want to delete the customer?","Delete Window",JOptionPane.YES_OPTION);//parent component nerede görüneceği this button
+            System.out.println(answer); //butonların sırası soldan başlayarak 0 1 buton sırası öyle belirlenir.
+
+            if (answer==0){
+                productCategoryImpl.categoryDelete(value);
+//                System.out.println("delete row "+value);
+                tblCategory.setModel(productCategoryImpl.categoryTableModel()); //tabloyu refresh et
+                txtCategoryName.setText("");
+                txtCategoryInfo.setText("");
+
+                row=-1;
+            }
+        }
+
+        else{
+            JOptionPane.showMessageDialog(this,"Please choose."); //this kendini burada ortala
+            //show confirm anlaşmayı kabul etmek istiyor musun.
+        }
+    }
+
+    private void tblCategoryMouseClicked(MouseEvent e) {
+        rowValueCategory();
+    }
+
+    private void txtSearchCategoryKeyReleased(KeyEvent e) {
+        String txtSearch=txtSearchCategory.getText().toLowerCase(Locale.ROOT).trim();
+        tblCategory.setModel( productCategoryImpl.categorySearch(txtSearch));
     }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -196,27 +303,6 @@ public class MainApp extends JFrame {
         txtEditProductStatement = new JTextField();
         btnEditProduct = new JButton();
         lblEditProduct = new JLabel();
-        panel5 = new JPanel();
-        panel23 = new JPanel();
-        scrollPane5 = new JScrollPane();
-        tblCategoryList = new JTable();
-        panel24 = new JPanel();
-        btnEditCategoryList = new JButton();
-        btnDeleteCategoryList = new JButton();
-        panel25 = new JPanel();
-        label38 = new JLabel();
-        label39 = new JLabel();
-        txtAddCategory = new JTextField();
-        scrollPane6 = new JScrollPane();
-        txtAddCategoryExplanation = new JTextArea();
-        btnAddCategory = new JButton();
-        panel26 = new JPanel();
-        label40 = new JLabel();
-        label41 = new JLabel();
-        txtEditCategory = new JTextField();
-        scrollPane7 = new JScrollPane();
-        txtEditCategoryExplanation = new JTextArea();
-        btnEditCategory = new JButton();
         panel6 = new JPanel();
         pnlUserAdd = new JPanel();
         lblError = new JLabel();
@@ -229,6 +315,21 @@ public class MainApp extends JFrame {
         txtEmail = new JTextField();
         txtPassword = new JTextField();
         btnAddUser = new JButton();
+        panel5 = new JPanel();
+        panel23 = new JPanel();
+        scrollPane5 = new JScrollPane();
+        tblCategory = new JTable();
+        label3 = new JLabel();
+        txtSearchCategory = new JTextField();
+        panel25 = new JPanel();
+        label38 = new JLabel();
+        label39 = new JLabel();
+        txtCategoryName = new JTextField();
+        scrollPane6 = new JScrollPane();
+        txtCategoryInfo = new JTextArea();
+        btnAddCategory = new JButton();
+        btnUpdateCategory = new JButton();
+        btnDeleteCategoryList = new JButton();
         btnExit = new JButton();
         label45 = new JLabel();
 
@@ -490,7 +591,7 @@ public class MainApp extends JFrame {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(pnlEditCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addComponent(panel19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(31, Short.MAX_VALUE))
+                            .addContainerGap(35, Short.MAX_VALUE))
                 );
                 panel1Layout.setVerticalGroup(
                     panel1Layout.createParallelGroup()
@@ -1191,7 +1292,7 @@ public class MainApp extends JFrame {
                                     .addComponent(panel17, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(panel18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap(29, Short.MAX_VALUE))
+                            .addContainerGap(33, Short.MAX_VALUE))
                 );
                 panel4Layout.setVerticalGroup(
                     panel4Layout.createParallelGroup()
@@ -1208,221 +1309,6 @@ public class MainApp extends JFrame {
                 );
             }
             tabbedPane1.addTab("Produtcs", panel4);
-
-            //======== panel5 ========
-            {
-
-                //======== panel23 ========
-                {
-                    panel23.setBorder(new TitledBorder("Category List"));
-
-                    //======== scrollPane5 ========
-                    {
-                        scrollPane5.setViewportView(tblCategoryList);
-                    }
-
-                    //======== panel24 ========
-                    {
-                        panel24.setBorder(new TitledBorder("Operations"));
-
-                        //---- btnEditCategoryList ----
-                        btnEditCategoryList.setText("Edit");
-
-                        //---- btnDeleteCategoryList ----
-                        btnDeleteCategoryList.setText("Delete");
-
-                        GroupLayout panel24Layout = new GroupLayout(panel24);
-                        panel24.setLayout(panel24Layout);
-                        panel24Layout.setHorizontalGroup(
-                            panel24Layout.createParallelGroup()
-                                .addGroup(panel24Layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addGroup(panel24Layout.createParallelGroup()
-                                        .addGroup(panel24Layout.createSequentialGroup()
-                                            .addComponent(btnDeleteCategoryList)
-                                            .addGap(0, 0, Short.MAX_VALUE))
-                                        .addComponent(btnEditCategoryList, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addContainerGap())
-                        );
-                        panel24Layout.setVerticalGroup(
-                            panel24Layout.createParallelGroup()
-                                .addGroup(panel24Layout.createSequentialGroup()
-                                    .addComponent(btnEditCategoryList, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnDeleteCategoryList, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(15, 15, 15))
-                        );
-                    }
-
-                    GroupLayout panel23Layout = new GroupLayout(panel23);
-                    panel23.setLayout(panel23Layout);
-                    panel23Layout.setHorizontalGroup(
-                        panel23Layout.createParallelGroup()
-                            .addGroup(panel23Layout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(scrollPane5, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(panel24, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(25, 25, 25))
-                    );
-                    panel23Layout.setVerticalGroup(
-                        panel23Layout.createParallelGroup()
-                            .addGroup(panel23Layout.createSequentialGroup()
-                                .addGroup(panel23Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                    .addComponent(scrollPane5, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(panel24, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 3, Short.MAX_VALUE))
-                    );
-                }
-
-                //======== panel25 ========
-                {
-                    panel25.setBorder(new TitledBorder("Add New Category"));
-
-                    //---- label38 ----
-                    label38.setText("Category Name");
-
-                    //---- label39 ----
-                    label39.setText("Explanation");
-
-                    //======== scrollPane6 ========
-                    {
-                        scrollPane6.setViewportView(txtAddCategoryExplanation);
-                    }
-
-                    //---- btnAddCategory ----
-                    btnAddCategory.setText("Add");
-
-                    GroupLayout panel25Layout = new GroupLayout(panel25);
-                    panel25.setLayout(panel25Layout);
-                    panel25Layout.setHorizontalGroup(
-                        panel25Layout.createParallelGroup()
-                            .addGroup(panel25Layout.createSequentialGroup()
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panel25Layout.createParallelGroup()
-                                    .addGroup(panel25Layout.createSequentialGroup()
-                                        .addComponent(label38, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtAddCategory, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(panel25Layout.createSequentialGroup()
-                                        .addComponent(label39, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(scrollPane6)))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAddCategory)
-                                .addGap(30, 30, 30))
-                    );
-                    panel25Layout.setVerticalGroup(
-                        panel25Layout.createParallelGroup()
-                            .addGroup(panel25Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(panel25Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(label38, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAddCategory, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGroup(panel25Layout.createParallelGroup()
-                                    .addGroup(panel25Layout.createSequentialGroup()
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(label39, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(GroupLayout.Alignment.TRAILING, panel25Layout.createSequentialGroup()
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(scrollPane6, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(23, 23, 23))))
-                            .addGroup(panel25Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(btnAddCategory, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                    );
-                }
-
-                //======== panel26 ========
-                {
-                    panel26.setBorder(new TitledBorder("Edit Category"));
-
-                    //---- label40 ----
-                    label40.setText("Category Name");
-
-                    //---- label41 ----
-                    label41.setText("Explanation");
-
-                    //======== scrollPane7 ========
-                    {
-                        scrollPane7.setViewportView(txtEditCategoryExplanation);
-                    }
-
-                    //---- btnEditCategory ----
-                    btnEditCategory.setText("Edit");
-
-                    GroupLayout panel26Layout = new GroupLayout(panel26);
-                    panel26.setLayout(panel26Layout);
-                    panel26Layout.setHorizontalGroup(
-                        panel26Layout.createParallelGroup()
-                            .addGroup(panel26Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(panel26Layout.createParallelGroup()
-                                    .addGroup(panel26Layout.createSequentialGroup()
-                                        .addComponent(label40, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtEditCategory, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(panel26Layout.createSequentialGroup()
-                                        .addComponent(label41, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(scrollPane7)))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEditCategory)
-                                .addContainerGap(12, Short.MAX_VALUE))
-                    );
-                    panel26Layout.setVerticalGroup(
-                        panel26Layout.createParallelGroup()
-                            .addGroup(panel26Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(panel26Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(label40, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEditCategory, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGroup(panel26Layout.createParallelGroup()
-                                    .addGroup(panel26Layout.createSequentialGroup()
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(label41, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(GroupLayout.Alignment.TRAILING, panel26Layout.createSequentialGroup()
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(scrollPane7, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(22, 22, 22))))
-                            .addGroup(panel26Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(btnEditCategory, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                    );
-                }
-
-                GroupLayout panel5Layout = new GroupLayout(panel5);
-                panel5.setLayout(panel5Layout);
-                panel5Layout.setHorizontalGroup(
-                    panel5Layout.createParallelGroup()
-                        .addGroup(panel5Layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addGroup(panel5Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                .addComponent(panel25, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
-                                .addGroup(panel5Layout.createSequentialGroup()
-                                    .addGap(0, 0, Short.MAX_VALUE)
-                                    .addGroup(panel5Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addComponent(panel23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(panel26, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-                            .addContainerGap(24, Short.MAX_VALUE))
-                );
-                panel5Layout.setVerticalGroup(
-                    panel5Layout.createParallelGroup()
-                        .addGroup(panel5Layout.createSequentialGroup()
-                            .addGap(22, 22, 22)
-                            .addComponent(panel23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(panel25, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(panel26, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(31, Short.MAX_VALUE))
-                );
-            }
-            tabbedPane1.addTab("Categories", panel5);
 
             //======== panel6 ========
             {
@@ -1536,6 +1422,167 @@ public class MainApp extends JFrame {
                 );
             }
             tabbedPane1.addTab("User Settings", panel6);
+
+            //======== panel5 ========
+            {
+
+                //======== panel23 ========
+                {
+                    panel23.setBorder(new TitledBorder("Category List"));
+
+                    //======== scrollPane5 ========
+                    {
+
+                        //---- tblCategory ----
+                        tblCategory.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                tblCategoryMouseClicked(e);
+                            }
+                        });
+                        scrollPane5.setViewportView(tblCategory);
+                    }
+
+                    //---- label3 ----
+                    label3.setText("Search");
+
+                    //---- txtSearchCategory ----
+                    txtSearchCategory.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            txtSearchCategoryKeyReleased(e);
+                        }
+                    });
+
+                    GroupLayout panel23Layout = new GroupLayout(panel23);
+                    panel23.setLayout(panel23Layout);
+                    panel23Layout.setHorizontalGroup(
+                        panel23Layout.createParallelGroup()
+                            .addGroup(panel23Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(scrollPane5, GroupLayout.PREFERRED_SIZE, 601, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(GroupLayout.Alignment.TRAILING, panel23Layout.createSequentialGroup()
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label3, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtSearchCategory, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE)
+                                .addGap(49, 49, 49))
+                    );
+                    panel23Layout.setVerticalGroup(
+                        panel23Layout.createParallelGroup()
+                            .addGroup(panel23Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addGroup(panel23Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label3, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSearchCategory, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(scrollPane5, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(33, Short.MAX_VALUE))
+                    );
+                }
+
+                //======== panel25 ========
+                {
+                    panel25.setBorder(new TitledBorder("Add and Update Category"));
+
+                    //---- label38 ----
+                    label38.setText("Category Name");
+
+                    //---- label39 ----
+                    label39.setText("Explanation");
+
+                    //======== scrollPane6 ========
+                    {
+                        scrollPane6.setViewportView(txtCategoryInfo);
+                    }
+
+                    GroupLayout panel25Layout = new GroupLayout(panel25);
+                    panel25.setLayout(panel25Layout);
+                    panel25Layout.setHorizontalGroup(
+                        panel25Layout.createParallelGroup()
+                            .addGroup(panel25Layout.createSequentialGroup()
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(panel25Layout.createParallelGroup()
+                                    .addGroup(panel25Layout.createSequentialGroup()
+                                        .addComponent(label38, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCategoryName, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panel25Layout.createSequentialGroup()
+                                        .addComponent(label39, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(scrollPane6)))
+                                .addGap(108, 108, 108))
+                    );
+                    panel25Layout.setVerticalGroup(
+                        panel25Layout.createParallelGroup()
+                            .addGroup(panel25Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(panel25Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(label38, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCategoryName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(panel25Layout.createParallelGroup()
+                                    .addGroup(panel25Layout.createSequentialGroup()
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label39, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(GroupLayout.Alignment.TRAILING, panel25Layout.createSequentialGroup()
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(scrollPane6, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+                                        .addGap(23, 23, 23))))
+                    );
+                }
+
+                //---- btnAddCategory ----
+                btnAddCategory.setText("Add");
+                btnAddCategory.addActionListener(e -> btnAddCategoryClick(e));
+
+                //---- btnUpdateCategory ----
+                btnUpdateCategory.setText("Update");
+                btnUpdateCategory.addActionListener(e -> btnUpdateCategoryClick(e));
+
+                //---- btnDeleteCategoryList ----
+                btnDeleteCategoryList.setText("Delete");
+                btnDeleteCategoryList.addActionListener(e -> btnDeleteCategoryClick(e));
+
+                GroupLayout panel5Layout = new GroupLayout(panel5);
+                panel5.setLayout(panel5Layout);
+                panel5Layout.setHorizontalGroup(
+                    panel5Layout.createParallelGroup()
+                        .addGroup(panel5Layout.createSequentialGroup()
+                            .addGap(138, 138, 138)
+                            .addComponent(btnAddCategory)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnUpdateCategory, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnDeleteCategoryList)
+                            .addGap(278, 278, 278))
+                        .addGroup(GroupLayout.Alignment.TRAILING, panel5Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(panel25, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addContainerGap())
+                        .addGroup(panel5Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(panel23, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addContainerGap())
+                );
+                panel5Layout.setVerticalGroup(
+                    panel5Layout.createParallelGroup()
+                        .addGroup(panel5Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(panel23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                            .addComponent(panel25, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(panel5Layout.createParallelGroup()
+                                .addComponent(btnAddCategory, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+                                .addGroup(panel5Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnUpdateCategory, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnDeleteCategoryList, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
+                            .addGap(9, 9, 9))
+                );
+            }
+            tabbedPane1.addTab("Categories", panel5);
         }
 
         //---- btnExit ----
@@ -1692,27 +1739,6 @@ public class MainApp extends JFrame {
     private JTextField txtEditProductStatement;
     private JButton btnEditProduct;
     private JLabel lblEditProduct;
-    private JPanel panel5;
-    private JPanel panel23;
-    private JScrollPane scrollPane5;
-    private JTable tblCategoryList;
-    private JPanel panel24;
-    private JButton btnEditCategoryList;
-    private JButton btnDeleteCategoryList;
-    private JPanel panel25;
-    private JLabel label38;
-    private JLabel label39;
-    private JTextField txtAddCategory;
-    private JScrollPane scrollPane6;
-    private JTextArea txtAddCategoryExplanation;
-    private JButton btnAddCategory;
-    private JPanel panel26;
-    private JLabel label40;
-    private JLabel label41;
-    private JTextField txtEditCategory;
-    private JScrollPane scrollPane7;
-    private JTextArea txtEditCategoryExplanation;
-    private JButton btnEditCategory;
     private JPanel panel6;
     private JPanel pnlUserAdd;
     private JLabel lblError;
@@ -1725,6 +1751,21 @@ public class MainApp extends JFrame {
     private JTextField txtEmail;
     private JTextField txtPassword;
     private JButton btnAddUser;
+    private JPanel panel5;
+    private JPanel panel23;
+    private JScrollPane scrollPane5;
+    private JTable tblCategory;
+    private JLabel label3;
+    private JTextField txtSearchCategory;
+    private JPanel panel25;
+    private JLabel label38;
+    private JLabel label39;
+    private JTextField txtCategoryName;
+    private JScrollPane scrollPane6;
+    private JTextArea txtCategoryInfo;
+    private JButton btnAddCategory;
+    private JButton btnUpdateCategory;
+    private JButton btnDeleteCategoryList;
     private JButton btnExit;
     private JLabel label45;
     // JFormDesigner - End of variables declaration  //GEN-END:variables

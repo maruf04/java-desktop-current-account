@@ -6,6 +6,8 @@ package view.user;
 
 import java.awt.event.*;
 import javax.swing.border.*;
+
+import model.ProductCategoryImpl;
 import model.UserImpl;
 import utils.Util;
 import view.MainApp;
@@ -21,6 +23,7 @@ import javax.swing.GroupLayout;
  * @author unknown
  */
 public class UserPanel extends JFrame {
+    MainApp mainapp=new MainApp();
     UserImpl userImpl=new UserImpl();
    // public static String to="";
     //public static String sub="";
@@ -32,16 +35,21 @@ public class UserPanel extends JFrame {
 
     public static void main(String[] args) {
         new UserPanel().setVisible(true);
+      //  ProductCategoryImpl productCategory=new ProductCategoryImpl();
+
     }
 
     public UserPanel() {
         initComponents();
         txtPassword.setText("JavaProject123");
         txtEmail.setText("javaproject96@gmail.com");
+
     }
 
     private void btnLoginClicked(ActionEvent e) {
         userLogin();
+
+
     }
 
     private void txtEmailKeyReleased(KeyEvent e) {

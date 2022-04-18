@@ -20,7 +20,7 @@ public interface IProductCategory {
     List<ProductCategory> categorytList();
 
 
-    List<ProductCategory> categorySearch(String data);
+    DefaultTableModel categorySearch(String data);
 
     DefaultTableModel categoryTableModel();
 

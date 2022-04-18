@@ -1,7 +1,5 @@
 package model;
 
-import jdk.jfr.Category;
-import props.Customer;
 import props.ProductCategory;
 import utils.DB;
 
@@ -23,7 +21,7 @@ public class ProductCategoryImpl implements IProductCategory{
         int status=0;
         DB db=new DB();
         try {
-            String sql= "insert into customer values(null,?,?)";
+            String sql= "insert into category values(null,?,?)";
             PreparedStatement pre=db.connect().prepareStatement(sql);
             pre.setString(1,category.getCategoryName());
             pre.setString(2,category.getCategoryInfo());
@@ -58,7 +56,7 @@ public class ProductCategoryImpl implements IProductCategory{
 
 
         } catch (Exception ex) {
-            System.err.println("customerDelete Error: "+ex); //err kýrmýzý gösteriyor.
+            System.err.println("categoryDelete Error: "+ex); //err kýrmýzý gösteriyor.
             ex.printStackTrace();
         } finally {
             db.close(); //açýk olan
@@ -88,7 +86,7 @@ public class ProductCategoryImpl implements IProductCategory{
 
 
         } catch (Exception ex) {
-            System.err.println("customerUpdate Error: "+ex); //err kýrmýzý gösteriyor.
+            System.err.println("categoryUpdate Error: "+ex); //err kýrmýzý gösteriyor.
             ex.printStackTrace();
         } finally {
             db.close(); //açýk olan
@@ -104,19 +102,19 @@ public class ProductCategoryImpl implements IProductCategory{
             PreparedStatement pre=db.connect().prepareStatement(sql);
             ResultSet rs= pre.executeQuery();
 
-            categorytList().clear();
+           categoryList.clear();
             while(rs.next()){
                 int cid=rs.getInt("cid");
                 String categoryName=rs.getString("CategoryName");
                 String categoryInfo= rs.getString("CategoryInfo");
 
                 ProductCategory category =new ProductCategory(cid,categoryName,categoryInfo);
-                categorytList().add(category);
+                categoryList.add(category);
 
             }
 
         }catch (Exception ex){
-            System.out.println("customerList Error"+ex);
+            System.out.println("categoryList Error"+ex);
             ex.printStackTrace();
 
 
@@ -125,11 +123,11 @@ public class ProductCategoryImpl implements IProductCategory{
         }
 
 
-        return categorytList();
+        return categoryList;
     }
 
     @Override
-    public List<ProductCategory> categorySearch(String data) {
+    public DefaultTableModel categorySearch(String data) {
         ls=lsSearch;
         DefaultTableModel model=new DefaultTableModel();
         model.addColumn("cid");  //kolon ekledik
@@ -156,7 +154,7 @@ public class ProductCategoryImpl implements IProductCategory{
             model.addRow(row);
         }
 
-        return (List<ProductCategory>) model;
+        return model;
 
     }
 
