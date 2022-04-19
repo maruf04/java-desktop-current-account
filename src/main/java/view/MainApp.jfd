@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "7.0.5.4.420" Java: "11.0.14.1" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.5.1.409" Java: "11.0.14.1" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -354,7 +354,7 @@ new FormModel {
 						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 							name: "scrollPane3"
 							add( new FormComponent( "javax.swing.JTable" ) {
-								name: "tblProdutcs"
+								name: "tblProducts"
 							} )
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
@@ -366,10 +366,12 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnProductListEdit"
 								"text": "Edit"
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnProductListEditClick", true ) )
 							} )
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnProductListDelete"
 								"text": "Delete"
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnProductListDeleteClick", true ) )
 							} )
 						} )
 					} )
@@ -424,6 +426,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnAddProduct"
 							"text": "Add"
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAddProductClick", true ) )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "lblAddProduct"
@@ -481,6 +484,8 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnEditProduct"
 							"text": "Edit"
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnEditProductClick", true ) )
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnEditProductClick", true ) )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "lblEditProduct"
@@ -619,6 +624,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnExit"
 				"text": "Exit"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnExitClick", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label45"

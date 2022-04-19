@@ -5,12 +5,16 @@
 package view;
 
 import model.ProductCategoryImpl;
+import model.ProductImpl;
 import model.UserImpl;
+import props.ComboItem;
+import props.Product;
 import props.ProductCategory;
 import props.User;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import java.util.Locale;
 import javax.swing.*;
 import javax.swing.GroupLayout;
@@ -21,12 +25,13 @@ import javax.swing.table.TableModel;
  * @author mrf
  */
 public class MainApp extends JFrame {
+    ProductImpl productImpl=new ProductImpl();
     ProductCategoryImpl productCategoryImpl=new ProductCategoryImpl();
     int row=-1;
     int value;
     public static void main(String[] args) {
         MainApp mainApp=new MainApp();
-        //mainApp.setVisible(true);
+        mainApp.setVisible(true);
     }
     UserImpl userImpl=new UserImpl();
     ProductCategory productCategory=new ProductCategory();
@@ -38,7 +43,118 @@ public class MainApp extends JFrame {
     public MainApp() {
         initComponents();
         tblCategory.setModel(productCategoryImpl.categoryTableModel());
+        tblProducts.setModel(productImpl.productTable(null));
+        listedProductCategory();
     }
+
+    private void listedProductCategory() {
+        List<ComboItem> lsCategory=productImpl.listCategory();
+        for (ComboItem item:lsCategory) {
+            cmbAddProductCategory.addItem(new ComboItem(item.getValue(), item.getKey()));
+            cmbEditProductCategory.addItem(new ComboItem(item.getValue(), item.getKey()));
+        }
+    }
+
+    private Product productAddValidate(){
+        try {
+            if (txtAddProductName.getText().equals("") || txtAddProductName.getText().equals(null)) {
+                txtAddProductName.requestFocus();
+                lblAddProduct.setText("Product Name Empty");
+            } else if ( txtAddProductBuying.getText().equals("") || txtAddProductBuying.getText().equals(null)) {
+                txtAddProductBuying.requestFocus();
+                lblAddProduct.setText("Product Buy Price Empty");
+            } else if (cmbAddProductCategory.getSelectedItem().equals("")) {
+                cmbAddProductCategory.requestFocus();
+                lblAddProduct.setText("Product Category Empty");
+            } else if (txtAddProductSelling.getText().equals("") || txtAddProductSelling.getText().equals(null)) {
+                txtAddProductSelling.requestFocus();
+                lblAddProduct.setText("Product Sell Price Empty");
+            } else if (txtAddProductStatement.getText().equals("")) {
+                txtAddProductStatement.requestFocus();
+                lblAddProduct.setText("Product İnfo Empty");
+            } else if (txtAddProductStock.getText().equals("")) {
+                txtAddProductStock.requestFocus();
+                lblAddProduct.setText("Product İnfo Empty");
+            }
+            else {
+
+                //int pid, String name, int categoryId, int buyPrice, int sellPrice, String info, int stock
+                String name=txtAddProductName.getText().toLowerCase(Locale.ROOT).trim();
+                //categoryId
+                int categoryId = Integer.parseInt(((ComboItem)cmbAddProductCategory.getSelectedItem()).getValue());
+
+                int buyPrice= Integer.parseInt(txtAddProductBuying.getText().toLowerCase(Locale.ROOT).trim());
+                int sellPrice= Integer.parseInt(txtAddProductSelling.getText().toLowerCase(Locale.ROOT).trim());
+                String info=txtAddProductStatement.getText().toLowerCase(Locale.ROOT).trim();
+                int stock= Integer.parseInt(txtAddProductStock.getText().toLowerCase(Locale.ROOT).trim());
+
+                Product product=new Product(0,name,categoryId,buyPrice,sellPrice,info,stock);
+                return product;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    private Product productUpdateValidate(){
+        try {
+            if (txtEditProductName.getText().equals("") || txtEditProductName.getText().equals(null)) {
+                txtEditProductName.requestFocus();
+                lblEditProduct.setText("Product Name Empty");
+            } else if ( txtEditProductBuying.getText().equals("") || txtEditProductBuying.getText().equals(null)) {
+                txtEditProductBuying.requestFocus();
+                lblEditProduct.setText("Product Buy Price Empty");
+            } else if (cmbEditProductCategory.getSelectedItem().equals("")) {
+                cmbEditProductCategory.requestFocus();
+                lblEditProduct.setText("Product Category Empty");
+            } else if (txtEditProductSelling.getText().equals("") || txtEditProductSelling.getText().equals(null)) {
+                txtEditProductSelling.requestFocus();
+                lblEditProduct.setText("Product Sell Price Empty");
+            } else if (txtEditProductStatement.getText().equals("")) {
+                txtEditProductStatement.requestFocus();
+                lblEditProduct.setText("Product İnfo Empty");
+            } else if (txtEditProductStock.getText().equals("")) {
+                txtEditProductStock.requestFocus();
+                lblEditProduct.setText("Product İnfo Empty");
+            }
+            else {
+
+                //int pid, String name, int categoryId, int buyPrice, int sellPrice, String info, int stock
+                int pid=Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0)));
+                String name=txtEditProductName.getText().toLowerCase(Locale.ROOT).trim();
+                //categoryId
+                int categoryId = Integer.parseInt(((ComboItem)cmbEditProductCategory.getSelectedItem()).getValue());
+
+                int buyPrice= Integer.parseInt(txtEditProductBuying.getText().toLowerCase(Locale.ROOT).trim());
+                int sellPrice= Integer.parseInt(txtEditProductSelling.getText().toLowerCase(Locale.ROOT).trim());
+                String info=txtEditProductStatement.getText().toLowerCase(Locale.ROOT).trim();
+                int stock= Integer.parseInt(txtEditProductStock.getText().toLowerCase(Locale.ROOT).trim());
+
+                Product product=new Product(pid,name,categoryId,buyPrice,sellPrice,info,stock);
+                return product;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private void fncClearProduct() {
+        txtAddProductName.setText("");
+        txtAddProductBuying.setText("");
+        txtAddProductSelling.setText("");
+        txtAddProductStatement.setText("");
+        txtAddProductStock.setText("");
+        txtEditProductName.setText("");
+        txtEditProductBuying.setText("");
+        txtEditProductSelling.setText("");
+        txtEditProductStatement.setText("");
+        txtEditProductStock.setText("");
+    }
+
+
     public void rowValueCategory() {
         int column = 0;
         row = tblCategory.getSelectedRow();
@@ -47,7 +163,7 @@ public class MainApp extends JFrame {
         String categoryName = String.valueOf(tblCategory.getValueAt(row, 1));
         String categoryInfo = String.valueOf(tblCategory.getValueAt(row, 2));
 
-        System.out.println("val" + value);
+        //System.out.println("val" + value);
         txtCategoryName.setText(categoryName);
         txtCategoryInfo.setText(categoryInfo);
 
@@ -184,8 +300,83 @@ public class MainApp extends JFrame {
         String txtSearch=txtSearchCategory.getText().toLowerCase(Locale.ROOT).trim();
         tblCategory.setModel( productCategoryImpl.categorySearch(txtSearch));
     }
+
+    private void btnProductListEditClick(ActionEvent e) {
+        if (tblProducts.getSelectedRow() != -1) {
+            txtEditProductName.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 1)));
+
+            //bunda hata cıkıyordu duzenlenecek
+            String  categoryId0 =String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 2));
+            //System.out.println("ct "+categoryId0);
+            //cmbEditProductCategory.setSelectedIndex(Integer.parseInt(categoryId0)-1);
+
+            txtEditProductBuying.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 3)));
+            txtEditProductSelling.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 4)));
+            txtEditProductStatement.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 5)));
+            txtEditProductStock.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 6)));
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Please make a choice!");
+    }
+
+    private void btnProductListDeleteClick(ActionEvent e) {
+        // TODO add your code here
+        if (tblProducts.getSelectedRow() != -1) {
+            int input = JOptionPane.showConfirmDialog(this, "Request delete are you sure?","Deletion process",JOptionPane.YES_NO_OPTION);
+            if(input==0){
+                productImpl.productDelete(Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0))));
+                ProductImpl pr=new ProductImpl();
+                tblProducts.setModel(pr.productTable(null));
+            }
+           // System.out.println("input :"+input);
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Please make a choice!");
+        fncClearProduct();
+    }
+
+    private void btnAddProductClick(ActionEvent e) {
+        // TODO add your code here
+        Product p=productAddValidate();
+        if(p !=null){
+            int status = productImpl.productInsert(p);
+            if(status > 0){
+                ProductImpl productImpl=new ProductImpl();
+                tblProducts.setModel(productImpl.productTable(null));
+                lblAddProduct.setText("Product Insert succes !");
+            }
+            else {
+                lblAddProduct.setText("Product Insert Error !");
+            }
+            fncClearProduct();
+            pack();
+        }
+    }
+
+    private void btnEditProductClick(ActionEvent e) {
+        Product p=productUpdateValidate();
+        if(p !=null){
+            int status = productImpl.productUpdate(p);
+            System.out.println(status);
+            if(status > 0){
+                ProductImpl productImpl2=new ProductImpl();
+                tblProducts.setModel(productImpl2.productTable(null));
+                lblEditProduct.setText("Product Update succes !");
+            }
+            else {
+                lblEditProduct.setText("Product Update Error !");
+            }
+            fncClearProduct();
+            pack();
+        }
+    }
+
+    private void btnExitClick(ActionEvent e) {
+        System.exit(0);
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+        // Generated using JFormDesigner Evaluation license - mrf
         tabbedPane1 = new JTabbedPane();
         panel1 = new JPanel();
         panel19 = new JPanel();
@@ -269,7 +460,7 @@ public class MainApp extends JFrame {
         panel4 = new JPanel();
         panel11 = new JPanel();
         scrollPane3 = new JScrollPane();
-        tblProdutcs = new JTable();
+        tblProducts = new JTable();
         panel16 = new JPanel();
         btnProductListEdit = new JButton();
         btnProductListDelete = new JButton();
@@ -342,6 +533,11 @@ public class MainApp extends JFrame {
             //======== panel1 ========
             {
                 panel1.setBackground(new Color(102, 255, 255));
+                panel1.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder(
+                0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder
+                . BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .awt .Font .BOLD ,12 ), java. awt. Color.
+                red) ,panel1. getBorder( )) ); panel1. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .
+                beans .PropertyChangeEvent e) {if ("borde\u0072" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
 
                 //======== panel19 ========
                 {
@@ -1006,7 +1202,7 @@ public class MainApp extends JFrame {
 
                     //======== scrollPane3 ========
                     {
-                        scrollPane3.setViewportView(tblProdutcs);
+                        scrollPane3.setViewportView(tblProducts);
                     }
 
                     //======== panel16 ========
@@ -1015,9 +1211,11 @@ public class MainApp extends JFrame {
 
                         //---- btnProductListEdit ----
                         btnProductListEdit.setText("Edit");
+                        btnProductListEdit.addActionListener(e -> btnProductListEditClick(e));
 
                         //---- btnProductListDelete ----
                         btnProductListDelete.setText("Delete");
+                        btnProductListDelete.addActionListener(e -> btnProductListDeleteClick(e));
 
                         GroupLayout panel16Layout = new GroupLayout(panel16);
                         panel16.setLayout(panel16Layout);
@@ -1088,6 +1286,7 @@ public class MainApp extends JFrame {
 
                     //---- btnAddProduct ----
                     btnAddProduct.setText("Add");
+                    btnAddProduct.addActionListener(e -> btnAddProductClick(e));
 
                     //---- lblAddProduct ----
                     lblAddProduct.setText("text");
@@ -1196,6 +1395,10 @@ public class MainApp extends JFrame {
 
                     //---- btnEditProduct ----
                     btnEditProduct.setText("Edit");
+                    btnEditProduct.addActionListener(e -> {
+			btnEditProductClick(e);
+			btnEditProductClick(e);
+		});
 
                     //---- lblEditProduct ----
                     lblEditProduct.setText("text");
@@ -1587,6 +1790,7 @@ public class MainApp extends JFrame {
 
         //---- btnExit ----
         btnExit.setText("Exit");
+        btnExit.addActionListener(e -> btnExitClick(e));
 
         //---- label45 ----
         label45.setText("Admin");
@@ -1622,6 +1826,7 @@ public class MainApp extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    // Generated using JFormDesigner Evaluation license - mrf
     private JTabbedPane tabbedPane1;
     private JPanel panel1;
     private JPanel panel19;
@@ -1705,7 +1910,7 @@ public class MainApp extends JFrame {
     private JPanel panel4;
     private JPanel panel11;
     private JScrollPane scrollPane3;
-    private JTable tblProdutcs;
+    private JTable tblProducts;
     private JPanel panel16;
     private JButton btnProductListEdit;
     private JButton btnProductListDelete;
