@@ -1,5 +1,6 @@
 package model;
 
+import props.ComboItem;
 import props.Product;
 import utils.DB;
 
@@ -25,14 +26,15 @@ public class ProductImpl implements IProduct{
         ls=lsSearch;
         int status=0;
         try{
+            //name cid buy info stock sellprice
             String sql="INSERT INTO Product values(null,?,?,?,?,?,?)";
             PreparedStatement pre = db.connect().prepareStatement(sql);
             pre.setString(1,product.getName());
             pre.setInt(2,product.getCategoryId());
             pre.setInt(3,product.getBuyPrice());
-            pre.setInt(4,product.getSellPrice());
-            pre.setString(5,product.getInfo());
-            pre.setInt(6,product.getStock());
+            pre.setString(4,product.getInfo());
+            pre.setInt(5,product.getStock());
+            pre.setInt(6,product.getSellPrice());
             status = pre.executeUpdate();
         }catch (Exception e){
             System.out.println("productInsert Error : "+e);
@@ -48,7 +50,7 @@ public class ProductImpl implements IProduct{
         ls=lsSearch;
         int status = 0;
         try{
-            String sql=" UPDATE product SET name= ?,categoryId = ?,buyPrice = ?, bellPrice =?, info =?, stock =?  where pid=?";
+            String sql=" UPDATE product SET name= ?,cid = ?,buyPrice = ?, sellPrice =?, info =?, stock =?  where pid=?";
             PreparedStatement pre = db.connect().prepareStatement(sql);
             pre.setString(1,product.getName());
             pre.setInt(2,product.getCategoryId());
@@ -96,7 +98,7 @@ public class ProductImpl implements IProduct{
             {
                 int pid=rs.getInt("pid");
                 String pName = rs.getString("name");
-                int pCategoryId = rs.getInt("categoryId");
+                int pCategoryId = rs.getInt("cid");
                 int pBuyPrice = rs.getInt("buyPrice");
                 int pSellPrice = rs.getInt("sellPrice");
                 String pInfo = rs.getString("info");
@@ -148,5 +150,30 @@ public class ProductImpl implements IProduct{
         }
         return md;
     }
+    public List listCategory(){
+        List<ComboItem> lsCategory = new ArrayList<>();
+        try
+        {
+            String sql = "select * from category";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            while(rs.next())
+            {
+                String cid= String.valueOf(rs.getInt("cid"));
+                String categoryName = rs.getString("categoryName");
+                ComboItem comboItem=new ComboItem(cid,categoryName);
+                lsCategory.add(comboItem);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.err.println("listCategory Error: "+ex.toString());
+            ex.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+        return lsCategory;
     }
+}
 

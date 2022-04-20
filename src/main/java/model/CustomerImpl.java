@@ -1,6 +1,7 @@
 package model;
 
 
+import props.ComboItem;
 import props.Customer;
 import utils.DB;
 
@@ -148,5 +149,32 @@ public class CustomerImpl implements ICustomer {
             md.addRow(row);
         }
         return md;
+    }
+
+    @Override
+    public List<ComboItem> listCustomer() {
+        List<ComboItem> lsCustomer = new ArrayList<>();
+        try
+        {
+            String sql = "select * from customer";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            while(rs.next())
+            {
+                String customerId= String.valueOf(rs.getInt("customerId"));
+                String customerName = rs.getString("name");
+                ComboItem comboItem=new ComboItem(customerId,customerName);
+                lsCustomer.add(comboItem);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.err.println("listCategory Error: "+ex.toString());
+            ex.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+        return lsCustomer;
     }
 }

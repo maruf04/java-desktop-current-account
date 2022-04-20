@@ -4,13 +4,16 @@
 
 package view;
 
+import com.toedter.calendar.*;
+import model.CustomerImpl;
 import model.ProductCategoryImpl;
+import model.ProductImpl;
 import model.UserImpl;
-import props.ProductCategory;
-import props.User;
+import props.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import java.util.Locale;
 import javax.swing.*;
 import javax.swing.GroupLayout;
@@ -21,15 +24,17 @@ import javax.swing.table.TableModel;
  * @author mrf
  */
 public class MainApp extends JFrame {
+    ProductImpl productImpl=new ProductImpl();
     ProductCategoryImpl productCategoryImpl=new ProductCategoryImpl();
     int row=-1;
     int value;
     public static void main(String[] args) {
         MainApp mainApp=new MainApp();
-        //mainApp.setVisible(true);
+        mainApp.setVisible(true);
     }
     UserImpl userImpl=new UserImpl();
     ProductCategory productCategory=new ProductCategory();
+    CustomerImpl customer=new CustomerImpl();
 
     public void startCategoryTable(){
         tblCategory.setModel(productCategoryImpl.categoryTableModel());
@@ -38,7 +43,126 @@ public class MainApp extends JFrame {
     public MainApp() {
         initComponents();
         tblCategory.setModel(productCategoryImpl.categoryTableModel());
+        tblProducts.setModel(productImpl.productTable(null));
+        listedProductCategory();
+        tblSale.setModel(productImpl.productTable(null));
     }
+
+    private void listedProductCategory() {
+        List<ComboItem> lsCategory=productImpl.listCategory();
+        List<ComboItem> lsCustomer=customer.listCustomer();
+
+        for (ComboItem item:lsCategory) {
+            cmbAddProductCategory.addItem(new ComboItem(item.getValue(), item.getKey()));
+            cmbEditProductCategory.addItem(new ComboItem(item.getValue(), item.getKey()));
+            cmbCategoryList.addItem(new ComboItem(item.getValue(),item.getKey()));
+
+        }
+        for(ComboItem i:lsCustomer){
+            cmbSaleCustomer.addItem(new ComboItem(i.getValue(),i.getKey()));
+        }
+    }
+
+    private Product productAddValidate(){
+        try {
+            if (txtAddProductName.getText().equals("") || txtAddProductName.getText().equals(null)) {
+                txtAddProductName.requestFocus();
+                lblAddProduct.setText("Product Name Empty");
+            } else if ( txtAddProductBuying.getText().equals("") || txtAddProductBuying.getText().equals(null)) {
+                txtAddProductBuying.requestFocus();
+                lblAddProduct.setText("Product Buy Price Empty");
+            } else if (cmbAddProductCategory.getSelectedItem().equals("")) {
+                cmbAddProductCategory.requestFocus();
+                lblAddProduct.setText("Product Category Empty");
+            } else if (txtAddProductSelling.getText().equals("") || txtAddProductSelling.getText().equals(null)) {
+                txtAddProductSelling.requestFocus();
+                lblAddProduct.setText("Product Sell Price Empty");
+            } else if (txtAddProductStatement.getText().equals("")) {
+                txtAddProductStatement.requestFocus();
+                lblAddProduct.setText("Product İnfo Empty");
+            } else if (txtAddProductStock.getText().equals("")) {
+                txtAddProductStock.requestFocus();
+                lblAddProduct.setText("Product İnfo Empty");
+            }
+            else {
+
+                //int pid, String name, int categoryId, int buyPrice, int sellPrice, String info, int stock
+                String name=txtAddProductName.getText().toLowerCase(Locale.ROOT).trim();
+                //categoryId
+                int categoryId = Integer.parseInt(((ComboItem)cmbAddProductCategory.getSelectedItem()).getValue());
+
+                int buyPrice= Integer.parseInt(txtAddProductBuying.getText().toLowerCase(Locale.ROOT).trim());
+                int sellPrice= Integer.parseInt(txtAddProductSelling.getText().toLowerCase(Locale.ROOT).trim());
+                String info=txtAddProductStatement.getText().toLowerCase(Locale.ROOT).trim();
+                int stock= Integer.parseInt(txtAddProductStock.getText().toLowerCase(Locale.ROOT).trim());
+
+                Product product=new Product(0,name,categoryId,buyPrice,sellPrice,info,stock);
+                return product;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    private Product productUpdateValidate(){
+        try {
+            if (txtEditProductName.getText().equals("") || txtEditProductName.getText().equals(null)) {
+                txtEditProductName.requestFocus();
+                lblEditProduct.setText("Product Name Empty");
+            } else if ( txtEditProductBuying.getText().equals("") || txtEditProductBuying.getText().equals(null)) {
+                txtEditProductBuying.requestFocus();
+                lblEditProduct.setText("Product Buy Price Empty");
+            } else if (cmbEditProductCategory.getSelectedItem().equals("")) {
+                cmbEditProductCategory.requestFocus();
+                lblEditProduct.setText("Product Category Empty");
+            } else if (txtEditProductSelling.getText().equals("") || txtEditProductSelling.getText().equals(null)) {
+                txtEditProductSelling.requestFocus();
+                lblEditProduct.setText("Product Sell Price Empty");
+            } else if (txtEditProductStatement.getText().equals("")) {
+                txtEditProductStatement.requestFocus();
+                lblEditProduct.setText("Product İnfo Empty");
+            } else if (txtEditProductStock.getText().equals("")) {
+                txtEditProductStock.requestFocus();
+                lblEditProduct.setText("Product İnfo Empty");
+            }
+            else {
+
+                //int pid, String name, int categoryId, int buyPrice, int sellPrice, String info, int stock
+                int pid=Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0)));
+                String name=txtEditProductName.getText().toLowerCase(Locale.ROOT).trim();
+                //categoryId
+                int categoryId = Integer.parseInt(((ComboItem)cmbEditProductCategory.getSelectedItem()).getValue());
+
+                int buyPrice= Integer.parseInt(txtEditProductBuying.getText().toLowerCase(Locale.ROOT).trim());
+                int sellPrice= Integer.parseInt(txtEditProductSelling.getText().toLowerCase(Locale.ROOT).trim());
+                String info=txtEditProductStatement.getText().toLowerCase(Locale.ROOT).trim();
+                int stock= Integer.parseInt(txtEditProductStock.getText().toLowerCase(Locale.ROOT).trim());
+
+                Product product=new Product(pid,name,categoryId,buyPrice,sellPrice,info,stock);
+                return product;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private void fncClearProduct() {
+        txtAddProductName.setText("");
+        txtAddProductBuying.setText("");
+        txtAddProductSelling.setText("");
+        txtAddProductStatement.setText("");
+        txtAddProductStock.setText("");
+        txtEditProductName.setText("");
+        txtEditProductBuying.setText("");
+        txtEditProductSelling.setText("");
+        txtEditProductStatement.setText("");
+        txtEditProductStock.setText("");
+    }
+
+
     public void rowValueCategory() {
         int column = 0;
         row = tblCategory.getSelectedRow();
@@ -47,7 +171,7 @@ public class MainApp extends JFrame {
         String categoryName = String.valueOf(tblCategory.getValueAt(row, 1));
         String categoryInfo = String.valueOf(tblCategory.getValueAt(row, 2));
 
-        System.out.println("val" + value);
+        //System.out.println("val" + value);
         txtCategoryName.setText(categoryName);
         txtCategoryInfo.setText(categoryInfo);
 
@@ -104,6 +228,7 @@ public class MainApp extends JFrame {
 
 
     }
+    
 
     public void fncTextClear(){
         txtName.setText("");
@@ -184,6 +309,94 @@ public class MainApp extends JFrame {
         String txtSearch=txtSearchCategory.getText().toLowerCase(Locale.ROOT).trim();
         tblCategory.setModel( productCategoryImpl.categorySearch(txtSearch));
     }
+
+    private void btnProductListEditClick(ActionEvent e) {
+        if (tblProducts.getSelectedRow() != -1) {
+            txtEditProductName.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 1)));
+
+            //bunda hata cıkıyordu duzenlenecek
+            String  categoryId0 =String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 2));
+            //System.out.println("ct "+categoryId0);
+            //cmbEditProductCategory.setSelectedIndex(Integer.parseInt(categoryId0)-1);
+
+            txtEditProductBuying.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 3)));
+            txtEditProductSelling.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 4)));
+            txtEditProductStatement.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 5)));
+            txtEditProductStock.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 6)));
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Please make a choice!");
+    }
+
+    private void btnProductListDeleteClick(ActionEvent e) {
+        // TODO add your code here
+        if (tblProducts.getSelectedRow() != -1) {
+            int input = JOptionPane.showConfirmDialog(this, "Request delete are you sure?","Deletion process",JOptionPane.YES_NO_OPTION);
+            if(input==0){
+                productImpl.productDelete(Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0))));
+                ProductImpl pr=new ProductImpl();
+                tblProducts.setModel(pr.productTable(null));
+            }
+           // System.out.println("input :"+input);
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Please make a choice!");
+        fncClearProduct();
+    }
+
+    private void btnAddProductClick(ActionEvent e) {
+        // TODO add your code here
+        Product p=productAddValidate();
+        if(p !=null){
+            int status = productImpl.productInsert(p);
+            if(status > 0){
+                ProductImpl productImpl=new ProductImpl();
+                tblProducts.setModel(productImpl.productTable(null));
+                lblAddProduct.setText("Product Insert succes !");
+            }
+            else {
+                lblAddProduct.setText("Product Insert Error !");
+            }
+            fncClearProduct();
+            pack();
+        }
+    }
+
+    private void btnEditProductClick(ActionEvent e) {
+        Product p=productUpdateValidate();
+        if(p !=null){
+            int status = productImpl.productUpdate(p);
+            System.out.println(status);
+            if(status > 0){
+                ProductImpl productImpl2=new ProductImpl();
+                tblProducts.setModel(productImpl2.productTable(null));
+                lblEditProduct.setText("Product Update succes !");
+            }
+            else {
+                lblEditProduct.setText("Product Update Error !");
+            }
+            fncClearProduct();
+            pack();
+        }
+    }
+
+    private void btnExitClick(ActionEvent e) {
+        System.exit(0);
+    }
+
+    private void btnBasketClick(ActionEvent e) {
+
+    }
+
+    private void tblSaleMouseClicked(MouseEvent e) {
+        if (tblSale.getSelectedRow() != -1) {
+            txtSaleSelect.setText(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 1)));
+            String  categoryId0 =String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 2));
+
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Please make a choice!");
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         tabbedPane1 = new JTabbedPane();
@@ -229,19 +442,9 @@ public class MainApp extends JFrame {
         label2 = new JLabel();
         txtSearchReport = new JTextField();
         label62 = new JLabel();
-        label63 = new JLabel();
-        label64 = new JLabel();
-        label65 = new JLabel();
-        spnDay1 = new JSpinner();
-        spnMonth1 = new JSpinner();
-        spnYear1 = new JSpinner();
         label66 = new JLabel();
-        label67 = new JLabel();
-        label68 = new JLabel();
-        label69 = new JLabel();
-        snpDay2 = new JSpinner();
-        spnMonth2 = new JSpinner();
-        spnYear2 = new JSpinner();
+        dateChooser1 = new JDateChooser();
+        dateChooser2 = new JDateChooser();
         panel12 = new JPanel();
         scrollPane2 = new JScrollPane();
         tblReport = new JTable();
@@ -252,7 +455,7 @@ public class MainApp extends JFrame {
         lblReportsInfo = new JLabel();
         panel3 = new JPanel();
         panel15 = new JPanel();
-        cmbList = new JComboBox();
+        cmbCategoryList = new JComboBox();
         btnSaleList = new JButton();
         lblSaleList = new JLabel();
         scrollPane9 = new JScrollPane();
@@ -265,11 +468,11 @@ public class MainApp extends JFrame {
         txtSalePiece = new JTextField();
         label50 = new JLabel();
         cmbSaleCustomer = new JComboBox();
-        btnSaleProcess = new JButton();
+        btnBasket = new JButton();
         panel4 = new JPanel();
         panel11 = new JPanel();
         scrollPane3 = new JScrollPane();
-        tblProdutcs = new JTable();
+        tblProducts = new JTable();
         panel16 = new JPanel();
         btnProductListEdit = new JButton();
         btnProductListDelete = new JButton();
@@ -591,7 +794,7 @@ public class MainApp extends JFrame {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(pnlEditCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addComponent(panel19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(35, Short.MAX_VALUE))
+                            .addContainerGap(31, Short.MAX_VALUE))
                 );
                 panel1Layout.setVerticalGroup(
                     panel1Layout.createParallelGroup()
@@ -632,26 +835,8 @@ public class MainApp extends JFrame {
                     //---- label62 ----
                     label62.setText("Date Range");
 
-                    //---- label63 ----
-                    label63.setText("day");
-
-                    //---- label64 ----
-                    label64.setText("year");
-
-                    //---- label65 ----
-                    label65.setText("month");
-
                     //---- label66 ----
                     label66.setText("and");
-
-                    //---- label67 ----
-                    label67.setText("day");
-
-                    //---- label68 ----
-                    label68.setText("month");
-
-                    //---- label69 ----
-                    label69.setText("year");
 
                     GroupLayout panel10Layout = new GroupLayout(panel10);
                     panel10.setLayout(panel10Layout);
@@ -659,7 +844,7 @@ public class MainApp extends JFrame {
                         panel10Layout.createParallelGroup()
                             .addGroup(panel10Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addGroup(panel10Layout.createParallelGroup()
                                     .addGroup(panel10Layout.createSequentialGroup()
                                         .addComponent(label1, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -675,35 +860,11 @@ public class MainApp extends JFrame {
                                     .addGroup(panel10Layout.createSequentialGroup()
                                         .addComponent(label62, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(label63, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                                            .addComponent(spnDay1, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(panel10Layout.createParallelGroup()
-                                            .addGroup(panel10Layout.createSequentialGroup()
-                                                .addComponent(label65, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(label64, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(panel10Layout.createSequentialGroup()
-                                                .addComponent(spnMonth1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(spnYear1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(69, 69, 69)
-                                                .addComponent(label66)))
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(panel10Layout.createParallelGroup()
-                                            .addGroup(panel10Layout.createSequentialGroup()
-                                                .addComponent(label67, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(label68, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(label69, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(panel10Layout.createSequentialGroup()
-                                                .addComponent(snpDay2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(spnMonth2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(spnYear2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(dateChooser1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addGap(49, 49, 49)
+                                        .addComponent(label66)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(dateChooser2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     );
                     panel10Layout.setVerticalGroup(
@@ -718,25 +879,13 @@ public class MainApp extends JFrame {
                                 .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label2)
                                     .addComponent(txtSearchReport, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(label63)
-                                    .addComponent(label65)
-                                    .addComponent(label64)
-                                    .addComponent(label67)
-                                    .addComponent(label68)
-                                    .addComponent(label69))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                                 .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label62, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnDay1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnMonth1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnYear1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(label66)
-                                    .addComponent(snpDay2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnMonth2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnYear2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(17, 17, 17))
+                                    .addComponent(dateChooser1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dateChooser2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(27, 27, 27))
                     );
                 }
 
@@ -875,6 +1024,14 @@ public class MainApp extends JFrame {
 
                     //======== scrollPane9 ========
                     {
+
+                        //---- tblSale ----
+                        tblSale.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                tblSaleMouseClicked(e);
+                            }
+                        });
                         scrollPane9.setViewportView(tblSale);
                     }
 
@@ -894,8 +1051,9 @@ public class MainApp extends JFrame {
                         //---- label50 ----
                         label50.setText("Customer");
 
-                        //---- btnSaleProcess ----
-                        btnSaleProcess.setText("Complete");
+                        //---- btnBasket ----
+                        btnBasket.setText("Add to Basket");
+                        btnBasket.addActionListener(e -> btnBasketClick(e));
 
                         GroupLayout panel29Layout = new GroupLayout(panel29);
                         panel29.setLayout(panel29Layout);
@@ -910,10 +1068,12 @@ public class MainApp extends JFrame {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(panel29Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                         .addComponent(txtSaleSelect, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                                        .addComponent(txtSalePiece, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                                        .addComponent(cmbSaleCustomer, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+                                        .addComponent(cmbSaleCustomer, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                                        .addGroup(panel29Layout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addComponent(txtSalePiece)))
                                     .addGap(18, 18, 18)
-                                    .addComponent(btnSaleProcess)
+                                    .addComponent(btnBasket)
                                     .addContainerGap(50, Short.MAX_VALUE))
                         );
                         panel29Layout.setVerticalGroup(
@@ -932,7 +1092,7 @@ public class MainApp extends JFrame {
                                         .addComponent(label50)
                                         .addGroup(panel29Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(cmbSaleCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnSaleProcess)))
+                                            .addComponent(btnBasket)))
                                     .addContainerGap(10, Short.MAX_VALUE))
                         );
                     }
@@ -945,7 +1105,7 @@ public class MainApp extends JFrame {
                                 .addGroup(panel15Layout.createParallelGroup()
                                     .addGroup(panel15Layout.createSequentialGroup()
                                         .addContainerGap()
-                                        .addComponent(cmbList, GroupLayout.PREFERRED_SIZE, 295, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cmbCategoryList, GroupLayout.PREFERRED_SIZE, 295, GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(btnSaleList))
                                     .addGroup(panel15Layout.createSequentialGroup()
@@ -964,7 +1124,7 @@ public class MainApp extends JFrame {
                             .addGroup(panel15Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(panel15Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cmbList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbCategoryList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnSaleList))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblSaleList)
@@ -1006,7 +1166,7 @@ public class MainApp extends JFrame {
 
                     //======== scrollPane3 ========
                     {
-                        scrollPane3.setViewportView(tblProdutcs);
+                        scrollPane3.setViewportView(tblProducts);
                     }
 
                     //======== panel16 ========
@@ -1015,9 +1175,11 @@ public class MainApp extends JFrame {
 
                         //---- btnProductListEdit ----
                         btnProductListEdit.setText("Edit");
+                        btnProductListEdit.addActionListener(e -> btnProductListEditClick(e));
 
                         //---- btnProductListDelete ----
                         btnProductListDelete.setText("Delete");
+                        btnProductListDelete.addActionListener(e -> btnProductListDeleteClick(e));
 
                         GroupLayout panel16Layout = new GroupLayout(panel16);
                         panel16.setLayout(panel16Layout);
@@ -1088,6 +1250,7 @@ public class MainApp extends JFrame {
 
                     //---- btnAddProduct ----
                     btnAddProduct.setText("Add");
+                    btnAddProduct.addActionListener(e -> btnAddProductClick(e));
 
                     //---- lblAddProduct ----
                     lblAddProduct.setText("text");
@@ -1196,6 +1359,10 @@ public class MainApp extends JFrame {
 
                     //---- btnEditProduct ----
                     btnEditProduct.setText("Edit");
+                    btnEditProduct.addActionListener(e -> {
+			btnEditProductClick(e);
+			btnEditProductClick(e);
+		});
 
                     //---- lblEditProduct ----
                     lblEditProduct.setText("text");
@@ -1292,7 +1459,7 @@ public class MainApp extends JFrame {
                                     .addComponent(panel17, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(panel18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap(33, Short.MAX_VALUE))
+                            .addContainerGap(29, Short.MAX_VALUE))
                 );
                 panel4Layout.setVerticalGroup(
                     panel4Layout.createParallelGroup()
@@ -1571,7 +1738,7 @@ public class MainApp extends JFrame {
                         .addGroup(panel5Layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(panel23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                             .addComponent(panel25, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(panel5Layout.createParallelGroup()
@@ -1587,6 +1754,7 @@ public class MainApp extends JFrame {
 
         //---- btnExit ----
         btnExit.setText("Exit");
+        btnExit.addActionListener(e -> btnExitClick(e));
 
         //---- label45 ----
         label45.setText("Admin");
@@ -1665,19 +1833,9 @@ public class MainApp extends JFrame {
     private JLabel label2;
     private JTextField txtSearchReport;
     private JLabel label62;
-    private JLabel label63;
-    private JLabel label64;
-    private JLabel label65;
-    private JSpinner spnDay1;
-    private JSpinner spnMonth1;
-    private JSpinner spnYear1;
     private JLabel label66;
-    private JLabel label67;
-    private JLabel label68;
-    private JLabel label69;
-    private JSpinner snpDay2;
-    private JSpinner spnMonth2;
-    private JSpinner spnYear2;
+    private JDateChooser dateChooser1;
+    private JDateChooser dateChooser2;
     private JPanel panel12;
     private JScrollPane scrollPane2;
     private JTable tblReport;
@@ -1688,7 +1846,7 @@ public class MainApp extends JFrame {
     private JLabel lblReportsInfo;
     private JPanel panel3;
     private JPanel panel15;
-    private JComboBox cmbList;
+    private JComboBox cmbCategoryList;
     private JButton btnSaleList;
     private JLabel lblSaleList;
     private JScrollPane scrollPane9;
@@ -1701,11 +1859,11 @@ public class MainApp extends JFrame {
     private JTextField txtSalePiece;
     private JLabel label50;
     private JComboBox cmbSaleCustomer;
-    private JButton btnSaleProcess;
+    private JButton btnBasket;
     private JPanel panel4;
     private JPanel panel11;
     private JScrollPane scrollPane3;
-    private JTable tblProdutcs;
+    private JTable tblProducts;
     private JPanel panel16;
     private JButton btnProductListEdit;
     private JButton btnProductListDelete;

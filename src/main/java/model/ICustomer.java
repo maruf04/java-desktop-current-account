@@ -1,6 +1,7 @@
 package model;
 
 
+import props.ComboItem;
 import props.Customer;
 
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +14,7 @@ public interface ICustomer {
     List<Customer> customerList();
     List<Customer> customerSearch(String data);
     DefaultTableModel customerTableModel();
+    List<ComboItem> listCustomer();
 
 
 }
