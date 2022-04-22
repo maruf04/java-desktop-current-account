@@ -744,14 +744,6 @@ public class MainApp extends JFrame {
 
                     //======== scrollPane4 ========
                     {
-
-                        //---- tblCustomer ----
-                        tblCustomer.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                tblCustomerMouseClicked(e);
-                            }
-                        });
                         scrollPane4.setViewportView(tblCustomer);
                     }
 

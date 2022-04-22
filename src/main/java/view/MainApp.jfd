@@ -25,7 +25,6 @@ new FormModel {
 							name: "scrollPane4"
 							add( new FormComponent( "javax.swing.JTable" ) {
 								name: "tblCustomer"
-								addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "tblCustomerMouseClicked", true ) )
 							} )
 						} )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
