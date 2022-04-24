@@ -4,24 +4,18 @@ public class Order {
     private int oid;
     private int customerID;
     private int total;
-    private String date1;
-    private String date2;
+    private String date;
+    private String uuid;
 
     public Order() {
     }
 
-
-    public Order(int oid, int customerID, int total, String date1, String date2) {
+    public Order(int oid, int customerID, int total, String date, String uuid) {
         this.oid = oid;
         this.customerID = customerID;
         this.total = total;
-        this.date1 = date1;
-        this.date2 = date2;
-    }
-
-    public Order(String date1, String date2) {
-        this.date1 = date1;
-        this.date2 = date2;
+        this.date = date;
+        this.uuid = uuid;
     }
 
     public int getOid() {
@@ -48,20 +42,20 @@ public class Order {
         this.total = total;
     }
 
-    public String getDate1() {
-        return date1;
+    public String getDate() {
+        return date;
     }
 
-    public void setDate1(String date1) {
-        this.date1 = date1;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getDate2() {
-        return date2;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setDate2(String date2) {
-        this.date2 = date2;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     @Override
@@ -70,8 +64,8 @@ public class Order {
                 "oid=" + oid +
                 ", customerID=" + customerID +
                 ", total=" + total +
-                ", date1='" + date1 + '\'' +
-                ", date2='" + date2 + '\'' +
+                ", date='" + date + '\'' +
+                ", uuid='" + uuid + '\'' +
                 '}';
     }
 }

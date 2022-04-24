@@ -7,17 +7,23 @@ public class Basket {
     private String date;
     private int count;
     private int status;
+    private String uuid;
+    private int categoryId;
 
     public Basket() {
     }
 
-    public Basket(int sid, int customerID, int productID, String date, int count, int status) {
+    public Basket(int sid, int customerID, int productID, String date, int count, int status,String uuid,int categoryId) {
+        //categoryid eklenecek ve yeniden düzenlenecek prop impl ve db
+
         this.sid = sid;
         this.customerID = customerID;
         this.productID = productID;
         this.date = date;
         this.count = count;
         this.status = status;
+        this.uuid = uuid;
+        this.categoryId = categoryId;
     }
 
     public int getSid() {
@@ -68,6 +74,22 @@ public class Basket {
         this.status = status;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public String toString() {
         return "Basket{" +
@@ -77,6 +99,8 @@ public class Basket {
                 ", date='" + date + '\'' +
                 ", count=" + count +
                 ", status=" + status +
+                ", uuid='" + uuid + '\'' +
+                ", categoryId=" + categoryId +
                 '}';
     }
 }

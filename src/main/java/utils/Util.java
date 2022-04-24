@@ -4,6 +4,8 @@ import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 public class Util {
@@ -60,6 +62,11 @@ public class Util {
         } catch (MessagingException e) {
             System.out.println("SendMail Error: "+e);
         }
+    }
+    public static String dateTimeNow(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
     }
     /*
     public static void sendMail(String to,String sub,String msg){

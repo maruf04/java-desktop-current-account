@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "7.0.5.4.420" Java: "11.0.13" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.5.1.409" Java: "11.0.14.1" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -15,7 +15,6 @@ new FormModel {
 					"$verticalGroup": "par l {seq l {space :p:19:p, comp panel19:::p::p, space :::p, par l {comp pnlAddCustomer:::p:239:p, comp pnlEditCustomer:::p:239:p}, space :::x, comp lblCustomerError:::p::p, space :::p}}"
 				} ) {
 					name: "panel1"
-					"background": new java.awt.Color( 102, 255, 255, 255 )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 						"$horizontalGroup": "par l {seq l {space :p:45:p, comp scrollPane4:::p:435:p, space s:::p, comp panel20:::::x, space :p:25:p}}"
 						"$verticalGroup": "par l {seq l {space :p:14:p, par t {comp scrollPane4:::p:132:p, comp panel20:::p::p}, space :::x}}"
@@ -278,8 +277,8 @@ new FormModel {
 				} ) {
 					name: "panel3"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq {par l {seq {space :::p, comp cmbList:::p:295:p, space s:::p, comp btnSaleList:::p::p}, seq l {space :p:12:p, par t {seq {comp lblSaleList:::p:219:p, space :p:329:p}, comp scrollPane9::l:p:548:p, comp lblSales::t:p:211:p, comp panel29::l:p::p}}}, space ::68:x}}"
-						"$verticalGroup": "par l {seq l {space :::p, par b {comp cmbList::b:p::p, comp btnSaleList::b:p::p}, space :::p, comp lblSaleList:::p::p, space :::p, comp scrollPane9:::p:128:p, space :::p, comp lblSales:::p::p, space :::p, comp panel29:::p::p, space ::16:x}}"
+						"$horizontalGroup": "par l {seq {par l {seq {par l {seq {space :::p, comp cmbList:::p:295:p, space s:::p, comp btnSaleList:::p::p}, seq l {space :p:12:p, par t {seq {comp lblSaleList:::p:219:p, space :p:329:p}, comp lblSales::t:p:211:p, seq l {comp panel29:::p::p, space :p:72:p, comp btnOpenBasket:::p::p}}}}, space :0:53:x}, comp scrollPane9::t::622:x}, space :::p}}"
+						"$verticalGroup": "par l {seq l {space :::p, par b {comp cmbList::b:p::p, comp btnSaleList::b:p::p}, space :::p, comp lblSaleList:::p::p, par l {seq {space :::p, comp scrollPane9:::p:128:p, space :::p, comp lblSales:::p::p, space :::p, comp panel29:::p::p, space ::16:x}, seq t {space ::194:x, comp btnOpenBasket:::p::p, space :p:95:p}}}}"
 					} ) {
 						name: "panel15"
 						"border": new javax.swing.border.TitledBorder( "Sales Screen" )
@@ -289,6 +288,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnSaleList"
 							"text": "List"
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnSaleListClick", true ) )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "lblSaleList"
@@ -298,6 +298,7 @@ new FormModel {
 							name: "scrollPane9"
 							add( new FormComponent( "javax.swing.JTable" ) {
 								name: "tblSale"
+								addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "tblSaleMouseClicked", true ) )
 							} )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
@@ -334,7 +335,13 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnSaleProcess"
 								"text": "Complete"
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnSaleProcessClick", true ) )
 							} )
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "btnOpenBasket"
+							"text": "Basket"
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnOpenBasketClick", true ) )
 						} )
 					} )
 				}, new FormLayoutConstraints( null ) {
