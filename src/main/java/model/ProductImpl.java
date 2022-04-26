@@ -111,6 +111,37 @@ public class ProductImpl implements IProduct{
     }
 
     @Override
+    public Product getProduct(int pid) {
+        Product product = null;
+        try{
+            String sql="select * from product where pid = ?";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            pre.setInt(1,pid);
+            ResultSet rs=pre.executeQuery();
+            while(rs.next())
+            {
+                int productId=rs.getInt("pid");
+                String pName = rs.getString("name");
+                int pCategoryId = rs.getInt("cid");
+                int pBuyPrice = rs.getInt("buyPrice");
+                int pSellPrice = rs.getInt("sellPrice");
+                String pInfo = rs.getString("info");
+                int pStock = rs.getInt("stock");
+                product= new Product(productId,pName,pCategoryId,pBuyPrice,pSellPrice,pInfo,pStock);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.err.println("getProduct Error: "+ex.toString());
+            ex.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+       return product;
+    }
+
+    @Override
     public List<Product> productList() {
         List<Product> productList = new ArrayList<>();
         try

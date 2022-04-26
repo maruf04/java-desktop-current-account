@@ -129,7 +129,6 @@ public class MainApp extends JFrame {
                 lblEditProduct.setText("Product İnfo Empty");
             }
             else {
-
                 //int pid, String name, int categoryId, int buyPrice, int sellPrice, String info, int stock
                 int pid=Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0)));
                 String name=txtEditProductName.getText().toLowerCase(Locale.ROOT).trim();
@@ -610,12 +609,13 @@ public class MainApp extends JFrame {
     }
 
     private void btnSaleProcessClick(ActionEvent e) {
-        if (tblSale.getSelectedRow() != -1) {
+        if (tblSale.getSelectedRow() != -1 ) {
             //int sid, int customerID, int productID, String date,int count , int status,String uuid
             int customerId =Integer.parseInt(((ComboItem)cmbSaleCustomer.getSelectedItem()).getValue());
             int productID = Integer.parseInt(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 0)));
             String date=utils.Util.dateTimeNow();
-            int count ;
+            int count = 0 ;
+            //?count girişi boş olması kontrol edilecek
             count=Integer.parseInt(txtSalePiece.getText());
             int status=0;
 
@@ -629,8 +629,13 @@ public class MainApp extends JFrame {
             else
                uuid=UUID.randomUUID().toString();
             int categoryId=Integer.parseInt(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 2)));
-            Basket basket=new Basket(0,customerId,productID,date,count,status,uuid,categoryId);
-            basketImpl.basketInsert(basket);
+
+            //stock kontrolu
+            //count stocktan buyuk ise sepete ekleme yapmaz
+            if(basketImpl.stockControl(productID,count)==1){
+                Basket basket=new Basket(0,customerId,productID,date,count,status,uuid,categoryId);
+                basketImpl.basketInsert(basket);
+            }
         }
         else
             JOptionPane.showMessageDialog(this,"Please Choose" );
