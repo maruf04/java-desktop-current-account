@@ -11,7 +11,7 @@ import java.util.List;
 
 public class OrderImpl implements IOrder{
     DB db=new DB();
-    List<Order> ls = new ArrayList<>(); // 1
+    List<Order> ls = new ArrayList<>();
     @Override
     public int orderInsert(Order order) {
         int status=0;

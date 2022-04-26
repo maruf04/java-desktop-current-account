@@ -10,6 +10,7 @@ public interface IBasket {
     int basketInsert(Basket basket);
     int basketDelete(int sid);
     int basketUpdate(int sid);
+    int stockControl(int productId, int count);
     String basketControl(int customerId);
     List<Basket> basketList();
     DefaultTableModel basketTableModel();

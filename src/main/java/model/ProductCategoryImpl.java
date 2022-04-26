@@ -56,10 +56,10 @@ public class ProductCategoryImpl implements IProductCategory{
 
 
         } catch (Exception ex) {
-            System.err.println("categoryDelete Error: "+ex); //err kýrmýzý gösteriyor.
+            System.err.println("categoryDelete Error: "+ex); //err kï¿½rmï¿½zï¿½ gï¿½steriyor.
             ex.printStackTrace();
         } finally {
-            db.close(); //açýk olan
+            db.close();
         }
         return status;
     }
@@ -80,16 +80,16 @@ public class ProductCategoryImpl implements IProductCategory{
             pre.setInt(3,category.getCid());
 
 
-            //soru iþaretlerine gönderilecek olan datanýn gönderim yönteminin bir adýda bind yöntemi olarak geçer.
+            //soru iï¿½aretlerine gï¿½nderilecek olan datanï¿½n gï¿½nderim yï¿½nteminin bir adï¿½da bind yï¿½ntemi olarak geï¿½er.
             status= pre.executeUpdate();
 
 
 
         } catch (Exception ex) {
-            System.err.println("categoryUpdate Error: "+ex); //err kýrmýzý gösteriyor.
+            System.err.println("categoryUpdate Error: "+ex); //err kï¿½rmï¿½zï¿½ gï¿½steriyor.
             ex.printStackTrace();
         } finally {
-            db.close(); //açýk olan
+            db.close(); //aï¿½ï¿½k olan
         }
         return status;
     }
@@ -161,7 +161,7 @@ public class ProductCategoryImpl implements IProductCategory{
 
 
     @Override
-    public DefaultTableModel categoryTableModel(){  //Model oluþturduk datatablemodel ile sütýn ve sayýrlar oluþturduk
+    public DefaultTableModel categoryTableModel(){  //Model oluï¿½turduk datatablemodel ile sï¿½tï¿½n ve sayï¿½rlar oluï¿½turduk
         categorytList();
 
         DefaultTableModel tableModel= new DefaultTableModel();
@@ -171,7 +171,7 @@ public class ProductCategoryImpl implements IProductCategory{
         tableModel.addColumn("Category Info");
 
 
-        for(ProductCategory item: categorytList()){ //car türünde bir nesne getiriyor.
+        for(ProductCategory item: categorytList()){ //car tï¿½rï¿½nde bir nesne getiriyor.
             Object[] row={item.getCid(),item.getCategoryName(),item.getCategoryInfo()};//item.getCid(),
 
             tableModel.addRow(row);

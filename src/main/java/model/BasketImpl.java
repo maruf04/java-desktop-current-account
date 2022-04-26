@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BasketImpl implements IBasket{
+    ProductImpl productImpl = new ProductImpl(-1);
     int inpCustomerId;
     DB db=new DB();
     List<Basket> ls = new ArrayList<>();
@@ -79,6 +80,37 @@ public class BasketImpl implements IBasket{
     }
 
     @Override
+    public int stockControl(int productId, int count) {
+        int status=0;
+        //sorgu at productan stock al ve count ile karşılaştır
+        //count stocktan  buyk ise false dondur
+        //degilse true dondur
+
+        try{
+            String sql="select stock from product where pid =  ? ";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            pre.setInt(1,productId);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next()) {
+                int stock = rs.getInt("stock");
+                System.out.println("stock:"+stock);
+                if(count >stock){
+                    System.err.println("count stocktan buyuk");
+                    status=0;
+                }
+                else
+                    status=1;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        finally {
+            db.close();
+        }
+        return status;
+    }
+
+    @Override
     public String basketControl(int customerId) {
         try
         {
@@ -109,13 +141,18 @@ public class BasketImpl implements IBasket{
         {
             String sql="";
             if(inpCustomerId ==-1)
-                sql = "select * from basket";
+                sql = "select * from basket where status=?";
             else{
-                sql="select * from basket where customerID=?";
+                sql="select * from basket where customerID=? and status=?";
             }
             PreparedStatement pre=db.connect().prepareStatement(sql);
-            if(inpCustomerId !=-1)
-                pre.setInt(1,inpCustomerId);
+            if(inpCustomerId !=-1) {
+                pre.setInt(1, inpCustomerId);
+                pre.setInt(2, 0);
+            }
+            else
+                pre.setInt(1,0);
+
 
 
             ResultSet rs=pre.executeQuery();
