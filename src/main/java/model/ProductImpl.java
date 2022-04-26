@@ -15,8 +15,9 @@ public class ProductImpl implements IProduct{
     DB db=new DB();
     List<Product> ls = new ArrayList<>(); // 1
     List<Product> lsSearch = new ArrayList<>();// 2
-
-    public ProductImpl() {
+    int inpCategoryId=-1;
+    public ProductImpl(int categoryId) {
+        inpCategoryId =categoryId;
         ls = productList(); //veritabanına baglan yeni veri cek
         lsSearch = ls; // yeni verileri  lsSearch  ye ekle
     }
@@ -87,12 +88,42 @@ public class ProductImpl implements IProduct{
     }
 
     @Override
+    public int getProductSellPrice(int pid) {
+        int sellPrice=-1;
+        try
+        {
+            String sql="select sellPrice from product WHERE pid = ? order by pid desc";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            pre.setInt(1,pid);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next())
+                sellPrice = rs.getInt("sellPrice");
+        }
+        catch (Exception ex)
+        {
+            System.err.println("getProductSellPrice Error: "+ex.toString());
+            ex.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+        return sellPrice;
+    }
+
+    @Override
     public List<Product> productList() {
         List<Product> productList = new ArrayList<>();
         try
         {
-            String sql = "select * from product order by pid desc";
+            String sql="";
+            if(inpCategoryId ==-1)
+                sql = "select * from product order by pid desc";
+            else{
+                sql="select * from product WHERE cid = ? order by pid desc";
+            }
             PreparedStatement pre=db.connect().prepareStatement(sql);
+            if(inpCategoryId !=-1)
+                pre.setInt(1,inpCategoryId);
             ResultSet rs=pre.executeQuery();
             while(rs.next())
             {
@@ -174,6 +205,32 @@ public class ProductImpl implements IProduct{
             db.close();
         }
         return lsCategory;
+    }
+
+    public List listCustomer(){
+        List<ComboItem> lsCustomer = new ArrayList<>();
+        try
+        {
+            String sql = "select * from customer";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            while(rs.next())
+            {
+                String customerId= String.valueOf(rs.getInt("customerId"));
+                String customerName = rs.getString("name");
+                ComboItem comboItem=new ComboItem(customerId,customerName);
+                lsCustomer.add(comboItem);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.err.println("listCustomer Error: "+ex.toString());
+            ex.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+        return lsCustomer;
     }
 }
 

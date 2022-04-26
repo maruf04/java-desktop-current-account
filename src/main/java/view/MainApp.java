@@ -4,18 +4,15 @@
 
 package view;
 
-import model.ProductCategoryImpl;
-import model.ProductImpl;
-import model.UserImpl;
-import props.ComboItem;
-import props.Product;
-import props.ProductCategory;
-import props.User;
+import model.*;
+import props.*;
+import utils.Util;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.border.*;
@@ -25,8 +22,9 @@ import javax.swing.table.TableModel;
  * @author mrf
  */
 public class MainApp extends JFrame {
-    ProductImpl productImpl=new ProductImpl();
+    ProductImpl productImpl=new ProductImpl(-1);
     ProductCategoryImpl productCategoryImpl=new ProductCategoryImpl();
+    BasketImpl basketImpl=new BasketImpl(-1);
     int row=-1;
     int value;
     public static void main(String[] args) {
@@ -34,6 +32,7 @@ public class MainApp extends JFrame {
         mainApp.setVisible(true);
     }
     UserImpl userImpl=new UserImpl();
+    CustomerImpl customerImpl = new CustomerImpl(); //Customer
     ProductCategory productCategory=new ProductCategory();
 
     public void startCategoryTable(){
@@ -42,9 +41,19 @@ public class MainApp extends JFrame {
 
     public MainApp() {
         initComponents();
+        tblCustomer.setModel(customerImpl.customerTableModel());//Customer
         tblCategory.setModel(productCategoryImpl.categoryTableModel());
         tblProducts.setModel(productImpl.productTable(null));
+        tblSale.setModel(productImpl.productTable(null));
         listedProductCategory();
+        listedCustomer();
+    }
+
+    private void listedCustomer() {
+        List<ComboItem> listCustomer=productImpl.listCustomer();
+        for (ComboItem item:listCustomer) {
+            cmbSaleCustomer.addItem(new ComboItem(item.getValue(), item.getKey()));
+        }
     }
 
     private void listedProductCategory() {
@@ -52,6 +61,7 @@ public class MainApp extends JFrame {
         for (ComboItem item:lsCategory) {
             cmbAddProductCategory.addItem(new ComboItem(item.getValue(), item.getKey()));
             cmbEditProductCategory.addItem(new ComboItem(item.getValue(), item.getKey()));
+            cmbList.addItem(new ComboItem(item.getValue(), item.getKey()));
         }
     }
 
@@ -226,6 +236,106 @@ public class MainApp extends JFrame {
         txtSurname.setText("");
         txtEmail.setText("");
         txtPassword.setText("");
+        //AddCustomer
+        txtAddCustomerName.setText("");
+        txtAddCustomerSurname.setText("");
+        txtAddCustomerEmail.setText("");
+        txtAddCustomerPhone.setText("");
+        txtAddCustomerAddress.setText("");
+        //EditCustomer
+        txtEditCustomerName.setText("");
+        txtEditCustomerSurname.setText("");
+        txtEditCustomerEmail.setText("");
+        txtEditCustomerPhone.setText("");
+        txtEditCustomerAddress.setText("");
+    }
+
+    //Customer
+    private Customer fncAddCustomerDatavalidate(){
+        String name = txtAddCustomerName.getText().toLowerCase(Locale.ROOT).trim();
+        String surname = txtAddCustomerSurname.getText().toLowerCase(Locale.ROOT).trim();
+        String email=txtAddCustomerEmail.getText().toLowerCase(Locale.ROOT).trim();
+        String phone=txtAddCustomerPhone.getText().toLowerCase(Locale.ROOT).trim();
+        String address=txtAddCustomerAddress.getText().toLowerCase(Locale.ROOT).trim();
+        if(name.equals("")){
+            txtAddCustomerName.requestFocus();
+            lblCustomerError.setText("Name is cannot be empty");
+        }
+        else if(surname.equals("")){
+            txtAddCustomerSurname.requestFocus();
+            lblCustomerError.setText("Surname is cannot be empty");
+        }
+        else if(email.equals("")){
+            txtAddCustomerEmail.requestFocus();
+            lblCustomerError.setText("Email is cannot be empty");
+        }
+        else if(!Util.isValidEmailAddress(email)){
+            lblCustomerError.setText("E-mail invalid");
+            txtAddCustomerEmail.requestFocus();
+        }
+        else if(phone.equals("")){
+            txtAddCustomerPhone.requestFocus();
+            lblCustomerError.setText("Phone is cannot be empty");
+        }
+        else if(address.equals("")){
+            txtAddCustomerAddress.requestFocus();
+            lblCustomerError.setText("Address is cannot be empty");
+        }
+        else{
+            lblCustomerError.setText("");
+            Customer customer = new Customer(0,name,surname,email,phone,address);
+            return customer;
+        }
+        return null;
+    }
+    private Customer fncEditCustomerDatavalidate(){
+        String name = txtEditCustomerName.getText().toLowerCase(Locale.ROOT).trim();
+        String surname = txtEditCustomerSurname.getText().toLowerCase(Locale.ROOT).trim();
+        String email=txtEditCustomerEmail.getText().toLowerCase(Locale.ROOT).trim();
+        String phone=txtEditCustomerPhone.getText().toLowerCase(Locale.ROOT).trim();
+        String address=txtEditCustomerAddress.getText().toLowerCase(Locale.ROOT).trim();
+
+        if(name.equals("")){
+            txtEditCustomerName.requestFocus();
+            lblCustomerError.setText("Name is cannot be empty");
+        }
+        else if(surname.equals("")){
+            txtEditCustomerSurname.requestFocus();
+            lblCustomerError.setText("Surname is cannot be empty");
+        }
+        else if(email.equals("")){
+            txtEditCustomerEmail.requestFocus();
+            lblCustomerError.setText("Email is cannot be empty");
+        }
+        else if(!Util.isValidEmailAddress(email)){
+            lblCustomerError.setText("E-mail invalid");
+            txtEditCustomerEmail.requestFocus();
+        }
+        else if(phone.equals("")){
+            txtEditCustomerPhone.requestFocus();
+            lblCustomerError.setText("Phone is cannot be empty");
+        }
+        else if(address.equals("")){
+            txtEditCustomerAddress.requestFocus();
+            lblCustomerError.setText("Address is cannot be empty");
+        }
+        else{
+            lblCustomerError.setText("");
+            Customer customer = new Customer(0,name,surname,email,phone,address);
+            return customer;
+        }
+        return null;
+    }
+    public String rowValueCustomer(int row,int column){
+
+        String selectedCellValue = String.valueOf(tblCustomer.getValueAt(row , column)) ;
+        txtEditCustomerName.setText((String) tblCustomer.getValueAt(row , 1));
+        txtEditCustomerSurname.setText((String) tblCustomer.getValueAt(row , 2));
+        txtEditCustomerEmail.setText((String) tblCustomer.getValueAt(row , 3));
+        txtEditCustomerPhone.setText( String.valueOf(tblCustomer.getValueAt(row , 4)));
+        txtEditCustomerAddress.setText( String.valueOf(tblCustomer.getValueAt(row , 5)));
+
+        return selectedCellValue;
     }
 
     private void btnAddCategoryClick(ActionEvent e) {
@@ -325,7 +435,7 @@ public class MainApp extends JFrame {
             int input = JOptionPane.showConfirmDialog(this, "Request delete are you sure?","Deletion process",JOptionPane.YES_NO_OPTION);
             if(input==0){
                 productImpl.productDelete(Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0))));
-                ProductImpl pr=new ProductImpl();
+                ProductImpl pr=new ProductImpl(-1);
                 tblProducts.setModel(pr.productTable(null));
             }
            // System.out.println("input :"+input);
@@ -341,7 +451,7 @@ public class MainApp extends JFrame {
         if(p !=null){
             int status = productImpl.productInsert(p);
             if(status > 0){
-                ProductImpl productImpl=new ProductImpl();
+                ProductImpl productImpl=new ProductImpl(-1);
                 tblProducts.setModel(productImpl.productTable(null));
                 lblAddProduct.setText("Product Insert succes !");
             }
@@ -359,7 +469,7 @@ public class MainApp extends JFrame {
             int status = productImpl.productUpdate(p);
             System.out.println(status);
             if(status > 0){
-                ProductImpl productImpl2=new ProductImpl();
+                ProductImpl productImpl2=new ProductImpl(-1);
                 tblProducts.setModel(productImpl2.productTable(null));
                 lblEditProduct.setText("Product Update succes !");
             }
@@ -373,6 +483,162 @@ public class MainApp extends JFrame {
 
     private void btnExitClick(ActionEvent e) {
         System.exit(0);
+    }
+
+    private void btnCustomerListEdit(ActionEvent e) {
+        // TODO add your code here
+
+    }
+
+    private void btnCustomerListDelete(ActionEvent e) {
+        // TODO add your code here
+        if (tblCustomer.getSelectedRow() != -1) {
+            System.out.println(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 0));
+            int input = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete?","delete process",JOptionPane.YES_NO_OPTION);
+            // 0=yes, 1=no, 2=cancel
+            if(input==0){
+                customerImpl.customerDelete(Integer.parseInt(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 0))));
+                //tablo yenilensin diye
+                CustomerImpl customer0=new CustomerImpl();
+                tblCustomer.setModel(customer0.customerTableModel());
+            }
+            System.out.println("input :"+input);
+            fncTextClear();
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Please Choose");
+    }
+
+    private void btnAddCustomer(ActionEvent e) {
+        // TODO add your code here
+        Customer c = fncAddCustomerDatavalidate();
+        if(c != null){
+            int status = customerImpl.customerInsert(c);
+            if( status > 0 ){
+                String name = txtAddCustomerName.getText();
+                String surname = txtAddCustomerSurname.getText();
+                String email = txtAddCustomerEmail.getText();
+                String phone = txtAddCustomerPhone.getText();
+                String address = txtAddCustomerAddress.getText();
+                //tablo yenilensin diye
+                CustomerImpl customer = new CustomerImpl();
+                tblCustomer.setModel(customer.customerTableModel());
+                lblCustomerError.setText("Succesful !");
+                fncTextClear();
+            }
+            else {
+                if(status == -1)
+                    lblCustomerError.setText("Another customer with the same email information!");
+                else if(status == -2)
+                    lblCustomerError.setText("Another customer with the same phone information!");
+                else {
+                    lblCustomerError.setText("Insert Error !");
+                    fncTextClear();
+                }
+            }
+            pack();
+        }
+    }
+
+    private void btnEditCustomer(ActionEvent e) {
+        // TODO add your code here
+        Customer ce = fncEditCustomerDatavalidate();
+        if (ce != null) {
+            int status = customerImpl.customerUpdate (ce);
+            if (tblCustomer.getSelectedRow() != -1) {
+                System.out.println(tblCustomer.getValueAt(tblCustomer.getSelectedRow(), 0));
+                int input = JOptionPane.showConfirmDialog(this, "Are you sure you want to edit?", "edit process", JOptionPane.YES_NO_OPTION);
+                // 0=yes, 1=no, 2=cancel
+                if (input == 0) {
+                    String name = txtEditCustomerName.getText();
+                    String surname = txtEditCustomerSurname.getText();
+                    String email = txtEditCustomerEmail.getText();
+                    String phone = txtEditCustomerPhone.getText();
+                    String address = txtEditCustomerAddress.getText();
+                    Customer customer = new Customer(Integer.parseInt(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow(), 0))), name, surname, email, phone, address);
+                    customerImpl.customerUpdate(customer);
+                    //tablo yenilensin diye
+                    CustomerImpl customer0 = new CustomerImpl();
+                    tblCustomer.setModel(customer0.customerTableModel());
+                    fncTextClear();
+                }
+                System.out.println("input :" + input);
+            } else
+                JOptionPane.showMessageDialog(this, "Please Choose");
+
+            pack();
+            fncTextClear();
+            JOptionPane.showMessageDialog(this, "Edit Succesful");
+            //lblError.setText("Updated proceses succesful");
+        }
+    }
+
+    private void tblCustomerMouseClicked(MouseEvent e) {
+        // TODO add your code here
+        System.out.println(rowValueCustomer(tblCustomer.getSelectedRow(),tblCustomer.getSelectedColumn()));
+    }
+
+    private void btnCustomerListEditMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        if (tblCustomer.getSelectedRow() != -1) {
+            txtEditCustomerName.setText(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 1)));
+            txtEditCustomerSurname.setText(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 2)));
+            txtEditCustomerEmail.setText(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 3)));
+            txtEditCustomerPhone.setText(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 4)));
+            txtEditCustomerAddress.setText(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 5)));
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Please Choose" );
+    }
+
+    private void btnSaleListClick(ActionEvent e) {
+        int categoryId = Integer.parseInt(((ComboItem)cmbList.getSelectedItem()).getValue());
+        String categoryValue = ((ComboItem)cmbList.getSelectedItem()).getKey();
+        System.out.println(categoryId);
+        System.out.println(categoryValue);
+        ProductImpl product2=new ProductImpl(categoryId);
+
+        tblSale.setModel(product2.productTable(null));
+    }
+
+    private void tblSaleMouseClicked(MouseEvent e) {
+        if (tblSale.getSelectedRow() != -1) {
+            txtSaleSelect.setText(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 1)));
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Please Choose" );
+    }
+
+    private void btnSaleProcessClick(ActionEvent e) {
+        if (tblSale.getSelectedRow() != -1) {
+            //int sid, int customerID, int productID, String date,int count , int status,String uuid
+            int customerId =Integer.parseInt(((ComboItem)cmbSaleCustomer.getSelectedItem()).getValue());
+            int productID = Integer.parseInt(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 0)));
+            String date=utils.Util.dateTimeNow();
+            int count ;
+            count=Integer.parseInt(txtSalePiece.getText());
+            int status=0;
+
+            //customerId ye gore uuid ve sepet düzenlendi
+            //sepete sorgu at
+            // şayet aynı customerId den statusu 0 olan varsa onun uuid sini al aşagıdaki uuid ye ata
+            //yoksa yeni bir uuid üret ve aşagıdaki uuid ye ata
+            String uuid="";
+            if(basketImpl.basketControl(customerId)!=null)
+                uuid=basketImpl.basketControl(customerId);
+            else
+               uuid=UUID.randomUUID().toString();
+            int categoryId=Integer.parseInt(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 2)));
+            Basket basket=new Basket(0,customerId,productID,date,count,status,uuid,categoryId);
+            basketImpl.basketInsert(basket);
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Please Choose" );
+    }
+
+    private void btnOpenBasketClick(ActionEvent e) {
+        BasketScreen basketScreen=new BasketScreen();
+        basketScreen.setVisible(true);
     }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -396,7 +662,6 @@ public class MainApp extends JFrame {
         txtAddCustomerPhone = new JTextField();
         txtAddCustomerAddress = new JTextField();
         btnAddCustomer = new JButton();
-        lblAddCustomer = new JLabel();
         pnlEditCustomer = new JPanel();
         label30 = new JLabel();
         label31 = new JLabel();
@@ -409,7 +674,7 @@ public class MainApp extends JFrame {
         txtEditCustomerPhone = new JTextField();
         txtEditCustomerAddress = new JTextField();
         btnEditCustomer = new JButton();
-        lblEditCustomer = new JLabel();
+        lblCustomerError = new JLabel();
         panel2 = new JPanel();
         panel10 = new JPanel();
         label1 = new JLabel();
@@ -456,6 +721,7 @@ public class MainApp extends JFrame {
         label50 = new JLabel();
         cmbSaleCustomer = new JComboBox();
         btnSaleProcess = new JButton();
+        btnOpenBasket = new JButton();
         panel4 = new JPanel();
         panel11 = new JPanel();
         scrollPane3 = new JScrollPane();
@@ -531,7 +797,6 @@ public class MainApp extends JFrame {
 
             //======== panel1 ========
             {
-                panel1.setBackground(new Color(102, 255, 255));
 
                 //======== panel19 ========
                 {
@@ -547,9 +812,16 @@ public class MainApp extends JFrame {
 
                         //---- btnCustomerListEdit ----
                         btnCustomerListEdit.setText("Edit");
+                        btnCustomerListEdit.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
+                                btnCustomerListEditMouseReleased(e);
+                            }
+                        });
 
                         //---- btnCustomerListDelete ----
                         btnCustomerListDelete.setText("Delete");
+                        btnCustomerListDelete.addActionListener(e -> btnCustomerListDelete(e));
 
                         GroupLayout panel20Layout = new GroupLayout(panel20);
                         panel20.setLayout(panel20Layout);
@@ -618,9 +890,7 @@ public class MainApp extends JFrame {
 
                     //---- btnAddCustomer ----
                     btnAddCustomer.setText("Add");
-
-                    //---- lblAddCustomer ----
-                    lblAddCustomer.setText("text");
+                    btnAddCustomer.addActionListener(e -> btnAddCustomer(e));
 
                     GroupLayout pnlAddCustomerLayout = new GroupLayout(pnlAddCustomer);
                     pnlAddCustomer.setLayout(pnlAddCustomerLayout);
@@ -630,8 +900,7 @@ public class MainApp extends JFrame {
                                 .addContainerGap()
                                 .addGroup(pnlAddCustomerLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                     .addGroup(pnlAddCustomerLayout.createSequentialGroup()
-                                        .addComponent(lblAddCustomer, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(btnAddCustomer))
                                     .addGroup(pnlAddCustomerLayout.createSequentialGroup()
                                         .addGroup(pnlAddCustomerLayout.createParallelGroup()
@@ -677,9 +946,7 @@ public class MainApp extends JFrame {
                                     .addComponent(label29, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtAddCustomerAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlAddCustomerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnAddCustomer)
-                                    .addComponent(lblAddCustomer)))
+                                .addComponent(btnAddCustomer))
                     );
                 }
 
@@ -704,9 +971,7 @@ public class MainApp extends JFrame {
 
                     //---- btnEditCustomer ----
                     btnEditCustomer.setText("Edit");
-
-                    //---- lblEditCustomer ----
-                    lblEditCustomer.setText("text");
+                    btnEditCustomer.addActionListener(e -> btnEditCustomer(e));
 
                     GroupLayout pnlEditCustomerLayout = new GroupLayout(pnlEditCustomer);
                     pnlEditCustomer.setLayout(pnlEditCustomerLayout);
@@ -716,8 +981,7 @@ public class MainApp extends JFrame {
                                 .addContainerGap()
                                 .addGroup(pnlEditCustomerLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                     .addGroup(pnlEditCustomerLayout.createSequentialGroup()
-                                        .addComponent(lblEditCustomer, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(btnEditCustomer))
                                     .addGroup(pnlEditCustomerLayout.createSequentialGroup()
                                         .addGroup(pnlEditCustomerLayout.createParallelGroup()
@@ -763,11 +1027,12 @@ public class MainApp extends JFrame {
                                     .addComponent(label34, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtEditCustomerAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlEditCustomerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnEditCustomer)
-                                    .addComponent(lblEditCustomer)))
+                                .addComponent(btnEditCustomer))
                     );
                 }
+
+                //---- lblCustomerError ----
+                lblCustomerError.setText("text");
 
                 GroupLayout panel1Layout = new GroupLayout(panel1);
                 panel1.setLayout(panel1Layout);
@@ -776,6 +1041,7 @@ public class MainApp extends JFrame {
                         .addGroup(panel1Layout.createSequentialGroup()
                             .addGap(28, 28, 28)
                             .addGroup(panel1Layout.createParallelGroup()
+                                .addComponent(lblCustomerError, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
                                 .addGroup(panel1Layout.createSequentialGroup()
                                     .addComponent(pnlAddCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
@@ -792,7 +1058,9 @@ public class MainApp extends JFrame {
                             .addGroup(panel1Layout.createParallelGroup()
                                 .addComponent(pnlAddCustomer, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(pnlEditCustomer, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(27, Short.MAX_VALUE))
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCustomerError)
+                            .addContainerGap())
                 );
             }
             tabbedPane1.addTab("Customers", panel1);
@@ -1059,12 +1327,21 @@ public class MainApp extends JFrame {
 
                     //---- btnSaleList ----
                     btnSaleList.setText("List");
+                    btnSaleList.addActionListener(e -> btnSaleListClick(e));
 
                     //---- lblSaleList ----
                     lblSaleList.setText("text");
 
                     //======== scrollPane9 ========
                     {
+
+                        //---- tblSale ----
+                        tblSale.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                tblSaleMouseClicked(e);
+                            }
+                        });
                         scrollPane9.setViewportView(tblSale);
                     }
 
@@ -1086,6 +1363,7 @@ public class MainApp extends JFrame {
 
                         //---- btnSaleProcess ----
                         btnSaleProcess.setText("Complete");
+                        btnSaleProcess.addActionListener(e -> btnSaleProcessClick(e));
 
                         GroupLayout panel29Layout = new GroupLayout(panel29);
                         panel29.setLayout(panel29Layout);
@@ -1127,6 +1405,10 @@ public class MainApp extends JFrame {
                         );
                     }
 
+                    //---- btnOpenBasket ----
+                    btnOpenBasket.setText("Basket");
+                    btnOpenBasket.addActionListener(e -> btnOpenBasketClick(e));
+
                     GroupLayout panel15Layout = new GroupLayout(panel15);
                     panel15.setLayout(panel15Layout);
                     panel15Layout.setHorizontalGroup(
@@ -1134,20 +1416,26 @@ public class MainApp extends JFrame {
                             .addGroup(panel15Layout.createSequentialGroup()
                                 .addGroup(panel15Layout.createParallelGroup()
                                     .addGroup(panel15Layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(cmbList, GroupLayout.PREFERRED_SIZE, 295, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnSaleList))
-                                    .addGroup(panel15Layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addGroup(panel15Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                        .addGroup(panel15Layout.createParallelGroup()
                                             .addGroup(panel15Layout.createSequentialGroup()
-                                                .addComponent(lblSaleList, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(329, 329, 329))
-                                            .addComponent(scrollPane9, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 548, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblSales, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(panel29, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-                                .addContainerGap(68, Short.MAX_VALUE))
+                                                .addContainerGap()
+                                                .addComponent(cmbList, GroupLayout.PREFERRED_SIZE, 295, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnSaleList))
+                                            .addGroup(panel15Layout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addGroup(panel15Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                                    .addGroup(panel15Layout.createSequentialGroup()
+                                                        .addComponent(lblSaleList, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(329, 329, 329))
+                                                    .addComponent(lblSales, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(GroupLayout.Alignment.LEADING, panel15Layout.createSequentialGroup()
+                                                        .addComponent(panel29, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(72, 72, 72)
+                                                        .addComponent(btnOpenBasket)))))
+                                        .addGap(0, 53, Short.MAX_VALUE))
+                                    .addComponent(scrollPane9, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE))
+                                .addContainerGap())
                     );
                     panel15Layout.setVerticalGroup(
                         panel15Layout.createParallelGroup()
@@ -1158,13 +1446,19 @@ public class MainApp extends JFrame {
                                     .addComponent(btnSaleList))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblSaleList)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(scrollPane9, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblSales)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panel29, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(16, Short.MAX_VALUE))
+                                .addGroup(panel15Layout.createParallelGroup()
+                                    .addGroup(panel15Layout.createSequentialGroup()
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(scrollPane9, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblSales)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(panel29, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(16, Short.MAX_VALUE))
+                                    .addGroup(GroupLayout.Alignment.TRAILING, panel15Layout.createSequentialGroup()
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
+                                        .addComponent(btnOpenBasket)
+                                        .addGap(95, 95, 95))))
                     );
                 }
 
@@ -1840,7 +2134,6 @@ public class MainApp extends JFrame {
     private JTextField txtAddCustomerPhone;
     private JTextField txtAddCustomerAddress;
     private JButton btnAddCustomer;
-    private JLabel lblAddCustomer;
     private JPanel pnlEditCustomer;
     private JLabel label30;
     private JLabel label31;
@@ -1853,7 +2146,7 @@ public class MainApp extends JFrame {
     private JTextField txtEditCustomerPhone;
     private JTextField txtEditCustomerAddress;
     private JButton btnEditCustomer;
-    private JLabel lblEditCustomer;
+    private JLabel lblCustomerError;
     private JPanel panel2;
     private JPanel panel10;
     private JLabel label1;
@@ -1900,6 +2193,7 @@ public class MainApp extends JFrame {
     private JLabel label50;
     private JComboBox cmbSaleCustomer;
     private JButton btnSaleProcess;
+    private JButton btnOpenBasket;
     private JPanel panel4;
     private JPanel panel11;
     private JScrollPane scrollPane3;

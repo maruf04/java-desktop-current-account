@@ -9,6 +9,7 @@ public interface IProduct {
     int productInsert(Product product);
     int productUpdate(Product product);
     int productDelete(int pid);
+    int getProductSellPrice(int pid);
     List<Product> productList();
     DefaultTableModel productTable(String data);
 }
