@@ -64,7 +64,7 @@ public class Util {
         }
     }
     public static String dateTimeNow(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }

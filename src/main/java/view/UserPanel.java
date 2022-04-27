@@ -5,9 +5,9 @@
 package view;
 
 import java.awt.event.*;
+
 import model.UserImpl;
 import utils.Util;
-import view.NewUser;
 import view.user.UserChangePassword;
 
 import java.awt.*;

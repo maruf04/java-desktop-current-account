@@ -10,12 +10,24 @@ public class Basket {
     private String uuid;
     private int categoryId;
 
+    Product product;
+    Customer customer;
+
     public Basket() {
     }
 
-    public Basket(int sid, int customerID, int productID, String date, int count, int status,String uuid,int categoryId) {
-        //categoryid eklenecek ve yeniden düzenlenecek prop impl ve db
+    public Basket(int sid, int customerID, int productID, String date, int count, int status, Product product, Customer customer) {
+        this.sid = sid;
+        this.customerID = customerID;
+        this.productID = productID;
+        this.date = date;
+        this.count = count;
+        this.status = status;
+        this.product = product;
+        this.customer = customer;
+    }
 
+    public Basket(int sid, int customerID, int productID, String date, int count, int status, String uuid, int categoryId) {
         this.sid = sid;
         this.customerID = customerID;
         this.productID = productID;
@@ -24,6 +36,17 @@ public class Basket {
         this.status = status;
         this.uuid = uuid;
         this.categoryId = categoryId;
+    }
+
+    public Basket(int sid, int customerId, int pid, String date, int count, int status, Product product) {
+        this.sid = sid;
+        this.customerID = customerID;
+        this.productID = productID;
+        this.date = date;
+        this.count = count;
+        this.status = status;
+        this.product=product;
+
     }
 
     public int getSid() {
@@ -90,6 +113,22 @@ public class Basket {
         this.categoryId = categoryId;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public String toString() {
         return "Basket{" +
@@ -101,6 +140,8 @@ public class Basket {
                 ", status=" + status +
                 ", uuid='" + uuid + '\'' +
                 ", categoryId=" + categoryId +
+                ", product=" + product +
+                ", customer=" + customer +
                 '}';
     }
 }

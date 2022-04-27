@@ -4,6 +4,9 @@
 
 package view;
 
+import java.beans.*;
+import javax.swing.event.*;
+import com.github.lgooddatepicker.components.*;
 import model.*;
 import props.*;
 import utils.Util;
@@ -22,12 +25,16 @@ import javax.swing.table.TableModel;
  * @author mrf
  */
 public class MainApp extends JFrame {
+
     ProductImpl productImpl=new ProductImpl(-1);
     ProductCategoryImpl productCategoryImpl=new ProductCategoryImpl();
     BasketImpl basketImpl=new BasketImpl(-1);
     int row=-1;
     int value;
+
     public static void main(String[] args) {
+
+
         MainApp mainApp=new MainApp();
         mainApp.setVisible(true);
     }
@@ -129,6 +136,7 @@ public class MainApp extends JFrame {
                 lblEditProduct.setText("Product İnfo Empty");
             }
             else {
+
                 //int pid, String name, int categoryId, int buyPrice, int sellPrice, String info, int stock
                 int pid=Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0)));
                 String name=txtEditProductName.getText().toLowerCase(Locale.ROOT).trim();
@@ -609,13 +617,12 @@ public class MainApp extends JFrame {
     }
 
     private void btnSaleProcessClick(ActionEvent e) {
-        if (tblSale.getSelectedRow() != -1 ) {
+        if (tblSale.getSelectedRow() != -1) {
             //int sid, int customerID, int productID, String date,int count , int status,String uuid
             int customerId =Integer.parseInt(((ComboItem)cmbSaleCustomer.getSelectedItem()).getValue());
             int productID = Integer.parseInt(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 0)));
             String date=utils.Util.dateTimeNow();
-            int count = 0 ;
-            //?count girişi boş olması kontrol edilecek
+            int count ;
             count=Integer.parseInt(txtSalePiece.getText());
             int status=0;
 
@@ -629,13 +636,8 @@ public class MainApp extends JFrame {
             else
                uuid=UUID.randomUUID().toString();
             int categoryId=Integer.parseInt(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 2)));
-
-            //stock kontrolu
-            //count stocktan buyuk ise sepete ekleme yapmaz
-            if(basketImpl.stockControl(productID,count)==1){
-                Basket basket=new Basket(0,customerId,productID,date,count,status,uuid,categoryId);
-                basketImpl.basketInsert(basket);
-            }
+            Basket basket=new Basket(0,customerId,productID,date,count,status,uuid,categoryId);
+            basketImpl.basketInsert(basket);
         }
         else
             JOptionPane.showMessageDialog(this,"Please Choose" );
@@ -645,6 +647,48 @@ public class MainApp extends JFrame {
         BasketScreen basketScreen=new BasketScreen();
         basketScreen.setVisible(true);
     }
+
+    String datest="1900-12-01";
+    String datend="2500-12-01";
+
+    OrderImpl or=new OrderImpl(datest,datend);
+
+    private void txtSearchReportKeyReleased(KeyEvent e) {
+        String data=txtSearchReport.getText().trim();
+        Boolean customer=rdbCustomer.isSelected();
+        Boolean product=rdbProduct.isSelected();
+
+        if (customer){
+            tblReport.setModel(or.reportTableModel(data,"customer"));
+            lblError.setText("");
+
+        }else if (product) {
+            tblReport.setModel(or.reportTableModel(data, "product"));
+            lblError.setText("");}
+        else {
+            lblError.setText("Please Select Area!!!");
+
+        }
+
+    }
+
+    private void datePicker1PropertyChange(PropertyChangeEvent e) {
+        if (datePicker1.getDate() != null ) {
+            datest = datePicker1.getDate().toString();
+            or.setListReport(or.dataReportLst(datest,datend));}
+    }
+
+    private void datePicker2PropertyChange(PropertyChangeEvent e) {
+        if (datePicker2.getDate() != null ) {
+            datend = datePicker2.getDate().toString();
+            or.setListReport(or.dataReportLst(datest,datend));}
+    }
+
+    private void tabbedPane1StateChanged(ChangeEvent e) {
+        if(tabbedPane1.getSelectedIndex()==5){
+            txtSearchReport.setText("");
+
+        }    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         tabbedPane1 = new JTabbedPane();
@@ -683,25 +727,14 @@ public class MainApp extends JFrame {
         panel2 = new JPanel();
         panel10 = new JPanel();
         label1 = new JLabel();
-        radioButton1 = new JRadioButton();
-        radioButton2 = new JRadioButton();
-        radioButton3 = new JRadioButton();
+        rdbCustomer = new JRadioButton();
+        rdbProduct = new JRadioButton();
         label2 = new JLabel();
         txtSearchReport = new JTextField();
         label62 = new JLabel();
-        label63 = new JLabel();
-        label64 = new JLabel();
-        label65 = new JLabel();
-        spnDay1 = new JSpinner();
-        spnMonth1 = new JSpinner();
-        spnYear1 = new JSpinner();
         label66 = new JLabel();
-        label67 = new JLabel();
-        label68 = new JLabel();
-        label69 = new JLabel();
-        snpDay2 = new JSpinner();
-        spnMonth2 = new JSpinner();
-        spnYear2 = new JSpinner();
+        datePicker1 = new DatePicker();
+        datePicker2 = new DatePicker();
         panel12 = new JPanel();
         scrollPane2 = new JScrollPane();
         tblReport = new JTable();
@@ -799,6 +832,7 @@ public class MainApp extends JFrame {
 
         //======== tabbedPane1 ========
         {
+            tabbedPane1.addChangeListener(e -> tabbedPane1StateChanged(e));
 
             //======== panel1 ========
             {
@@ -1080,41 +1114,34 @@ public class MainApp extends JFrame {
                     //---- label1 ----
                     label1.setText("Search Location");
 
-                    //---- radioButton1 ----
-                    radioButton1.setText("Customers");
+                    //---- rdbCustomer ----
+                    rdbCustomer.setText("Customers");
 
-                    //---- radioButton2 ----
-                    radioButton2.setText("Products");
-
-                    //---- radioButton3 ----
-                    radioButton3.setText("Categories");
+                    //---- rdbProduct ----
+                    rdbProduct.setText("Products");
 
                     //---- label2 ----
                     label2.setText("Search");
 
+                    //---- txtSearchReport ----
+                    txtSearchReport.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            txtSearchReportKeyReleased(e);
+                        }
+                    });
+
                     //---- label62 ----
                     label62.setText("Date Range");
-
-                    //---- label63 ----
-                    label63.setText("day");
-
-                    //---- label64 ----
-                    label64.setText("year");
-
-                    //---- label65 ----
-                    label65.setText("month");
 
                     //---- label66 ----
                     label66.setText("and");
 
-                    //---- label67 ----
-                    label67.setText("day");
+                    //---- datePicker1 ----
+                    datePicker1.addPropertyChangeListener(e -> datePicker1PropertyChange(e));
 
-                    //---- label68 ----
-                    label68.setText("month");
-
-                    //---- label69 ----
-                    label69.setText("year");
+                    //---- datePicker2 ----
+                    datePicker2.addPropertyChangeListener(e -> datePicker2PropertyChange(e));
 
                     GroupLayout panel10Layout = new GroupLayout(panel10);
                     panel10.setLayout(panel10Layout);
@@ -1122,51 +1149,25 @@ public class MainApp extends JFrame {
                         panel10Layout.createParallelGroup()
                             .addGroup(panel10Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addGroup(panel10Layout.createParallelGroup()
                                     .addGroup(panel10Layout.createSequentialGroup()
                                         .addComponent(label1, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(radioButton1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(radioButton2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(radioButton3))
+                                        .addComponent(rdbCustomer)
+                                        .addGap(104, 104, 104)
+                                        .addComponent(rdbProduct))
                                     .addGroup(panel10Layout.createSequentialGroup()
                                         .addComponent(label2)
                                         .addGap(18, 18, 18)
                                         .addComponent(txtSearchReport, GroupLayout.PREFERRED_SIZE, 520, GroupLayout.PREFERRED_SIZE))
                                     .addGroup(panel10Layout.createSequentialGroup()
                                         .addComponent(label62, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(label63, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                                            .addComponent(spnDay1, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(panel10Layout.createParallelGroup()
-                                            .addGroup(panel10Layout.createSequentialGroup()
-                                                .addComponent(label65, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(label64, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(panel10Layout.createSequentialGroup()
-                                                .addComponent(spnMonth1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(spnYear1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(69, 69, 69)
-                                                .addComponent(label66)))
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(panel10Layout.createParallelGroup()
-                                            .addGroup(panel10Layout.createSequentialGroup()
-                                                .addComponent(label67, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(label68, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(label69, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(panel10Layout.createSequentialGroup()
-                                                .addComponent(snpDay2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(spnMonth2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(spnYear2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(datePicker1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addGap(86, 86, 86)
+                                        .addComponent(label66)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(datePicker2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     );
                     panel10Layout.setVerticalGroup(
@@ -1174,32 +1175,19 @@ public class MainApp extends JFrame {
                             .addGroup(panel10Layout.createSequentialGroup()
                                 .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label1)
-                                    .addComponent(radioButton1)
-                                    .addComponent(radioButton2)
-                                    .addComponent(radioButton3))
+                                    .addComponent(rdbCustomer)
+                                    .addComponent(rdbProduct))
                                 .addGap(18, 18, 18)
                                 .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label2)
                                     .addComponent(txtSearchReport, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(label63)
-                                    .addComponent(label65)
-                                    .addComponent(label64)
-                                    .addComponent(label67)
-                                    .addComponent(label68)
-                                    .addComponent(label69))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                                 .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label62, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnDay1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnMonth1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnYear1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(datePicker1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(label66)
-                                    .addComponent(snpDay2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnMonth2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spnYear2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(17, 17, 17))
+                                    .addComponent(datePicker2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20))
                     );
                 }
 
@@ -2115,6 +2103,11 @@ public class MainApp extends JFrame {
         );
         pack();
         setLocationRelativeTo(getOwner());
+
+        //---- buttonGroup1 ----
+        ButtonGroup buttonGroup1 = new ButtonGroup();
+        buttonGroup1.add(rdbCustomer);
+        buttonGroup1.add(rdbProduct);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
@@ -2155,25 +2148,14 @@ public class MainApp extends JFrame {
     private JPanel panel2;
     private JPanel panel10;
     private JLabel label1;
-    private JRadioButton radioButton1;
-    private JRadioButton radioButton2;
-    private JRadioButton radioButton3;
+    private JRadioButton rdbCustomer;
+    private JRadioButton rdbProduct;
     private JLabel label2;
     private JTextField txtSearchReport;
     private JLabel label62;
-    private JLabel label63;
-    private JLabel label64;
-    private JLabel label65;
-    private JSpinner spnDay1;
-    private JSpinner spnMonth1;
-    private JSpinner spnYear1;
     private JLabel label66;
-    private JLabel label67;
-    private JLabel label68;
-    private JLabel label69;
-    private JSpinner snpDay2;
-    private JSpinner spnMonth2;
-    private JSpinner spnYear2;
+    private DatePicker datePicker1;
+    private DatePicker datePicker2;
     private JPanel panel12;
     private JScrollPane scrollPane2;
     private JTable tblReport;

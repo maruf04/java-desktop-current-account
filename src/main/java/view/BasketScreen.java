@@ -5,14 +5,13 @@
 package view;
 
 import java.awt.event.*;
+
 import model.BasketImpl;
 import model.OrderImpl;
-import model.ProductCategoryImpl;
 import model.ProductImpl;
 import props.Basket;
 import props.ComboItem;
 import props.Order;
-import props.Product;
 
 import java.awt.*;
 import java.util.List;
@@ -23,7 +22,7 @@ import javax.swing.GroupLayout;
  * @author mrf
  */
 public class BasketScreen extends JFrame {
-    BasketImpl basketImpl = new BasketImpl(-1);
+    BasketImpl basketImpl = new BasketImpl(1);
     ProductImpl productImpl =new ProductImpl(-1);
     OrderImpl orderImpl=new OrderImpl();
 
@@ -53,36 +52,38 @@ public class BasketScreen extends JFrame {
             JOptionPane.showMessageDialog(this,"Please make a choice!");
     }
 
-    private void btnBuyClick(ActionEvent e) {
+    private void cmbSaleCustomerMouseEntered(MouseEvent e) {
+        // TODO add your code here
         int customerId = Integer.parseInt(((ComboItem)cmbSaleCustomer.getSelectedItem()).getValue());
         BasketImpl basketImpl1 = new BasketImpl(customerId);
         tblBasket.setModel(basketImpl1.basketTableModel());
-        System.out.println(basketImpl1.basketList());
-        int customerID = basketImpl1.basketList().get(0).getCustomerID();
-        String date = basketImpl1.basketList().get(0).getDate();
-        String uuid = basketImpl1.basketList().get(0).getUuid();
-        int totalPrice=0;
-        List<Basket> listBasket=basketImpl1.basketList();
-        for (Basket item:listBasket) {
-            //stock kontrolu yap ,stokta varsa işleme tabi tut
-            if(basketImpl.stockControl(item.getProductID(),item.getCount())==1){
-                totalPrice +=(item.getCount()) * (productImpl.getProductSellPrice(item.getProductID()));
-                Product product1=productImpl.getProduct(item.getProductID());
-                int stock=product1.getStock();
-                int rsStock=stock-item.getCount();
-                product1.setStock(rsStock);
-                productImpl.productUpdate(product1);
-                System.out.println("stock updated : "+product1.getStock());
-            }
-        }
-        Order order=new Order(1,customerID,totalPrice,date,uuid);
-        orderImpl.orderInsert(order);
-        basketImpl.basketUpdate(customerID);
-        BasketImpl basketImpl2 = new BasketImpl(customerId);
-        tblBasket.setModel(basketImpl2.basketTableModel());
     }
+        OrderImpl order=new OrderImpl();
+    MainApp mainApp=new MainApp();
+    private void btnBuyClick(ActionEvent e) {
+        int customerID = basketImpl.basketList().get(0).getCustomerID();
+        String date = basketImpl.basketList().get(0).getDate();
+        String uuid = basketImpl.basketList().get(0).getUuid();
+        order.setListReport(order.dataReportLst(mainApp.datest,mainApp.datend));
 
-    private void btnSearchClick(ActionEvent e) {
+        //bu müşteriye ait sepeteki her bir ürünün adeti ve product tablosunda satış fiyatıyla çarpımı ve bunların toplamı total olacak
+        //!!liste ile ilgili bir sorun var gec gelmekte ve en tek fiyat yazıyo ve burdnan guncellenmiyor
+        //basketImpl de sorun yok sorun burada
+        // ?sepet listesinde sadece status değeri 0 olanları getirmek gerekiyor bide
+        int totalPrice=0;
+        List<Basket> listBasket=basketImpl.basketList();
+        for (Basket item:listBasket) {
+            totalPrice +=(item.getCount()) * (productImpl.getProductSellPrice(item.getProductID()));
+        }
+        System.out.println(customerID);
+        System.out.println(date);
+        System.out.println(uuid);
+        System.out.println(totalPrice);
+        Order order=new Order(1,customerID,totalPrice,date,uuid);
+        // !! bburda bir stok kontrolu gerekli
+        orderImpl.orderInsert(order);
+        //sepet tablosunda bu musterinin eklediği ürünlerin statusü 1 e dondurelecek
+        basketImpl.basketUpdate(customerID);
         int customerId = Integer.parseInt(((ComboItem)cmbSaleCustomer.getSelectedItem()).getValue());
         BasketImpl basketImpl1 = new BasketImpl(customerId);
         tblBasket.setModel(basketImpl1.basketTableModel());
@@ -90,7 +91,6 @@ public class BasketScreen extends JFrame {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - mrf
         panel1 = new JPanel();
         scrollPane1 = new JScrollPane();
         tblBasket = new JTable();
@@ -98,19 +98,12 @@ public class BasketScreen extends JFrame {
         btnBuy = new JButton();
         cmbSaleCustomer = new JComboBox();
         label50 = new JLabel();
-        btnSearch = new JButton();
 
         //======== this ========
         Container contentPane = getContentPane();
 
         //======== panel1 ========
         {
-            panel1.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing.
-            border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER
-            , javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font
-            .BOLD ,12 ), java. awt. Color. red) ,panel1. getBorder( )) ); panel1. addPropertyChangeListener (
-            new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r"
-            .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
 
             //======== scrollPane1 ========
             {
@@ -143,12 +136,16 @@ public class BasketScreen extends JFrame {
         btnBuy.setText("Buy");
         btnBuy.addActionListener(e -> btnBuyClick(e));
 
+        //---- cmbSaleCustomer ----
+        cmbSaleCustomer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                cmbSaleCustomerMouseEntered(e);
+            }
+        });
+
         //---- label50 ----
         label50.setText("Customer");
-
-        //---- btnSearch ----
-        btnSearch.setText("Search");
-        btnSearch.addActionListener(e -> btnSearchClick(e));
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
@@ -169,9 +166,7 @@ public class BasketScreen extends JFrame {
                     .addComponent(label50, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
                     .addGap(12, 12, 12)
                     .addComponent(cmbSaleCustomer, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(btnSearch)
-                    .addContainerGap(164, Short.MAX_VALUE))
+                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -179,9 +174,7 @@ public class BasketScreen extends JFrame {
                     .addGap(8, 8, 8)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(label50)
-                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbSaleCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSearch)))
+                        .addComponent(cmbSaleCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(panel1, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -196,7 +189,6 @@ public class BasketScreen extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - mrf
     private JPanel panel1;
     private JScrollPane scrollPane1;
     private JTable tblBasket;
@@ -204,6 +196,5 @@ public class BasketScreen extends JFrame {
     private JButton btnBuy;
     private JComboBox cmbSaleCustomer;
     private JLabel label50;
-    private JButton btnSearch;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

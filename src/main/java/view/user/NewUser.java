@@ -5,7 +5,6 @@
 package view.user;
 
 import model.UserImpl;
-import props.Customer;
 import props.User;
 
 import java.awt.*;

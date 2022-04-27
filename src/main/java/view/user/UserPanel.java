@@ -5,9 +5,7 @@
 package view.user;
 
 import java.awt.event.*;
-import javax.swing.border.*;
 
-import model.ProductCategoryImpl;
 import model.UserImpl;
 import utils.Util;
 import view.MainApp;
@@ -15,7 +13,6 @@ import view.MainApp;
 
 import java.awt.*;
 import java.util.Locale;
-import java.util.Random;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 

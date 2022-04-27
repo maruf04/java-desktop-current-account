@@ -1,7 +1,6 @@
 package model;
 
 import props.Basket;
-import props.Product;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
