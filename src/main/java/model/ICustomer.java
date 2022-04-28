@@ -12,7 +12,6 @@ public interface ICustomer {
     int customerDelete(int customerId);
     int customerUpdate(Customer customer);
     List<Customer> customerList();
-    List<Customer> customerSearch(String data);
     DefaultTableModel customerTableModel();
     List<ComboItem> listCustomer();
 

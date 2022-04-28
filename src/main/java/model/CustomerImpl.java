@@ -102,39 +102,6 @@ public class CustomerImpl implements ICustomer {
     }
 
     @Override
-    public List<Customer> customerSearch(String data) {
-        List<Customer> ls = new ArrayList<>();
-        try {
-            String searchData = "%" + data + "%";
-            String sql = " select * from Customer where name like ? or surname like ? or email like ? or phone like ? or address like ? ";
-            PreparedStatement pre = db.connect().prepareStatement(sql);
-            pre.setString(1, searchData);
-            pre.setString(2, searchData);
-            pre.setString(3, searchData);
-            pre.setString(4, searchData);
-            pre.setString(5, searchData);
-            ResultSet rs = pre.executeQuery();
-            while (rs.next()){
-                int customerId = rs.getInt("CustomerId");
-                String name = rs.getString("Name");
-                String surname = rs.getString("Surname");
-                String email = rs.getString("Email");
-                String phone = rs.getString("Phone");
-                String address = rs.getString("Addresss");
-                Customer c = new Customer(customerId, name, surname, email, phone, address);
-                ls.add(c);
-            }
-            if (ls.size() > 0);
-                return ls;
-        }catch (Exception ex){
-            System.out.println(" customerSearch Error " + ex);
-        }finally {
-            db.close();
-        }
-        return null;
-    }
-
-    @Override
     public DefaultTableModel customerTableModel() {
         ls = lsSearch;
         DefaultTableModel md = new DefaultTableModel();
