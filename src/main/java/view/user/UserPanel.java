@@ -5,7 +5,9 @@
 package view.user;
 
 import java.awt.event.*;
+import javax.swing.border.*;
 
+import model.ProductCategoryImpl;
 import model.UserImpl;
 import utils.Util;
 import view.MainApp;
@@ -13,6 +15,7 @@ import view.MainApp;
 
 import java.awt.*;
 import java.util.Locale;
+import java.util.Random;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 
@@ -20,9 +23,8 @@ import javax.swing.GroupLayout;
  * @author unknown
  */
 public class UserPanel extends JFrame {
-    MainApp mainapp=new MainApp();
     UserImpl userImpl=new UserImpl();
-   // public static String to="";
+    //public static String to="";
     //public static String sub="";
     //public static String msg="";
     public static String emailChange="";
@@ -32,7 +34,6 @@ public class UserPanel extends JFrame {
 
     public static void main(String[] args) {
         new UserPanel().setVisible(true);
-      //  ProductCategoryImpl productCategory=new ProductCategoryImpl();
 
     }
 
@@ -78,12 +79,16 @@ public class UserPanel extends JFrame {
         String email=txtEmail.getText().trim().toLowerCase(Locale.ROOT);
         status=userImpl.userGetEmail(email);
         if(status){
-            // String to= UserImpl.emailAddress;
-            //String sub="Java Project Forget Password";
-            //String msg="\n\n\t\tVerification Code: "+userImpl.verificationCode;
+            generatingVerificationCode();
 
-            System.out.println(userImpl.verificationCode);
-            //Util.sendMail(to,sub,msg);
+
+            String to= UserImpl.emailAddress;
+            String sub="Java Project Forget Password";
+            String msg="\n\n\t\tVerification Code: "+verificationCode;
+
+            Util.sendMail(to,sub,msg);
+
+
 
             new UserForgetPassword().setVisible(true);
             dispose();
@@ -119,7 +124,19 @@ public class UserPanel extends JFrame {
         }
     }
 
+    public void generatingVerificationCode() {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 5;
+        Random random = new Random();
 
+        verificationCode = random.ints(leftLimit, rightLimit + 1)
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+         System.out.println(verificationCode);
+    }
 
 
 

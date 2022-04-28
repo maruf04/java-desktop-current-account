@@ -6,6 +6,7 @@ package view.user;
 
 import model.UserImpl;
 import props.User;
+import view.user.UserPanel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -30,7 +31,7 @@ public class UserForgetPassword extends JFrame {
     private void btnForgetPasswordClicked(ActionEvent e) {
         User user=fncDataValid();
 
-            if(txtverificationCode.equals(UserImpl.verificationCode)){
+            if(txtverificationCode.getText().equals(UserPanel.verificationCode)){
                 userImpl.userForgetPassword(user);
             }else{
                 lblError.setText("Verification Code is Wrong");
