@@ -8,6 +8,9 @@ public class Customer {
     private String phone;
     private String address;
 
+    public Customer() {
+    }
+
     public Customer(int customerId, String name, String surname, String email, String phone, String address) {
         this.customerId = customerId;
         this.name = name;
@@ -75,8 +78,5 @@ public class Customer {
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 '}';
-    }
-
-    public Customer() {
     }
 }
