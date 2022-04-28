@@ -10,9 +10,13 @@ new FormModel {
 			name: "this"
 			add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
 				name: "tabbedPane1"
+				"foreground": sfield java.awt.Color blue
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+				"border": new javax.swing.border.BevelBorder( 1, sfield java.awt.Color red, sfield java.awt.Color yellow, sfield java.awt.Color green, sfield java.awt.Color blue )
+				"selectedIndex": 0
 				addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "tabbedPane1StateChanged", true ) )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:28:p, par l {comp lblCustomerError:::p:121:p, seq l {comp pnlAddCustomer:::p::p, space u:::p, comp pnlEditCustomer:::p::p}, comp panel19:::p::p}, space ::7:x}}"
+					"$horizontalGroup": "par l {seq l {space :p:28:p, par l {comp lblCustomerError:::p:121:p, seq l {comp pnlAddCustomer:::p::p, space u:::p, comp pnlEditCustomer:::p::p}, comp panel19:::p::p}, space ::3:x}}"
 					"$verticalGroup": "par l {seq l {space :p:19:p, comp panel19:::p::p, space :::p, par l {comp pnlAddCustomer:::p:239:p, comp pnlEditCustomer:::p:239:p}, space :::x, comp lblCustomerError:::p::p, space :::p}}"
 				} ) {
 					name: "panel1"
@@ -39,6 +43,7 @@ new FormModel {
 								"icon": new com.jformdesigner.model.SwingIcon( 0, "/edit32.png" )
 								"foreground": sfield java.awt.Color red
 								"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+								"background": new java.awt.Color( 255, 255, 0, 255 )
 								addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnCustomerListEditMouseReleased", true ) )
 							} )
 							add( new FormComponent( "javax.swing.JButton" ) {
@@ -47,6 +52,7 @@ new FormModel {
 								"icon": new com.jformdesigner.model.SwingIcon( 0, "/delete.png" )
 								"foreground": sfield java.awt.Color red
 								"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+								"background": new java.awt.Color( 255, 255, 0, 255 )
 								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnCustomerListDelete", true ) )
 							} )
 						} )
@@ -96,6 +102,9 @@ new FormModel {
 							name: "btnAddCustomer"
 							"text": "Add"
 							"icon": new com.jformdesigner.model.SwingIcon( 0, "/add.png" )
+							"foreground": sfield java.awt.Color red
+							"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+							"background": new java.awt.Color( 255, 255, 0, 255 )
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAddCustomer", true ) )
 						} )
 					} )
@@ -144,6 +153,9 @@ new FormModel {
 							name: "btnEditCustomer"
 							"text": "Edit"
 							"icon": new com.jformdesigner.model.SwingIcon( 0, "/edit32.png" )
+							"foreground": sfield java.awt.Color red
+							"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+							"background": new java.awt.Color( 255, 255, 0, 255 )
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnEditCustomer", true ) )
 						} )
 					} )
@@ -160,8 +172,8 @@ new FormModel {
 				} ) {
 					name: "panel2"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq {space :::p, par l {seq {space :p:28:p, comp label62:::p::p, space s:::p, comp datePicker1:::p::p, space :p:86:p, comp label66:::p::p, space s:::p, comp datePicker2:::p::p}, par t:::p {seq l {comp label1:::p:116:p, space s:::p, comp rdbCustomer:::p::p, space :p:104:p, comp rdbProduct:::p::p, space :::x, comp rdbCategory:::p::p}, seq l {comp label2:::p::p, space s:::p, comp txtSearchReport:::p:520:p}}}, space :::x}}"
-						"$verticalGroup": "par l {seq l {par b {comp label1::b:p::p, comp rdbCustomer::b:p::p, comp rdbProduct::b:p::p, comp rdbCategory::b:p::p}, space s:::p, par b {comp label2::b:p::p, comp txtSearchReport::b:p::p}, space ::24:x, par l {comp label62:::p:30:p, par b {comp datePicker1::b:p::p, comp label66::b:p::p, comp datePicker2::b:p::p}}, space :p:20:p}}"
+						"$horizontalGroup": "par l {seq {space :::p, par l {seq {space :p:28:p, comp label62:::p::p, space s:::p, comp datePicker1:::p::p, space :p:53:p, comp label66:::p::p, space :p:51:p, comp datePicker2:::p::p}, par t:::p {seq l {comp label1:::p:116:p, space s:::p, comp rdbCustomer:::p::p, space :p:104:p, comp rdbProduct:::p::p, space :::x, comp rdbCategory:::p::p}, seq l {comp label2:::p::p, space s:::p, comp txtSearchReport:::p:520:p}}}, space :::x}}"
+						"$verticalGroup": "par l {seq l {par b {comp label1::b:p::p, comp rdbCustomer::b:p::p, comp rdbProduct::b:p::p, comp rdbCategory::b:p::p}, space s:::p, par b {comp label2::b:p::p, comp txtSearchReport::b:p::p}, space ::24:x, par l {comp label62:::p:30:p, par b {comp datePicker1::b:p::p, comp datePicker2::b:p::p, comp label66::b:p::p}}, space :p:20:p}}"
 					} ) {
 						name: "panel10"
 						"border": new javax.swing.border.TitledBorder( "Filters" )
@@ -173,11 +185,13 @@ new FormModel {
 							name: "rdbCustomer"
 							"text": "Customers"
 							"$buttonGroup": new FormReference( "buttonGroup1" )
+							"font": new java.awt.Font( "Segoe UI", 1, 12 )
 						} )
 						add( new FormComponent( "javax.swing.JRadioButton" ) {
 							name: "rdbProduct"
 							"text": "Products"
 							"$buttonGroup": &FormReference0 new FormReference( "buttonGroup1" )
+							"font": new java.awt.Font( "Segoe UI", 1, 12 )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label2"
@@ -198,16 +212,19 @@ new FormModel {
 						} )
 						add( new FormComponent( "com.github.lgooddatepicker.components.DatePicker" ) {
 							name: "datePicker1"
+							"background": new java.awt.Color( 255, 204, 204, 255 )
 							addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "datePicker1PropertyChange", true ) )
 						} )
 						add( new FormComponent( "com.github.lgooddatepicker.components.DatePicker" ) {
 							name: "datePicker2"
+							"background": new java.awt.Color( 255, 204, 204, 255 )
 							addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "datePicker2PropertyChange", true ) )
 						} )
 						add( new FormComponent( "javax.swing.JRadioButton" ) {
 							name: "rdbCategory"
 							"text": "Category"
 							"$buttonGroup": #FormReference0
+							"font": new java.awt.Font( "Segoe UI", 1, 12 )
 						} )
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
@@ -257,7 +274,7 @@ new FormModel {
 				} ) {
 					name: "panel3"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq {par l {seq {par l {seq {space :::p, comp cmbList:::p:295:p, space s:::p, comp btnSaleList:::p::p}, seq l {space :p:12:p, par t {seq {comp lblSaleList:::p:219:p, space :p:329:p}, comp lblSales::t:p:211:p, seq l {comp panel29:::p::p, space :p:33:p, comp btnOpenBasket:::p::p}}}}, space :0:92:x}, comp scrollPane9::t::716:x}, space :::p}}"
+						"$horizontalGroup": "par l {seq {par l {seq {par l {seq {space :::p, comp cmbList:::p:295:p, space s:::p, comp btnSaleList:::p::p}, seq l {space :p:12:p, par t {seq {comp lblSaleList:::p:219:p, space :p:329:p}, comp lblSales::t:p:211:p, seq l {comp panel29:::p::p, space :p:33:p, comp btnOpenBasket:::p::p}}}}, space :0:92:x}, comp scrollPane9::t::722:x}, space :::p}}"
 						"$verticalGroup": "par l {seq l {space :::p, par b {comp cmbList::b:p::p, comp btnSaleList::b:p::p}, space :::p, comp lblSaleList:::p::p, par l {seq {space :::p, comp scrollPane9:::p:128:p, space :::p, comp lblSales:::p::p, space :::p, comp panel29:::p::p, space ::40:x}, seq t {space ::206:x, comp btnOpenBasket:::p::p, space :p:107:p}}}}"
 					} ) {
 						name: "panel15"
@@ -269,6 +286,9 @@ new FormModel {
 							name: "btnSaleList"
 							"text": "List"
 							"icon": new com.jformdesigner.model.SwingIcon( 0, "/list.png" )
+							"foreground": sfield java.awt.Color red
+							"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+							"background": new java.awt.Color( 255, 255, 0, 255 )
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnSaleListClick", true ) )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
@@ -317,6 +337,9 @@ new FormModel {
 								name: "btnSaleProcess"
 								"text": "Complete"
 								"icon": new com.jformdesigner.model.SwingIcon( 0, "/complate.png" )
+								"foreground": sfield java.awt.Color red
+								"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+								"background": new java.awt.Color( 255, 255, 0, 255 )
 								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnSaleProcessClick", true ) )
 							} )
 						} )
@@ -324,6 +347,9 @@ new FormModel {
 							name: "btnOpenBasket"
 							"text": "Basket"
 							"icon": new com.jformdesigner.model.SwingIcon( 0, "/basket.png" )
+							"foreground": sfield java.awt.Color red
+							"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+							"background": new java.awt.Color( 255, 255, 0, 255 )
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnOpenBasketClick", true ) )
 						} )
 					} )
@@ -331,7 +357,7 @@ new FormModel {
 					"title": "Sales Management"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:20:p, par l {comp panel11:::p::p, seq {comp panel17:::p::p, space :::p, comp panel18:::p::p}}, space ::11:x}}"
+					"$horizontalGroup": "par l {seq l {space :p:20:p, par l {comp panel11:::p::p, seq {comp panel17:::p::p, space :::p, comp panel18:::p::p}}, space ::4:x}}"
 					"$verticalGroup": "par l {seq l {space :::p, comp panel11:::p:143:p, space :::p, par l {comp panel17::::0:x, seq {comp panel18:::p:282:p, space :0:0:x}}, space :::p}}"
 				} ) {
 					name: "panel4"
@@ -357,12 +383,18 @@ new FormModel {
 								name: "btnProductListEdit"
 								"text": "Edit"
 								"icon": new com.jformdesigner.model.SwingIcon( 0, "/edit32.png" )
+								"foreground": sfield java.awt.Color red
+								"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+								"background": new java.awt.Color( 255, 255, 0, 255 )
 								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnProductListEditClick", true ) )
 							} )
 							add( new FormComponent( "javax.swing.JButton" ) {
 								name: "btnProductListDelete"
 								"text": "Delete"
 								"icon": new com.jformdesigner.model.SwingIcon( 0, "/delete.png" )
+								"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+								"foreground": sfield java.awt.Color red
+								"background": new java.awt.Color( 255, 255, 0, 255 )
 								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnProductListDeleteClick", true ) )
 							} )
 						} )
@@ -419,6 +451,9 @@ new FormModel {
 							name: "btnAddProduct"
 							"text": "Add"
 							"icon": new com.jformdesigner.model.SwingIcon( 0, "/add.png" )
+							"foreground": sfield java.awt.Color red
+							"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+							"background": new java.awt.Color( 255, 255, 0, 255 )
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAddProductClick", true ) )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
@@ -478,6 +513,9 @@ new FormModel {
 							name: "btnEditProduct"
 							"text": "Edit"
 							"icon": new com.jformdesigner.model.SwingIcon( 0, "/edit32.png" )
+							"foreground": sfield java.awt.Color red
+							"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+							"background": new java.awt.Color( 255, 255, 51, 255 )
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnEditProductClick", true ) )
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnEditProductClick", true ) )
 						} )
@@ -490,10 +528,11 @@ new FormModel {
 					"title": "Produtcs"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:30:p, par l {comp pnlUserAdd:::p:461:p, comp btnAddUser::t:p::p}, space ::195:x}}"
-					"$verticalGroup": "par l {seq t {space ::49:x, comp pnlUserAdd:::p::p, space :::p, comp btnAddUser:::p:39:p, space :p:154:p}}"
+					"$horizontalGroup": "par l {seq l {space :p:30:p, par l {comp pnlUserAdd:::p:461:p, comp btnAddUser::t:p::p}, space ::191:x}}"
+					"$verticalGroup": "par l {seq t {space ::45:x, comp pnlUserAdd:::p::p, space :::p, comp btnAddUser:::p:39:p, space :p:154:p}}"
 				} ) {
 					name: "panel6"
+					"foreground": sfield java.awt.Color cyan
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 						"$horizontalGroup": "par l {seq {space :::p, par l {seq {par l {comp lblEmail:::p:90:p, comp lblPassword:::p:90:p}, space :::p, par l {seq {comp txtPassword:::p:161:p, space :::p, comp lblError:::p:224:p}, comp txtEmail::l:p:161:p}}, seq l {comp lblName:::p:90:p, space :::p, comp txtName:::p:161:p}, seq l {comp lblSurname:::p:90:p, space :::p, comp txtSurname:::p:161:p}}, space :::x}}"
 						"$verticalGroup": "par l {seq l {space :p:12:p, par b {comp txtName::b:p:28:p, comp lblName::b:p:24:p}, space u:::p, par t {comp lblSurname:::p:24:p, comp txtSurname:::p:28:p}, par l {seq {space :p:70:p, comp lblError:::::x, space :p::p}, seq l {space u:::p, par b {comp lblEmail::b:p:24:p, comp txtEmail::b:p:28:p}, par l {seq {space :10:10:p, comp lblPassword:::p:24:p}, seq l {space :::p, comp txtPassword:::p:28:p}}, space :::x}}}}"
@@ -541,14 +580,17 @@ new FormModel {
 						name: "btnAddUser"
 						"text": "Add User"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/adduser.png" )
+						"foreground": sfield java.awt.Color red
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+						"background": new java.awt.Color( 255, 255, 0, 255 )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAddUserClicked", true ) )
 					} )
 				}, new FormLayoutConstraints( null ) {
 					"title": "User Settings"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:138:p, comp btnAddCategory:::p::p, space s:::p, comp btnUpdateCategory:::::x, space s:::p, comp btnDeleteCategoryList:::p:94:p, space :p:272:p}, seq t {space :::p, comp panel25:::::x, space :::p}, seq l {space :::p, comp panel23:::::x, space :::p}}"
-					"$verticalGroup": "par l {seq l {space :::p, comp panel23:::p::p, space ::20:x, comp panel25:::p:121:p, space u:::p, par l {par b {comp btnUpdateCategory::b:p:39:p, comp btnDeleteCategoryList::b:p::p}, comp btnAddCategory::l:p::p}, space :p:16:p}}"
+					"$horizontalGroup": "par l {seq l {space :p:138:p, comp btnAddCategory:::p::p, space s:::p, comp btnUpdateCategory:::::x, space s:::p, comp btnDeleteCategoryList:::p:118:p, space :p:242:p}, seq t {space :::p, comp panel25:::::x, space :::p}, seq l {space :::p, comp panel23:::::x, space :::p}}"
+					"$verticalGroup": "par l {seq l {space :::p, comp panel23:::p::p, space ::16:x, comp panel25:::p:121:p, space u:::p, par l {par b {comp btnUpdateCategory::b:p:39:p, comp btnDeleteCategoryList::b:p::p}, comp btnAddCategory::l:p::p}, space :p:16:p}}"
 				} ) {
 					name: "panel5"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
@@ -601,18 +643,27 @@ new FormModel {
 						name: "btnAddCategory"
 						"text": "Add"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/add.png" )
+						"foreground": sfield java.awt.Color red
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+						"background": new java.awt.Color( 255, 255, 0, 255 )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAddCategoryClick", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "btnUpdateCategory"
 						"text": "Update"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/edit32.png" )
+						"foreground": sfield java.awt.Color red
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+						"background": new java.awt.Color( 255, 255, 0, 255 )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnUpdateCategoryClick", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "btnDeleteCategoryList"
 						"text": "Delete"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/delete.png" )
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+						"foreground": sfield java.awt.Color red
+						"background": new java.awt.Color( 255, 255, 0, 255 )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnDeleteCategoryClick", true ) )
 					} )
 				}, new FormLayoutConstraints( null ) {
@@ -623,6 +674,9 @@ new FormModel {
 				name: "btnExit"
 				"text": "Exit"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/exitn.png" )
+				"foreground": sfield java.awt.Color red
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+				"background": new java.awt.Color( 255, 0, 0, 255 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnExitClick", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {

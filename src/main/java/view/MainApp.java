@@ -849,6 +849,9 @@ public class MainApp extends JFrame {
 
         //======== tabbedPane1 ========
         {
+            tabbedPane1.setForeground(Color.blue);
+            tabbedPane1.setFont(tabbedPane1.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+            tabbedPane1.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.red, Color.yellow, Color.green, Color.blue));
             tabbedPane1.addChangeListener(e -> tabbedPane1StateChanged(e));
 
             //======== panel1 ========
@@ -871,6 +874,7 @@ public class MainApp extends JFrame {
                         btnCustomerListEdit.setIcon(new ImageIcon(getClass().getResource("/edit32.png")));
                         btnCustomerListEdit.setForeground(Color.red);
                         btnCustomerListEdit.setFont(btnCustomerListEdit.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                        btnCustomerListEdit.setBackground(Color.yellow);
                         btnCustomerListEdit.addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseReleased(MouseEvent e) {
@@ -883,6 +887,7 @@ public class MainApp extends JFrame {
                         btnCustomerListDelete.setIcon(new ImageIcon(getClass().getResource("/delete.png")));
                         btnCustomerListDelete.setForeground(Color.red);
                         btnCustomerListDelete.setFont(btnCustomerListDelete.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                        btnCustomerListDelete.setBackground(Color.yellow);
                         btnCustomerListDelete.addActionListener(e -> btnCustomerListDelete(e));
 
                         GroupLayout panel20Layout = new GroupLayout(panel20);
@@ -953,6 +958,9 @@ public class MainApp extends JFrame {
                     //---- btnAddCustomer ----
                     btnAddCustomer.setText("Add");
                     btnAddCustomer.setIcon(new ImageIcon(getClass().getResource("/add.png")));
+                    btnAddCustomer.setForeground(Color.red);
+                    btnAddCustomer.setFont(btnAddCustomer.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                    btnAddCustomer.setBackground(Color.yellow);
                     btnAddCustomer.addActionListener(e -> btnAddCustomer(e));
 
                     GroupLayout pnlAddCustomerLayout = new GroupLayout(pnlAddCustomer);
@@ -1035,6 +1043,9 @@ public class MainApp extends JFrame {
                     //---- btnEditCustomer ----
                     btnEditCustomer.setText("Edit");
                     btnEditCustomer.setIcon(new ImageIcon(getClass().getResource("/edit32.png")));
+                    btnEditCustomer.setForeground(Color.red);
+                    btnEditCustomer.setFont(btnEditCustomer.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                    btnEditCustomer.setBackground(Color.yellow);
                     btnEditCustomer.addActionListener(e -> btnEditCustomer(e));
 
                     GroupLayout pnlEditCustomerLayout = new GroupLayout(pnlEditCustomer);
@@ -1111,7 +1122,7 @@ public class MainApp extends JFrame {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(pnlEditCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addComponent(panel19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(7, Short.MAX_VALUE))
+                            .addContainerGap(3, Short.MAX_VALUE))
                 );
                 panel1Layout.setVerticalGroup(
                     panel1Layout.createParallelGroup()
@@ -1141,9 +1152,11 @@ public class MainApp extends JFrame {
 
                     //---- rdbCustomer ----
                     rdbCustomer.setText("Customers");
+                    rdbCustomer.setFont(new Font("Segoe UI", Font.BOLD, 12));
 
                     //---- rdbProduct ----
                     rdbProduct.setText("Products");
+                    rdbProduct.setFont(new Font("Segoe UI", Font.BOLD, 12));
 
                     //---- label2 ----
                     label2.setText("Search");
@@ -1164,13 +1177,16 @@ public class MainApp extends JFrame {
                     label66.setText("and");
 
                     //---- datePicker1 ----
+                    datePicker1.setBackground(new Color(255, 204, 204));
                     datePicker1.addPropertyChangeListener(e -> datePicker1PropertyChange(e));
 
                     //---- datePicker2 ----
+                    datePicker2.setBackground(new Color(255, 204, 204));
                     datePicker2.addPropertyChangeListener(e -> datePicker2PropertyChange(e));
 
                     //---- rdbCategory ----
                     rdbCategory.setText("Category");
+                    rdbCategory.setFont(new Font("Segoe UI", Font.BOLD, 12));
 
                     GroupLayout panel10Layout = new GroupLayout(panel10);
                     panel10.setLayout(panel10Layout);
@@ -1184,9 +1200,9 @@ public class MainApp extends JFrame {
                                         .addComponent(label62)
                                         .addGap(18, 18, 18)
                                         .addComponent(datePicker1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(86, 86, 86)
+                                        .addGap(53, 53, 53)
                                         .addComponent(label66)
-                                        .addGap(18, 18, 18)
+                                        .addGap(51, 51, 51)
                                         .addComponent(datePicker2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(GroupLayout.Alignment.LEADING, panel10Layout.createSequentialGroup()
@@ -1220,8 +1236,8 @@ public class MainApp extends JFrame {
                                     .addComponent(label62, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(datePicker1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(label66)
-                                        .addComponent(datePicker2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(datePicker2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(label66)))
                                 .addGap(20, 20, 20))
                     );
                 }
@@ -1356,6 +1372,9 @@ public class MainApp extends JFrame {
                     //---- btnSaleList ----
                     btnSaleList.setText("List");
                     btnSaleList.setIcon(new ImageIcon(getClass().getResource("/list.png")));
+                    btnSaleList.setForeground(Color.red);
+                    btnSaleList.setFont(btnSaleList.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                    btnSaleList.setBackground(Color.yellow);
                     btnSaleList.addActionListener(e -> btnSaleListClick(e));
 
                     //---- lblSaleList ----
@@ -1393,6 +1412,9 @@ public class MainApp extends JFrame {
                         //---- btnSaleProcess ----
                         btnSaleProcess.setText("Complete");
                         btnSaleProcess.setIcon(new ImageIcon(getClass().getResource("/complate.png")));
+                        btnSaleProcess.setForeground(Color.red);
+                        btnSaleProcess.setFont(btnSaleProcess.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                        btnSaleProcess.setBackground(Color.yellow);
                         btnSaleProcess.addActionListener(e -> btnSaleProcessClick(e));
 
                         GroupLayout panel29Layout = new GroupLayout(panel29);
@@ -1439,6 +1461,9 @@ public class MainApp extends JFrame {
                     //---- btnOpenBasket ----
                     btnOpenBasket.setText("Basket");
                     btnOpenBasket.setIcon(new ImageIcon(getClass().getResource("/basket.png")));
+                    btnOpenBasket.setForeground(Color.red);
+                    btnOpenBasket.setFont(btnOpenBasket.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                    btnOpenBasket.setBackground(Color.yellow);
                     btnOpenBasket.addActionListener(e -> btnOpenBasketClick(e));
 
                     GroupLayout panel15Layout = new GroupLayout(panel15);
@@ -1466,7 +1491,7 @@ public class MainApp extends JFrame {
                                                         .addGap(33, 33, 33)
                                                         .addComponent(btnOpenBasket)))))
                                         .addGap(0, 92, Short.MAX_VALUE))
-                                    .addComponent(scrollPane9, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE))
+                                    .addComponent(scrollPane9, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE))
                                 .addContainerGap())
                     );
                     panel15Layout.setVerticalGroup(
@@ -1532,11 +1557,17 @@ public class MainApp extends JFrame {
                         //---- btnProductListEdit ----
                         btnProductListEdit.setText("Edit");
                         btnProductListEdit.setIcon(new ImageIcon(getClass().getResource("/edit32.png")));
+                        btnProductListEdit.setForeground(Color.red);
+                        btnProductListEdit.setFont(btnProductListEdit.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                        btnProductListEdit.setBackground(Color.yellow);
                         btnProductListEdit.addActionListener(e -> btnProductListEditClick(e));
 
                         //---- btnProductListDelete ----
                         btnProductListDelete.setText("Delete");
                         btnProductListDelete.setIcon(new ImageIcon(getClass().getResource("/delete.png")));
+                        btnProductListDelete.setFont(btnProductListDelete.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                        btnProductListDelete.setForeground(Color.red);
+                        btnProductListDelete.setBackground(Color.yellow);
                         btnProductListDelete.addActionListener(e -> btnProductListDeleteClick(e));
 
                         GroupLayout panel16Layout = new GroupLayout(panel16);
@@ -1609,6 +1640,9 @@ public class MainApp extends JFrame {
                     //---- btnAddProduct ----
                     btnAddProduct.setText("Add");
                     btnAddProduct.setIcon(new ImageIcon(getClass().getResource("/add.png")));
+                    btnAddProduct.setForeground(Color.red);
+                    btnAddProduct.setFont(btnAddProduct.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                    btnAddProduct.setBackground(Color.yellow);
                     btnAddProduct.addActionListener(e -> btnAddProductClick(e));
 
                     //---- lblAddProduct ----
@@ -1717,6 +1751,9 @@ public class MainApp extends JFrame {
                     //---- btnEditProduct ----
                     btnEditProduct.setText("Edit");
                     btnEditProduct.setIcon(new ImageIcon(getClass().getResource("/edit32.png")));
+                    btnEditProduct.setForeground(Color.red);
+                    btnEditProduct.setFont(btnEditProduct.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                    btnEditProduct.setBackground(new Color(255, 255, 51));
                     btnEditProduct.addActionListener(e -> {
 			btnEditProductClick(e);
 			btnEditProductClick(e);
@@ -1818,7 +1855,7 @@ public class MainApp extends JFrame {
                                     .addComponent(panel17, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(panel18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap(11, Short.MAX_VALUE))
+                            .addContainerGap(4, Short.MAX_VALUE))
                 );
                 panel4Layout.setVerticalGroup(
                     panel4Layout.createParallelGroup()
@@ -1838,6 +1875,7 @@ public class MainApp extends JFrame {
 
             //======== panel6 ========
             {
+                panel6.setForeground(Color.cyan);
 
                 //======== pnlUserAdd ========
                 {
@@ -1925,6 +1963,9 @@ public class MainApp extends JFrame {
                 //---- btnAddUser ----
                 btnAddUser.setText("Add User");
                 btnAddUser.setIcon(new ImageIcon(getClass().getResource("/adduser.png")));
+                btnAddUser.setForeground(Color.red);
+                btnAddUser.setFont(btnAddUser.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                btnAddUser.setBackground(Color.yellow);
                 btnAddUser.addActionListener(e -> btnAddUserClicked(e));
 
                 GroupLayout panel6Layout = new GroupLayout(panel6);
@@ -1936,12 +1977,12 @@ public class MainApp extends JFrame {
                             .addGroup(panel6Layout.createParallelGroup()
                                 .addComponent(pnlUserAdd, GroupLayout.PREFERRED_SIZE, 461, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnAddUser, GroupLayout.Alignment.TRAILING))
-                            .addContainerGap(195, Short.MAX_VALUE))
+                            .addContainerGap(191, Short.MAX_VALUE))
                 );
                 panel6Layout.setVerticalGroup(
                     panel6Layout.createParallelGroup()
                         .addGroup(GroupLayout.Alignment.TRAILING, panel6Layout.createSequentialGroup()
-                            .addContainerGap(49, Short.MAX_VALUE)
+                            .addContainerGap(45, Short.MAX_VALUE)
                             .addComponent(pnlUserAdd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnAddUser, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
@@ -2063,16 +2104,25 @@ public class MainApp extends JFrame {
                 //---- btnAddCategory ----
                 btnAddCategory.setText("Add");
                 btnAddCategory.setIcon(new ImageIcon(getClass().getResource("/add.png")));
+                btnAddCategory.setForeground(Color.red);
+                btnAddCategory.setFont(btnAddCategory.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                btnAddCategory.setBackground(Color.yellow);
                 btnAddCategory.addActionListener(e -> btnAddCategoryClick(e));
 
                 //---- btnUpdateCategory ----
                 btnUpdateCategory.setText("Update");
                 btnUpdateCategory.setIcon(new ImageIcon(getClass().getResource("/edit32.png")));
+                btnUpdateCategory.setForeground(Color.red);
+                btnUpdateCategory.setFont(btnUpdateCategory.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                btnUpdateCategory.setBackground(Color.yellow);
                 btnUpdateCategory.addActionListener(e -> btnUpdateCategoryClick(e));
 
                 //---- btnDeleteCategoryList ----
                 btnDeleteCategoryList.setText("Delete");
                 btnDeleteCategoryList.setIcon(new ImageIcon(getClass().getResource("/delete.png")));
+                btnDeleteCategoryList.setFont(btnDeleteCategoryList.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+                btnDeleteCategoryList.setForeground(Color.red);
+                btnDeleteCategoryList.setBackground(Color.yellow);
                 btnDeleteCategoryList.addActionListener(e -> btnDeleteCategoryClick(e));
 
                 GroupLayout panel5Layout = new GroupLayout(panel5);
@@ -2085,8 +2135,8 @@ public class MainApp extends JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(btnUpdateCategory, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGap(18, 18, 18)
-                            .addComponent(btnDeleteCategoryList, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
-                            .addGap(272, 272, 272))
+                            .addComponent(btnDeleteCategoryList, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+                            .addGap(242, 242, 242))
                         .addGroup(GroupLayout.Alignment.TRAILING, panel5Layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(panel25, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2101,7 +2151,7 @@ public class MainApp extends JFrame {
                         .addGroup(panel5Layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(panel23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                             .addComponent(panel25, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(panel5Layout.createParallelGroup()
@@ -2113,11 +2163,16 @@ public class MainApp extends JFrame {
                 );
             }
             tabbedPane1.addTab("Categories", panel5);
+
+            tabbedPane1.setSelectedIndex(0);
         }
 
         //---- btnExit ----
         btnExit.setText("Exit");
         btnExit.setIcon(new ImageIcon(getClass().getResource("/exitn.png")));
+        btnExit.setForeground(Color.red);
+        btnExit.setFont(btnExit.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+        btnExit.setBackground(Color.red);
         btnExit.addActionListener(e -> btnExitClick(e));
 
         //---- label45 ----
