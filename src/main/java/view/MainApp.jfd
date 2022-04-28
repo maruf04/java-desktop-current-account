@@ -14,6 +14,7 @@ new FormModel {
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
 				"border": new javax.swing.border.BevelBorder( 1, sfield java.awt.Color red, sfield java.awt.Color yellow, sfield java.awt.Color green, sfield java.awt.Color blue )
 				"selectedIndex": 0
+				"background": new java.awt.Color( 255, 0, 0, 255 )
 				addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "tabbedPane1StateChanged", true ) )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 					"$horizontalGroup": "par l {seq l {space :p:28:p, par l {comp lblCustomerError:::p:121:p, seq l {comp pnlAddCustomer:::p::p, space u:::p, comp pnlEditCustomer:::p::p}, comp panel19:::p::p}, space ::3:x}}"

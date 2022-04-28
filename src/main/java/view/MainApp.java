@@ -31,6 +31,8 @@ public class MainApp extends JFrame {
     BasketImpl basketImpl=new BasketImpl(-1);
     int row=-1;
     int value;
+    String datest="1900-12-01";
+    String datend="2500-12-01";
 
     public static void main(String[] args) {
         MainApp mainApp=new MainApp();
@@ -237,6 +239,55 @@ public class MainApp extends JFrame {
 
 
     }
+    private Customer fncEditCustomerDatavalidate(){
+        String name = txtEditCustomerName.getText().toLowerCase(Locale.ROOT).trim();
+        String surname = txtEditCustomerSurname.getText().toLowerCase(Locale.ROOT).trim();
+        String email=txtEditCustomerEmail.getText().toLowerCase(Locale.ROOT).trim();
+        String phone=txtEditCustomerPhone.getText().toLowerCase(Locale.ROOT).trim();
+        String address=txtEditCustomerAddress.getText().toLowerCase(Locale.ROOT).trim();
+
+        if(name.equals("")){
+            txtEditCustomerName.requestFocus();
+            lblCustomerError.setText("Name is cannot be empty");
+        }
+        else if(surname.equals("")){
+            txtEditCustomerSurname.requestFocus();
+            lblCustomerError.setText("Surname is cannot be empty");
+        }
+        else if(email.equals("")){
+            txtEditCustomerEmail.requestFocus();
+            lblCustomerError.setText("Email is cannot be empty");
+        }
+        else if(!Util.isValidEmailAddress(email)){
+            lblCustomerError.setText("E-mail invalid");
+            txtEditCustomerEmail.requestFocus();
+        }
+        else if(phone.equals("")){
+            txtEditCustomerPhone.requestFocus();
+            lblCustomerError.setText("Phone is cannot be empty");
+        }
+        else if(address.equals("")){
+            txtEditCustomerAddress.requestFocus();
+            lblCustomerError.setText("Address is cannot be empty");
+        }
+        else{
+            lblCustomerError.setText("");
+            Customer customer = new Customer(0,name,surname,email,phone,address);
+            return customer;
+        }
+        return null;
+    }
+    public String rowValueCustomer(int row,int column){
+
+        String selectedCellValue = String.valueOf(tblCustomer.getValueAt(row , column)) ;
+        txtEditCustomerName.setText((String) tblCustomer.getValueAt(row , 1));
+        txtEditCustomerSurname.setText((String) tblCustomer.getValueAt(row , 2));
+        txtEditCustomerEmail.setText((String) tblCustomer.getValueAt(row , 3));
+        txtEditCustomerPhone.setText( String.valueOf(tblCustomer.getValueAt(row , 4)));
+        txtEditCustomerAddress.setText( String.valueOf(tblCustomer.getValueAt(row , 5)));
+
+        return selectedCellValue;
+    }
 
     public void fncTextClear(){
         txtName.setText("");
@@ -295,55 +346,7 @@ public class MainApp extends JFrame {
         }
         return null;
     }
-    private Customer fncEditCustomerDatavalidate(){
-        String name = txtEditCustomerName.getText().toLowerCase(Locale.ROOT).trim();
-        String surname = txtEditCustomerSurname.getText().toLowerCase(Locale.ROOT).trim();
-        String email=txtEditCustomerEmail.getText().toLowerCase(Locale.ROOT).trim();
-        String phone=txtEditCustomerPhone.getText().toLowerCase(Locale.ROOT).trim();
-        String address=txtEditCustomerAddress.getText().toLowerCase(Locale.ROOT).trim();
 
-        if(name.equals("")){
-            txtEditCustomerName.requestFocus();
-            lblCustomerError.setText("Name is cannot be empty");
-        }
-        else if(surname.equals("")){
-            txtEditCustomerSurname.requestFocus();
-            lblCustomerError.setText("Surname is cannot be empty");
-        }
-        else if(email.equals("")){
-            txtEditCustomerEmail.requestFocus();
-            lblCustomerError.setText("Email is cannot be empty");
-        }
-        else if(!Util.isValidEmailAddress(email)){
-            lblCustomerError.setText("E-mail invalid");
-            txtEditCustomerEmail.requestFocus();
-        }
-        else if(phone.equals("")){
-            txtEditCustomerPhone.requestFocus();
-            lblCustomerError.setText("Phone is cannot be empty");
-        }
-        else if(address.equals("")){
-            txtEditCustomerAddress.requestFocus();
-            lblCustomerError.setText("Address is cannot be empty");
-        }
-        else{
-            lblCustomerError.setText("");
-            Customer customer = new Customer(0,name,surname,email,phone,address);
-            return customer;
-        }
-        return null;
-    }
-    public String rowValueCustomer(int row,int column){
-
-        String selectedCellValue = String.valueOf(tblCustomer.getValueAt(row , column)) ;
-        txtEditCustomerName.setText((String) tblCustomer.getValueAt(row , 1));
-        txtEditCustomerSurname.setText((String) tblCustomer.getValueAt(row , 2));
-        txtEditCustomerEmail.setText((String) tblCustomer.getValueAt(row , 3));
-        txtEditCustomerPhone.setText( String.valueOf(tblCustomer.getValueAt(row , 4)));
-        txtEditCustomerAddress.setText( String.valueOf(tblCustomer.getValueAt(row , 5)));
-
-        return selectedCellValue;
-    }
 
     private void btnAddCategoryClick(ActionEvent e) {
         ProductCategory c=fncDataValidCategory();
@@ -648,8 +651,7 @@ public class MainApp extends JFrame {
         basketScreen.setVisible(true);
     }
 
-    String datest="1900-12-01";
-    String datend="2500-12-01";
+
 
     //OrderImpl or=new OrderImpl(datest,datend); //???
 
@@ -852,6 +854,7 @@ public class MainApp extends JFrame {
             tabbedPane1.setForeground(Color.blue);
             tabbedPane1.setFont(tabbedPane1.getFont().deriveFont(Font.BOLD|Font.ITALIC));
             tabbedPane1.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.red, Color.yellow, Color.green, Color.blue));
+            tabbedPane1.setBackground(Color.red);
             tabbedPane1.addChangeListener(e -> tabbedPane1StateChanged(e));
 
             //======== panel1 ========
