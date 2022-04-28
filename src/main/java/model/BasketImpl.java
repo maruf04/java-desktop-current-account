@@ -1,8 +1,6 @@
 package model;
 
 import props.Basket;
-import props.Customer;
-import props.Product;
 import utils.DB;
 
 import javax.swing.table.DefaultTableModel;
@@ -12,22 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BasketImpl implements IBasket{
- //  ProductImpl productImpl = new ProductImpl(-1);
-    CustomerImpl customersImpl=new CustomerImpl();
-    ProductImpl productImpl=new ProductImpl(-1);
+    ProductImpl productImpl = new ProductImpl(-1);
     int inpCustomerId;
     DB db=new DB();
     List<Basket> ls = new ArrayList<>();
-    List<Customer> lsCustomer=new ArrayList<>();
-    List<Customer> lsCustomerSearch =new ArrayList<>();
-    public List<Product> lsProduct =new ArrayList<>();
-    public BasketImpl() {
-
-        lsCustomer= customersImpl.customerList();
-        lsCustomerSearch =lsCustomer;
-        lsProduct=productImpl.productList();
-
-    }
 
     public BasketImpl(int inpCustomerId) {
         this.inpCustomerId=inpCustomerId;

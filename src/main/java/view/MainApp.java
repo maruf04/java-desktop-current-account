@@ -33,14 +33,13 @@ public class MainApp extends JFrame {
     int value;
 
     public static void main(String[] args) {
-
-
         MainApp mainApp=new MainApp();
         mainApp.setVisible(true);
     }
     UserImpl userImpl=new UserImpl();
     CustomerImpl customerImpl = new CustomerImpl(); //Customer
     ProductCategory productCategory=new ProductCategory();
+    ReportImpl reportImpl = new ReportImpl();
 
     public void startCategoryTable(){
         tblCategory.setModel(productCategoryImpl.categoryTableModel());
@@ -52,6 +51,7 @@ public class MainApp extends JFrame {
         tblCategory.setModel(productCategoryImpl.categoryTableModel());
         tblProducts.setModel(productImpl.productTable(null));
         tblSale.setModel(productImpl.productTable(null));
+        tblReport.setModel(reportImpl.reportTableModel(null,-1));
         listedProductCategory();
         listedCustomer();
     }
@@ -651,46 +651,62 @@ public class MainApp extends JFrame {
     String datest="1900-12-01";
     String datend="2500-12-01";
 
-    OrderImpl or=new OrderImpl(datest,datend);
+    //OrderImpl or=new OrderImpl(datest,datend); //???
 
     private void txtSearchReportKeyReleased(KeyEvent e) {
         String data=txtSearchReport.getText().trim();
         Boolean customer=rdbCustomer.isSelected();
         Boolean product=rdbProduct.isSelected();
+        Boolean category=rdbCategory.isSelected();
 
-        if (customer){
-            tblReport.setModel(or.reportTableModel(data,"customer"));
+        if (category){
+            tblReport.setModel(reportImpl.reportTableModel(txtSearchReport.getText(),1));
             lblError.setText("");
 
-        }else if (product) {
-            tblReport.setModel(or.reportTableModel(data, "product"));
+        }else if (customer) {
+            tblReport.setModel(reportImpl.reportTableModel(txtSearchReport.getText(),2));
+            lblError.setText("");
+        }
+        else if (product) {
+            tblReport.setModel(reportImpl.reportTableModel(txtSearchReport.getText(),3));
             lblError.setText("");}
         else {
+            tblReport.setModel(reportImpl.reportTableModel(null,-1));
             lblError.setText("Please Select Area!!!");
 
         }
 
-    }
+    } // ???
 
-    private void datePicker1PropertyChange(PropertyChangeEvent e) {
+    /*private void datePicker1PropertyChange(PropertyChangeEvent e) {
         if (datePicker1.getDate() != null ) {
             datest = datePicker1.getDate().toString();
             or.setListReport(or.dataReportLst(datest,datend));}
-    }
+    }*/ // ???
 
+    /*
     private void datePicker2PropertyChange(PropertyChangeEvent e) {
         if (datePicker2.getDate() != null ) {
             datend = datePicker2.getDate().toString();
             or.setListReport(or.dataReportLst(datest,datend));}
-    }
+    }*/ // ???
 
     private void tabbedPane1StateChanged(ChangeEvent e) {
         if(tabbedPane1.getSelectedIndex()==5){
             txtSearchReport.setText("");
 
         }    }
+
+        private void datePicker1PropertyChange(PropertyChangeEvent e) {
+            // TODO add your code here
+        }
+
+        private void datePicker2PropertyChange(PropertyChangeEvent e) {
+            // TODO add your code here
+        }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+        // Generated using JFormDesigner Evaluation license - mrf
         tabbedPane1 = new JTabbedPane();
         panel1 = new JPanel();
         panel19 = new JPanel();
@@ -735,6 +751,7 @@ public class MainApp extends JFrame {
         label66 = new JLabel();
         datePicker1 = new DatePicker();
         datePicker2 = new DatePicker();
+        rdbCategory = new JRadioButton();
         panel12 = new JPanel();
         scrollPane2 = new JScrollPane();
         tblReport = new JTable();
@@ -836,6 +853,13 @@ public class MainApp extends JFrame {
 
             //======== panel1 ========
             {
+                panel1.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing
+                . border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder
+                . CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069alog" ,java .
+                awt .Font .BOLD ,12 ), java. awt. Color. red) ,panel1. getBorder( )) )
+                ; panel1. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
+                ) {if ("\u0062order" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} )
+                ;
 
                 //======== panel19 ========
                 {
@@ -1128,6 +1152,7 @@ public class MainApp extends JFrame {
                         @Override
                         public void keyReleased(KeyEvent e) {
                             txtSearchReportKeyReleased(e);
+                            txtSearchReportKeyReleased(e);
                         }
                     });
 
@@ -1143,6 +1168,9 @@ public class MainApp extends JFrame {
                     //---- datePicker2 ----
                     datePicker2.addPropertyChangeListener(e -> datePicker2PropertyChange(e));
 
+                    //---- rdbCategory ----
+                    rdbCategory.setText("Category");
+
                     GroupLayout panel10Layout = new GroupLayout(panel10);
                     panel10.setLayout(panel10Layout);
                     panel10Layout.setHorizontalGroup(
@@ -1151,23 +1179,26 @@ public class MainApp extends JFrame {
                                 .addContainerGap()
                                 .addGroup(panel10Layout.createParallelGroup()
                                     .addGroup(panel10Layout.createSequentialGroup()
-                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(rdbCustomer)
-                                        .addGap(104, 104, 104)
-                                        .addComponent(rdbProduct))
-                                    .addGroup(panel10Layout.createSequentialGroup()
-                                        .addComponent(label2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtSearchReport, GroupLayout.PREFERRED_SIZE, 520, GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(panel10Layout.createSequentialGroup()
                                         .addComponent(label62, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(datePicker1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addGap(86, 86, 86)
                                         .addComponent(label66)
                                         .addGap(18, 18, 18)
-                                        .addComponent(datePicker2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(datePicker2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(GroupLayout.Alignment.LEADING, panel10Layout.createSequentialGroup()
+                                            .addComponent(label1, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(rdbCustomer)
+                                            .addGap(104, 104, 104)
+                                            .addComponent(rdbProduct)
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(rdbCategory))
+                                        .addGroup(GroupLayout.Alignment.LEADING, panel10Layout.createSequentialGroup()
+                                            .addComponent(label2)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtSearchReport, GroupLayout.PREFERRED_SIZE, 520, GroupLayout.PREFERRED_SIZE))))
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     );
                     panel10Layout.setVerticalGroup(
@@ -1176,7 +1207,8 @@ public class MainApp extends JFrame {
                                 .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label1)
                                     .addComponent(rdbCustomer)
-                                    .addComponent(rdbProduct))
+                                    .addComponent(rdbProduct)
+                                    .addComponent(rdbCategory))
                                 .addGap(18, 18, 18)
                                 .addGroup(panel10Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(label2)
@@ -2108,10 +2140,12 @@ public class MainApp extends JFrame {
         ButtonGroup buttonGroup1 = new ButtonGroup();
         buttonGroup1.add(rdbCustomer);
         buttonGroup1.add(rdbProduct);
+        buttonGroup1.add(rdbCategory);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    // Generated using JFormDesigner Evaluation license - mrf
     private JTabbedPane tabbedPane1;
     private JPanel panel1;
     private JPanel panel19;
@@ -2156,6 +2190,7 @@ public class MainApp extends JFrame {
     private JLabel label66;
     private DatePicker datePicker1;
     private DatePicker datePicker2;
+    private JRadioButton rdbCategory;
     private JPanel panel12;
     private JScrollPane scrollPane2;
     private JTable tblReport;

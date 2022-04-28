@@ -13,8 +13,8 @@ import java.util.Locale;
 
 public class ProductImpl implements IProduct{
     DB db=new DB();
-    List<Product> ls = new ArrayList<>(); // 1
-    List<Product> lsSearch = new ArrayList<>();// 2
+    List<Product> ls = new ArrayList<>();
+    List<Product> lsSearch = new ArrayList<>();
     int inpCategoryId=-1;
     public ProductImpl(int categoryId) {
         inpCategoryId =categoryId;

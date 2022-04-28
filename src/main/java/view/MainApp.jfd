@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "7.0.5.4.420" Java: "11.0.14.1" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.5.1.409" Java: "11.0.14.1" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -152,8 +152,8 @@ new FormModel {
 				} ) {
 					name: "panel2"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq {space :::p, par l {seq l {comp label1:::p:116:p, space s:::p, comp rdbCustomer:::p::p, space :p:104:p, comp rdbProduct:::p::p}, seq l {comp label2:::p::p, space s:::p, comp txtSearchReport:::p:520:p}, seq l {comp label62:::p:76:p, space s:::p, comp datePicker1:::p::p, space :p:86:p, comp label66:::p::p, space s:::p, comp datePicker2:::p::p}}, space :::x}}"
-						"$verticalGroup": "par l {seq l {par b {comp label1::b:p::p, comp rdbCustomer::b:p::p, comp rdbProduct::b:p::p}, space s:::p, par b {comp label2::b:p::p, comp txtSearchReport::b:p::p}, space ::24:x, par b {comp label62::b:p:24:p, comp datePicker1::b:p::p, comp label66::b:p::p, comp datePicker2::b:p::p}, space :p:20:p}}"
+						"$horizontalGroup": "par l {seq {space :::p, par l {seq l {comp label62:::p:76:p, space s:::p, comp datePicker1:::p::p, space :p:86:p, comp label66:::p::p, space s:::p, comp datePicker2:::p::p}, par t:l::p {seq l {comp label1:::p:116:p, space s:::p, comp rdbCustomer:::p::p, space :p:104:p, comp rdbProduct:::p::p, space :::x, comp rdbCategory:::p::p}, seq l {comp label2:::p::p, space s:::p, comp txtSearchReport:::p:520:p}}}, space :::x}}"
+						"$verticalGroup": "par l {seq l {par b {comp label1::b:p::p, comp rdbCustomer::b:p::p, comp rdbProduct::b:p::p, comp rdbCategory::b:p::p}, space s:::p, par b {comp label2::b:p::p, comp txtSearchReport::b:p::p}, space ::24:x, par b {comp label62::b:p:24:p, comp datePicker1::b:p::p, comp label66::b:p::p, comp datePicker2::b:p::p}, space :p:20:p}}"
 					} ) {
 						name: "panel10"
 						"border": new javax.swing.border.TitledBorder( "Filters" )
@@ -169,7 +169,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JRadioButton" ) {
 							name: "rdbProduct"
 							"text": "Products"
-							"$buttonGroup": new FormReference( "buttonGroup1" )
+							"$buttonGroup": &FormReference0 new FormReference( "buttonGroup1" )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label2"
@@ -177,6 +177,7 @@ new FormModel {
 						} )
 						add( new FormComponent( "javax.swing.JTextField" ) {
 							name: "txtSearchReport"
+							addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "txtSearchReportKeyReleased", true ) )
 							addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "txtSearchReportKeyReleased", true ) )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
@@ -194,6 +195,11 @@ new FormModel {
 						add( new FormComponent( "com.github.lgooddatepicker.components.DatePicker" ) {
 							name: "datePicker2"
 							addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "datePicker2PropertyChange", true ) )
+						} )
+						add( new FormComponent( "javax.swing.JRadioButton" ) {
+							name: "rdbCategory"
+							"text": "Category"
+							"$buttonGroup": #FormReference0
 						} )
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
