@@ -144,4 +144,27 @@ public class CustomerImpl implements ICustomer {
         }
         return lsCustomer;
     }
+
+    @Override
+    public boolean customerDeleteControl(int customerId) {
+        boolean status =false;
+        try
+        {
+            String sql = "select * from basket where status = 1 and customerID = ?";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            pre.setInt(1,customerId);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next())
+                status=true;
+        }
+        catch (Exception ex)
+        {
+            System.err.println("customerDeleteControl Error: "+ex.toString());
+            ex.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+        return status ;
+    }
 }

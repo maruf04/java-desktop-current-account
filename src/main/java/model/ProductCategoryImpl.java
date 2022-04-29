@@ -11,15 +11,21 @@ import java.util.List;
 import java.util.Locale;
 
 public class ProductCategoryImpl implements IProductCategory{
+    DB db=new DB();
     List<ProductCategory> ls=new ArrayList<>();
     List<ProductCategory> lsSearch=new ArrayList<>();
     List<ProductCategory> categoryList=new ArrayList<>();
+
+    public ProductCategoryImpl(){
+        ls = categorytList();
+        lsSearch = ls;
+    }
 
 
     @Override
     public int categoryInsert(ProductCategory category) {
         int status=0;
-        DB db=new DB();
+
         try {
             String sql= "insert into category values(null,?,?)";
             PreparedStatement pre=db.connect().prepareStatement(sql);
@@ -45,7 +51,6 @@ public class ProductCategoryImpl implements IProductCategory{
     @Override
     public int categoryDelete(int cid) {
         int status=0;
-        DB db=new DB();
         try{
             String sql="delete from category where cid=?";
             PreparedStatement pre=db.connect().prepareStatement(sql);
@@ -66,7 +71,6 @@ public class ProductCategoryImpl implements IProductCategory{
 
     @Override
     public int categoryUpdate(ProductCategory category) {
-            DB db=new DB();
         int status=0;
 
         try {
@@ -96,7 +100,6 @@ public class ProductCategoryImpl implements IProductCategory{
 
     @Override
     public List<ProductCategory> categorytList() {
-        DB db=new DB();
         try {
             String sql="select * from category order by cid desc";
             PreparedStatement pre=db.connect().prepareStatement(sql);
@@ -158,8 +161,6 @@ public class ProductCategoryImpl implements IProductCategory{
 
     }
 
-
-
     @Override
     public DefaultTableModel categoryTableModel(){  //Model olu�turduk datatablemodel ile s�t�n ve say�rlar olu�turduk
         categorytList();
@@ -178,5 +179,28 @@ public class ProductCategoryImpl implements IProductCategory{
         }
 
         return  tableModel;
+    }
+
+    @Override
+    public boolean categoryDeleteControl(int cid) {
+        boolean status =false;
+        try
+        {
+            String sql = "select * from basket where status = 1 and categoryId = ?";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            pre.setInt(1,cid);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next())
+                status=true;
+        }
+        catch (Exception ex)
+        {
+            System.err.println("categoryDeleteControl Error: "+ex.toString());
+            ex.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+        return status ;
     }
 }

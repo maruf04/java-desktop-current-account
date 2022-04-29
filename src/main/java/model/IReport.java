@@ -13,5 +13,4 @@ public interface IReport {
     //searchType 1 customer
     //searchType 2 product
     //searchType 3 category
-    //searchType 4 date
 }

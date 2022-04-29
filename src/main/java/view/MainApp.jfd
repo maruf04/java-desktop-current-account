@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "7.0.5.4.420" Java: "11.0.14.1" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.5.1.409" Java: "11.0.14.1" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -17,7 +17,7 @@ new FormModel {
 				"background": new java.awt.Color( 255, 0, 0, 255 )
 				addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "tabbedPane1StateChanged", true ) )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:28:p, par l {comp lblCustomerError:::p:121:p, seq l {comp pnlAddCustomer:::p::p, space u:::p, comp pnlEditCustomer:::p::p}, comp panel19:::p::p}, space ::3:x}}"
+					"$horizontalGroup": "par l {seq l {space :p:28:p, par l {comp lblCustomerError:::p:121:p, seq l {comp pnlAddCustomer:::p::p, space u:::p, comp pnlEditCustomer:::p::p}, comp panel19:::p::p}, space ::2:x}}"
 					"$verticalGroup": "par l {seq l {space :p:19:p, comp panel19:::p::p, space :::p, par l {comp pnlAddCustomer:::p:239:p, comp pnlEditCustomer:::p:239:p}, space :::x, comp lblCustomerError:::p::p, space :::p}}"
 				} ) {
 					name: "panel1"
@@ -168,12 +168,12 @@ new FormModel {
 					"title": "Customers"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq {par l {seq l {space :p:13:p, par l {comp panel12:::::x, seq l {comp panel13:::p::p, space :::p, comp panel14:::::x}}}, seq l {space :::p, comp panel10:::::x}}, space :::p}}"
-					"$verticalGroup": "par l {seq l {space :p:16:p, comp panel10:::p::p, space :::p, comp panel12:::p:142:p, space :::p, par l:::p {comp panel13:::::x, comp panel14:::::x}, space :::x}}"
+					"$horizontalGroup": "par l {seq t {space :::p, par t {comp panel12:::::x, comp panel10:::::x}, space :::p}}"
+					"$verticalGroup": "par l {seq l {space :p:16:p, comp panel10:::p::p, space :::p, comp panel12:::p::p, space ::18:x}}"
 				} ) {
 					name: "panel2"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq {space :::p, par l {seq {space :p:28:p, comp label62:::p::p, space s:::p, comp datePicker1:::p::p, space :p:53:p, comp label66:::p::p, space :p:51:p, comp datePicker2:::p::p}, par t:::p {seq l {comp label1:::p:116:p, space s:::p, comp rdbCustomer:::p::p, space :p:104:p, comp rdbProduct:::p::p, space :::x, comp rdbCategory:::p::p}, seq l {comp label2:::p::p, space s:::p, comp txtSearchReport:::p:520:p}}}, space :::x}}"
+						"$horizontalGroup": "par l {seq {space :::p, par l {seq {space :p:28:p, comp label62:::p::p, space s:::p, comp datePicker1:::p::p, space :p:53:p, comp label66:::p::p, space :p:51:p, comp datePicker2:::p::p}, par t:::p {seq l {comp label1:::p:116:p, space s:::p, comp rdbCustomer:::p::p, space :p:104:p, comp rdbProduct:::p::p, space :::x, comp rdbCategory:::p::p}, seq l {comp label2:::p::p, space s:::p, comp txtSearchReport:::p:520:p}}}, space ::81:x}}"
 						"$verticalGroup": "par l {seq l {par b {comp label1::b:p::p, comp rdbCustomer::b:p::p, comp rdbProduct::b:p::p, comp rdbCategory::b:p::p}, space s:::p, par b {comp label2::b:p::p, comp txtSearchReport::b:p::p}, space ::24:x, par l {comp label62:::p:30:p, par b {comp datePicker1::b:p::p, comp datePicker2::b:p::p, comp label66::b:p::p}}, space :p:20:p}}"
 					} ) {
 						name: "panel10"
@@ -202,6 +202,7 @@ new FormModel {
 							name: "txtSearchReport"
 							addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "txtSearchReportKeyReleased", true ) )
 							addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "txtSearchReportKeyReleased", true ) )
+							addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "txtSearchReportKeyReleased", true ) )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label62"
@@ -214,12 +215,12 @@ new FormModel {
 						add( new FormComponent( "com.github.lgooddatepicker.components.DatePicker" ) {
 							name: "datePicker1"
 							"background": new java.awt.Color( 255, 204, 204, 255 )
-							addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "datePicker1PropertyChange", true ) )
+							addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "datePicker1PropertyChangeClick", true ) )
 						} )
 						add( new FormComponent( "com.github.lgooddatepicker.components.DatePicker" ) {
 							name: "datePicker2"
 							"background": new java.awt.Color( 255, 204, 204, 255 )
-							addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "datePicker2PropertyChange", true ) )
+							addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "datePicker2PropertyChangeClick", true ) )
 						} )
 						add( new FormComponent( "javax.swing.JRadioButton" ) {
 							name: "rdbCategory"
@@ -230,7 +231,7 @@ new FormModel {
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 						"$horizontalGroup": "par l {seq l {space :::p, comp scrollPane2:::::x, space :::p}}"
-						"$verticalGroup": "par l {seq l {space :::p, comp scrollPane2:::p:109:p, space :::x}}"
+						"$verticalGroup": "par l {seq l {space :::p, comp scrollPane2::::199:x, space :::p}}"
 					} ) {
 						name: "panel12"
 						"border": new javax.swing.border.TitledBorder( "Results" )
@@ -239,31 +240,6 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JTable" ) {
 								name: "tblReport"
 							} )
-						} )
-					} )
-					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq l {space :::p, comp lblStatement:::p:310:p, space ::14:x}}"
-						"$verticalGroup": "par l {seq l {space :::p, comp lblStatement::::58:x, space :::p}}"
-					} ) {
-						name: "panel13"
-						"border": new javax.swing.border.TitledBorder( "Profit-Loss Statement" )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "lblStatement"
-							"text": "text"
-						} )
-					} )
-					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq {space :::p, par l {comp lblSold::l:::x, seq l {comp lblReportsInfo:::p:309:p, space :0:0:x}}, space :::p}}"
-						"$verticalGroup": "par l {seq l {space :::p, comp lblSold:::p:37:p, space ::7:x, comp lblReportsInfo:::p:37:p, space :::p}}"
-					} ) {
-						name: "panel14"
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "lblSold"
-							"text": "Quantity Sold"
-						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "lblReportsInfo"
-							"text": "Info"
 						} )
 					} )
 				}, new FormLayoutConstraints( null ) {
@@ -275,7 +251,7 @@ new FormModel {
 				} ) {
 					name: "panel3"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-						"$horizontalGroup": "par l {seq {par l {seq {par l {seq {space :::p, comp cmbList:::p:295:p, space s:::p, comp btnSaleList:::p::p}, seq l {space :p:12:p, par t {seq {comp lblSaleList:::p:219:p, space :p:329:p}, comp lblSales::t:p:211:p, seq l {comp panel29:::p::p, space :p:33:p, comp btnOpenBasket:::p::p}}}}, space :0:92:x}, comp scrollPane9::t::722:x}, space :::p}}"
+						"$horizontalGroup": "par l {seq {par l {seq {space :::p, comp cmbList:::p:295:p, space s:::p, comp btnSaleList:::p::p}, seq l {space :p:12:p, par t {seq {comp lblSaleList:::p:219:p, space :p:329:p}, comp lblSales::t:p:211:p, seq l {comp panel29:::p::p, space :p:33:p, comp btnOpenBasket:::p::p}}}, comp scrollPane9::l:p:649:p}, space ::80:x}}"
 						"$verticalGroup": "par l {seq l {space :::p, par b {comp cmbList::b:p::p, comp btnSaleList::b:p::p}, space :::p, comp lblSaleList:::p::p, par l {seq {space :::p, comp scrollPane9:::p:128:p, space :::p, comp lblSales:::p::p, space :::p, comp panel29:::p::p, space ::40:x}, seq t {space ::206:x, comp btnOpenBasket:::p::p, space :p:107:p}}}}"
 					} ) {
 						name: "panel15"
@@ -358,7 +334,7 @@ new FormModel {
 					"title": "Sales Management"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:20:p, par l {comp panel11:::p::p, seq {comp panel17:::p::p, space :::p, comp panel18:::p::p}}, space ::4:x}}"
+					"$horizontalGroup": "par l {seq l {space :p:20:p, par l {comp panel11:::p::p, seq {comp panel17:::p::p, space :::p, comp panel18:::p::p}}, space ::3:x}}"
 					"$verticalGroup": "par l {seq l {space :::p, comp panel11:::p:143:p, space :::p, par l {comp panel17::::0:x, seq {comp panel18:::p:282:p, space :0:0:x}}, space :::p}}"
 				} ) {
 					name: "panel4"
@@ -396,6 +372,7 @@ new FormModel {
 								"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
 								"foreground": sfield java.awt.Color red
 								"background": new java.awt.Color( 255, 255, 0, 255 )
+								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnProductListDeleteClick", true ) )
 								addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnProductListDeleteClick", true ) )
 							} )
 						} )
@@ -526,7 +503,7 @@ new FormModel {
 						} )
 					} )
 				}, new FormLayoutConstraints( null ) {
-					"title": "Produtcs"
+					"title": "Products"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 					"$horizontalGroup": "par l {seq l {space :p:30:p, par l {comp pnlUserAdd:::p:461:p, comp btnAddUser::t:p::p}, space ::191:x}}"

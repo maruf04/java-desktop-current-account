@@ -212,6 +212,30 @@ public class ProductImpl implements IProduct{
         }
         return md;
     }
+
+    @Override
+    public boolean productDeleteControl(int pid) {
+        boolean status =false;
+        try
+        {
+            String sql = "select * from basket where status = 1 and productID = ?";
+            PreparedStatement pre=db.connect().prepareStatement(sql);
+            pre.setInt(1,pid);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next())
+                status=true;
+        }
+        catch (Exception ex)
+        {
+            System.err.println("productDeleteControl Error: "+ex.toString());
+            ex.printStackTrace();
+        }
+        finally {
+            db.close();
+        }
+        return status ;
+    }
+
     public List listCategory(){
         List<ComboItem> lsCategory = new ArrayList<>();
         try

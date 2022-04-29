@@ -14,8 +14,14 @@ public class ReportImpl implements IReport{
     DB db=new DB();
     List<Report> ls = new ArrayList<>();
     List<Report> lsSearch = new ArrayList<>();
+    String firstDate = "2022-01-01";
+    String lastDate = "2024-01-01";
 
-    public ReportImpl() {
+    public ReportImpl(String firstDate, String lastDate) {
+        if(firstDate !=null && lastDate !=null){
+            this.firstDate=firstDate;
+            this.lastDate=lastDate;
+        }
         ls = reportList();
         lsSearch = ls;
     }
@@ -29,16 +35,19 @@ public class ReportImpl implements IReport{
                     "join product p on p.pid = bs.productID\n" +
                     "join customer cr on cr.customerId = bs.customerID\n" +
                     "join category cy on cy.cid = bs.categoryId\n" +
-                    "where bs.status=1;";
+                    "where bs.status=1 and date BETWEEN ? AND ? ";
+
             PreparedStatement pre=db.connect().prepareStatement(sql);
+            pre.setString(1,firstDate);
+            pre.setString(2,lastDate);
             ResultSet rs=pre.executeQuery();
             while(rs.next())
             {
-                String customerName = rs.getString("customerName");
-                String productName = rs.getString("productName");
+                String customerName = rs.getString("customerName").toLowerCase(Locale.ROOT);
+                String productName = rs.getString("productName").toLowerCase(Locale.ROOT);
                 String date = rs.getString("date");
                 int count=rs.getInt("count");
-                String categoryName = rs.getString("categoryName");
+                String categoryName = rs.getString("categoryName").toLowerCase(Locale.ROOT);
                 int buyPrice = rs.getInt("buyPrice");
                 int sellPrice = rs.getInt("sellPrice");
                 Report report = new Report(customerName, productName, date, count, categoryName, buyPrice, sellPrice);
@@ -72,20 +81,16 @@ public class ReportImpl implements IReport{
             List<Report> subLs = new ArrayList<>();
             for (Report item : ls) {
                 if(searchType!=-1){
-                    if(searchType!=1 && item.getCustomerName().contains(data)){
+                    if(searchType!=1 && item.getCustomerName().toLowerCase(Locale.ROOT).contains(data)){
                         subLs.add(item);
                     }
-                    else if(searchType!=2 && item.getProductName().contains(data)){
+                    else if(searchType!=2 && item.getProductName().toLowerCase(Locale.ROOT).contains(data)){
                         subLs.add(item);
                     }
-                    else if(searchType!=3 && item.getCategoryName().contains(data)){
-                        subLs.add(item);
-                    }
-                    else if(searchType!=4 && item.getDate().contains(data) ) {//tarih filterelenecek ??
+                    else if(searchType!=3 && item.getCategoryName().toLowerCase(Locale.ROOT).contains(data)){
                         subLs.add(item);
                     }
                 }
-
             }
             ls = subLs;
         }

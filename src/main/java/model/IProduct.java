@@ -13,4 +13,5 @@ public interface IProduct {
     Product getProduct(int pid);
     List<Product> productList();
     DefaultTableModel productTable(String data);
+    boolean productDeleteControl(int pid);
 }

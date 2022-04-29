@@ -41,7 +41,7 @@ public class MainApp extends JFrame {
     UserImpl userImpl=new UserImpl();
     CustomerImpl customerImpl = new CustomerImpl(); //Customer
     ProductCategory productCategory=new ProductCategory();
-    ReportImpl reportImpl = new ReportImpl();
+    ReportImpl reportImpl = new ReportImpl(datest,datend);
 
     public void startCategoryTable(){
         tblCategory.setModel(productCategoryImpl.categoryTableModel());
@@ -151,6 +151,7 @@ public class MainApp extends JFrame {
                 int stock= Integer.parseInt(txtEditProductStock.getText().toLowerCase(Locale.ROOT).trim());
 
                 Product product=new Product(pid,name,categoryId,buyPrice,sellPrice,info,stock);
+                lblEditProduct.setText("");
                 return product;
             }
         }
@@ -161,16 +162,16 @@ public class MainApp extends JFrame {
     }
 
     private void fncClearProduct() {
-        txtAddProductName.setText("");
-        txtAddProductBuying.setText("");
-        txtAddProductSelling.setText("");
-        txtAddProductStatement.setText("");
-        txtAddProductStock.setText("");
-        txtEditProductName.setText("");
-        txtEditProductBuying.setText("");
-        txtEditProductSelling.setText("");
-        txtEditProductStatement.setText("");
-        txtEditProductStock.setText("");
+        txtAddProductName.setText(null);
+        txtAddProductBuying.setText(null);
+        txtAddProductSelling.setText(null);
+        txtAddProductStatement.setText(null);
+        txtAddProductStock.setText(null);
+        txtEditProductName.setText(null);
+        txtEditProductBuying.setText(null);
+        txtEditProductSelling.setText(null);
+        txtEditProductStatement.setText(null);
+        txtEditProductStock.setText(null);
     }
 
 
@@ -391,25 +392,23 @@ public class MainApp extends JFrame {
     }
 
     private void btnDeleteCategoryClick(ActionEvent e) {
-        if (row !=-1){
-            int answer=JOptionPane.showConfirmDialog(this,"Are you sure you want to delete the customer?","Delete Window",JOptionPane.YES_OPTION);//parent component nerede görüneceği this button
-            System.out.println(answer); //butonların sırası soldan başlayarak 0 1 buton sırası öyle belirlenir.
-
-            if (answer==0){
-                productCategoryImpl.categoryDelete(value);
-//                System.out.println("delete row "+value);
-                tblCategory.setModel(productCategoryImpl.categoryTableModel()); //tabloyu refresh et
-                txtCategoryName.setText("");
-                txtCategoryInfo.setText("");
-
-                row=-1;
+        if (tblCategory.getSelectedRow() != -1) {
+            int cid=(Integer.parseInt(String.valueOf(tblCategory.getValueAt(tblCategory.getSelectedRow() , 0))));
+            if(productCategoryImpl.categoryDeleteControl(cid)){
+                JOptionPane.showMessageDialog(this,"You cannot delete this category. this category has a sale!");
+            }else{
+                int input = JOptionPane.showConfirmDialog(this, "Request delete are you sure?","Deletion process",JOptionPane.YES_NO_OPTION);
+                if(input==0){
+                    productCategoryImpl.categoryDelete(value);
+                    tblCategory.setModel(productCategoryImpl.categoryTableModel()); //tabloyu refresh et
+                    txtCategoryName.setText("");
+                    txtCategoryInfo.setText("");
+                    row=-1;
+                }
             }
         }
-
-        else{
-            JOptionPane.showMessageDialog(this,"Please choose."); //this kendini burada ortala
-            //show confirm anlaşmayı kabul etmek istiyor musun.
-        }
+        else
+            JOptionPane.showMessageDialog(this,"Please make a choice!");
     }
 
     private void tblCategoryMouseClicked(MouseEvent e) {
@@ -442,13 +441,17 @@ public class MainApp extends JFrame {
     private void btnProductListDeleteClick(ActionEvent e) {
         // TODO add your code here
         if (tblProducts.getSelectedRow() != -1) {
-            int input = JOptionPane.showConfirmDialog(this, "Request delete are you sure?","Deletion process",JOptionPane.YES_NO_OPTION);
-            if(input==0){
-                productImpl.productDelete(Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0))));
-                ProductImpl pr=new ProductImpl(-1);
-                tblProducts.setModel(pr.productTable(null));
+            int pid=(Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0))));
+            if(productImpl.productDeleteControl(pid)){
+                JOptionPane.showMessageDialog(this,"You cannot delete this product. this product has a sale!");
+            }else{
+                int input = JOptionPane.showConfirmDialog(this, "Request delete are you sure?","Deletion process",JOptionPane.YES_NO_OPTION);
+                if(input==0){
+                    productImpl.productDelete(pid);
+                    ProductImpl pr=new ProductImpl(-1);
+                    tblProducts.setModel(pr.productTable(null));
+                }
             }
-           // System.out.println("input :"+input);
         }
         else
             JOptionPane.showMessageDialog(this,"Please make a choice!");
@@ -501,22 +504,22 @@ public class MainApp extends JFrame {
     }
 
     private void btnCustomerListDelete(ActionEvent e) {
-        // TODO add your code here
+
         if (tblCustomer.getSelectedRow() != -1) {
-            System.out.println(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 0));
-            int input = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete?","delete process",JOptionPane.YES_NO_OPTION);
-            // 0=yes, 1=no, 2=cancel
-            if(input==0){
-                customerImpl.customerDelete(Integer.parseInt(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 0))));
-                //tablo yenilensin diye
-                CustomerImpl customer0=new CustomerImpl();
-                tblCustomer.setModel(customer0.customerTableModel());
+            int customerId=(Integer.parseInt(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow() , 0))));
+            if(customerImpl.customerDeleteControl(customerId)){
+                JOptionPane.showMessageDialog(this,"You cannot delete this customer. this customer has a sale!");
+            }else{
+                int input = JOptionPane.showConfirmDialog(this, "Request delete are you sure?","Deletion process",JOptionPane.YES_NO_OPTION);
+                if(input==0){
+                    customerImpl.customerDelete(customerId);
+                    CustomerImpl customer0=new CustomerImpl();
+                    tblCustomer.setModel(customer0.customerTableModel());
+                }
             }
-            System.out.println("input :"+input);
-            fncTextClear();
         }
         else
-            JOptionPane.showMessageDialog(this,"Please Choose");
+            JOptionPane.showMessageDialog(this,"Please make a choice!");
     }
 
     private void btnAddCustomer(ActionEvent e) {
@@ -639,8 +642,13 @@ public class MainApp extends JFrame {
             else
                uuid=UUID.randomUUID().toString();
             int categoryId=Integer.parseInt(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 2)));
-            Basket basket=new Basket(0,customerId,productID,date,count,status,uuid,categoryId);
-            basketImpl.basketInsert(basket);
+            //stock kontrolu
+            //count stocktan buyuk ise sepete ekleme yapmaz
+            if(basketImpl.stockControl(productID,count)==1){
+                Basket basket=new Basket(0,customerId,productID,date,count,status,uuid,categoryId);
+                basketImpl.basketInsert(basket);
+            }else
+                lblSales.setText("Stock is insufficient");
         }
         else
             JOptionPane.showMessageDialog(this,"Please Choose" );
@@ -651,63 +659,59 @@ public class MainApp extends JFrame {
         basketScreen.setVisible(true);
     }
 
-
-
-    //OrderImpl or=new OrderImpl(datest,datend); //???
-
     private void txtSearchReportKeyReleased(KeyEvent e) {
         String data=txtSearchReport.getText().trim();
         Boolean customer=rdbCustomer.isSelected();
         Boolean product=rdbProduct.isSelected();
         Boolean category=rdbCategory.isSelected();
-
         if (category){
-            tblReport.setModel(reportImpl.reportTableModel(txtSearchReport.getText(),1));
+            tblReport.setModel(reportImpl.reportTableModel(txtSearchReport.getText().toLowerCase(Locale.ROOT),1));
             lblError.setText("");
 
         }else if (customer) {
-            tblReport.setModel(reportImpl.reportTableModel(txtSearchReport.getText(),2));
+            tblReport.setModel(reportImpl.reportTableModel(txtSearchReport.getText().toLowerCase(Locale.ROOT),2));
             lblError.setText("");
         }
         else if (product) {
-            tblReport.setModel(reportImpl.reportTableModel(txtSearchReport.getText(),3));
-            lblError.setText("");}
+            tblReport.setModel(reportImpl.reportTableModel(txtSearchReport.getText().toLowerCase(Locale.ROOT),3));
+            lblError.setText("");
+        }
         else {
             tblReport.setModel(reportImpl.reportTableModel(null,-1));
             lblError.setText("Please Select Area!!!");
 
         }
 
-    } // ???
-
-    /*private void datePicker1PropertyChange(PropertyChangeEvent e) {
-        if (datePicker1.getDate() != null ) {
-            datest = datePicker1.getDate().toString();
-            or.setListReport(or.dataReportLst(datest,datend));}
-    }*/ // ???
-
-    /*
-    private void datePicker2PropertyChange(PropertyChangeEvent e) {
-        if (datePicker2.getDate() != null ) {
-            datend = datePicker2.getDate().toString();
-            or.setListReport(or.dataReportLst(datest,datend));}
-    }*/ // ???
+    }
 
     private void tabbedPane1StateChanged(ChangeEvent e) {
         if(tabbedPane1.getSelectedIndex()==5){
             txtSearchReport.setText("");
+        }    
+    }
 
-        }    }
-
-        private void datePicker1PropertyChange(PropertyChangeEvent e) {
-            // TODO add your code here
+    private void datePicker1PropertyChangeClick(PropertyChangeEvent e) {
+        if(datePicker1.getDate() != null ){
+                datest = datePicker1.getDate().toString();
+                tblReportUpdated();
         }
+    }
+        
+    private void datePicker2PropertyChangeClick(PropertyChangeEvent e) {
+            if(datePicker2.getDate() != null ){
+                datend = datePicker2.getDate().toString();
+                tblReportUpdated();
+            }
+    }
+    private void tblReportUpdated() {
+        reportImpl=new ReportImpl(datest,datend);
+        tblReport.setModel(reportImpl.reportTableModel(null,-1));
+    }
 
-        private void datePicker2PropertyChange(PropertyChangeEvent e) {
-            // TODO add your code here
-        }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+        // Generated using JFormDesigner Evaluation license - mrf
         tabbedPane1 = new JTabbedPane();
         panel1 = new JPanel();
         panel19 = new JPanel();
@@ -756,11 +760,6 @@ public class MainApp extends JFrame {
         panel12 = new JPanel();
         scrollPane2 = new JScrollPane();
         tblReport = new JTable();
-        panel13 = new JPanel();
-        lblStatement = new JLabel();
-        panel14 = new JPanel();
-        lblSold = new JLabel();
-        lblReportsInfo = new JLabel();
         panel3 = new JPanel();
         panel15 = new JPanel();
         cmbList = new JComboBox();
@@ -859,6 +858,11 @@ public class MainApp extends JFrame {
 
             //======== panel1 ========
             {
+                panel1.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder( 0
+                , 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM
+                , new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,
+                panel1. getBorder( )) ); panel1. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
+                ) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
 
                 //======== panel19 ========
                 {
@@ -1125,7 +1129,7 @@ public class MainApp extends JFrame {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(pnlEditCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addComponent(panel19, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(3, Short.MAX_VALUE))
+                            .addContainerGap(2, Short.MAX_VALUE))
                 );
                 panel1Layout.setVerticalGroup(
                     panel1Layout.createParallelGroup()
@@ -1170,6 +1174,7 @@ public class MainApp extends JFrame {
                         public void keyReleased(KeyEvent e) {
                             txtSearchReportKeyReleased(e);
                             txtSearchReportKeyReleased(e);
+                            txtSearchReportKeyReleased(e);
                         }
                     });
 
@@ -1181,11 +1186,11 @@ public class MainApp extends JFrame {
 
                     //---- datePicker1 ----
                     datePicker1.setBackground(new Color(255, 204, 204));
-                    datePicker1.addPropertyChangeListener(e -> datePicker1PropertyChange(e));
+                    datePicker1.addPropertyChangeListener(e -> datePicker1PropertyChangeClick(e));
 
                     //---- datePicker2 ----
                     datePicker2.setBackground(new Color(255, 204, 204));
-                    datePicker2.addPropertyChangeListener(e -> datePicker2PropertyChange(e));
+                    datePicker2.addPropertyChangeListener(e -> datePicker2PropertyChangeClick(e));
 
                     //---- rdbCategory ----
                     rdbCategory.setText("Category");
@@ -1220,7 +1225,7 @@ public class MainApp extends JFrame {
                                             .addComponent(label2)
                                             .addGap(18, 18, 18)
                                             .addComponent(txtSearchReport, GroupLayout.PREFERRED_SIZE, 520, GroupLayout.PREFERRED_SIZE))))
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(81, Short.MAX_VALUE))
                     );
                     panel10Layout.setVerticalGroup(
                         panel10Layout.createParallelGroup()
@@ -1267,65 +1272,7 @@ public class MainApp extends JFrame {
                         panel12Layout.createParallelGroup()
                             .addGroup(panel12Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    );
-                }
-
-                //======== panel13 ========
-                {
-                    panel13.setBorder(new TitledBorder("Profit-Loss Statement"));
-
-                    //---- lblStatement ----
-                    lblStatement.setText("text");
-
-                    GroupLayout panel13Layout = new GroupLayout(panel13);
-                    panel13.setLayout(panel13Layout);
-                    panel13Layout.setHorizontalGroup(
-                        panel13Layout.createParallelGroup()
-                            .addGroup(panel13Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblStatement, GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(14, Short.MAX_VALUE))
-                    );
-                    panel13Layout.setVerticalGroup(
-                        panel13Layout.createParallelGroup()
-                            .addGroup(panel13Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblStatement, GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                                .addContainerGap())
-                    );
-                }
-
-                //======== panel14 ========
-                {
-
-                    //---- lblSold ----
-                    lblSold.setText("Quantity Sold");
-
-                    //---- lblReportsInfo ----
-                    lblReportsInfo.setText("Info");
-
-                    GroupLayout panel14Layout = new GroupLayout(panel14);
-                    panel14.setLayout(panel14Layout);
-                    panel14Layout.setHorizontalGroup(
-                        panel14Layout.createParallelGroup()
-                            .addGroup(panel14Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(panel14Layout.createParallelGroup()
-                                    .addComponent(lblSold, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(panel14Layout.createSequentialGroup()
-                                        .addComponent(lblReportsInfo, GroupLayout.PREFERRED_SIZE, 309, GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addContainerGap())
-                    );
-                    panel14Layout.setVerticalGroup(
-                        panel14Layout.createParallelGroup()
-                            .addGroup(panel14Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblSold, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                                .addComponent(lblReportsInfo, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                                 .addContainerGap())
                     );
                 }
@@ -1334,19 +1281,11 @@ public class MainApp extends JFrame {
                 panel2.setLayout(panel2Layout);
                 panel2Layout.setHorizontalGroup(
                     panel2Layout.createParallelGroup()
-                        .addGroup(panel2Layout.createSequentialGroup()
-                            .addGroup(panel2Layout.createParallelGroup()
-                                .addGroup(panel2Layout.createSequentialGroup()
-                                    .addGap(13, 13, 13)
-                                    .addGroup(panel2Layout.createParallelGroup()
-                                        .addComponent(panel12, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(panel2Layout.createSequentialGroup()
-                                            .addComponent(panel13, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(panel14, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGroup(panel2Layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(panel10, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(panel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addComponent(panel12, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(panel10, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addContainerGap())
                 );
                 panel2Layout.setVerticalGroup(
@@ -1355,12 +1294,8 @@ public class MainApp extends JFrame {
                             .addGap(16, 16, 16)
                             .addComponent(panel10, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(panel12, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(panel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(panel13, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(panel14, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(panel12, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(18, Short.MAX_VALUE))
                 );
             }
             tabbedPane1.addTab("Reports", panel2);
@@ -1476,26 +1411,23 @@ public class MainApp extends JFrame {
                             .addGroup(panel15Layout.createSequentialGroup()
                                 .addGroup(panel15Layout.createParallelGroup()
                                     .addGroup(panel15Layout.createSequentialGroup()
-                                        .addGroup(panel15Layout.createParallelGroup()
+                                        .addContainerGap()
+                                        .addComponent(cmbList, GroupLayout.PREFERRED_SIZE, 295, GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnSaleList))
+                                    .addGroup(panel15Layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addGroup(panel15Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                             .addGroup(panel15Layout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(cmbList, GroupLayout.PREFERRED_SIZE, 295, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btnSaleList))
-                                            .addGroup(panel15Layout.createSequentialGroup()
-                                                .addGap(12, 12, 12)
-                                                .addGroup(panel15Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(panel15Layout.createSequentialGroup()
-                                                        .addComponent(lblSaleList, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(329, 329, 329))
-                                                    .addComponent(lblSales, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(GroupLayout.Alignment.LEADING, panel15Layout.createSequentialGroup()
-                                                        .addComponent(panel29, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(33, 33, 33)
-                                                        .addComponent(btnOpenBasket)))))
-                                        .addGap(0, 92, Short.MAX_VALUE))
-                                    .addComponent(scrollPane9, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE))
-                                .addContainerGap())
+                                                .addComponent(lblSaleList, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(329, 329, 329))
+                                            .addComponent(lblSales, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(GroupLayout.Alignment.LEADING, panel15Layout.createSequentialGroup()
+                                                .addComponent(panel29, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(33, 33, 33)
+                                                .addComponent(btnOpenBasket))))
+                                    .addComponent(scrollPane9, GroupLayout.PREFERRED_SIZE, 649, GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(80, Short.MAX_VALUE))
                     );
                     panel15Layout.setVerticalGroup(
                         panel15Layout.createParallelGroup()
@@ -1571,7 +1503,10 @@ public class MainApp extends JFrame {
                         btnProductListDelete.setFont(btnProductListDelete.getFont().deriveFont(Font.BOLD|Font.ITALIC));
                         btnProductListDelete.setForeground(Color.red);
                         btnProductListDelete.setBackground(Color.yellow);
-                        btnProductListDelete.addActionListener(e -> btnProductListDeleteClick(e));
+                        btnProductListDelete.addActionListener(e -> {
+			btnProductListDeleteClick(e);
+			btnProductListDeleteClick(e);
+		});
 
                         GroupLayout panel16Layout = new GroupLayout(panel16);
                         panel16.setLayout(panel16Layout);
@@ -1858,7 +1793,7 @@ public class MainApp extends JFrame {
                                     .addComponent(panel17, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(panel18, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap(4, Short.MAX_VALUE))
+                            .addContainerGap(3, Short.MAX_VALUE))
                 );
                 panel4Layout.setVerticalGroup(
                     panel4Layout.createParallelGroup()
@@ -1874,7 +1809,7 @@ public class MainApp extends JFrame {
                             .addContainerGap())
                 );
             }
-            tabbedPane1.addTab("Produtcs", panel4);
+            tabbedPane1.addTab("Products", panel4);
 
             //======== panel6 ========
             {
@@ -2226,6 +2161,7 @@ public class MainApp extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    // Generated using JFormDesigner Evaluation license - mrf
     private JTabbedPane tabbedPane1;
     private JPanel panel1;
     private JPanel panel19;
@@ -2274,11 +2210,6 @@ public class MainApp extends JFrame {
     private JPanel panel12;
     private JScrollPane scrollPane2;
     private JTable tblReport;
-    private JPanel panel13;
-    private JLabel lblStatement;
-    private JPanel panel14;
-    private JLabel lblSold;
-    private JLabel lblReportsInfo;
     private JPanel panel3;
     private JPanel panel15;
     private JComboBox cmbList;

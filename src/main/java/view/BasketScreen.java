@@ -94,6 +94,7 @@ public class BasketScreen extends JFrame {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+        // Generated using JFormDesigner Evaluation license - mrf
         panel1 = new JPanel();
         scrollPane1 = new JScrollPane();
         tblBasket = new JTable();
@@ -101,12 +102,19 @@ public class BasketScreen extends JFrame {
         btnBuy = new JButton();
         cmbSaleCustomer = new JComboBox();
         label50 = new JLabel();
+        btnSearch = new JButton();
 
         //======== this ========
         Container contentPane = getContentPane();
 
         //======== panel1 ========
         {
+            panel1.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .
+            EmptyBorder ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing .border . TitledBorder. CENTER ,javax . swing
+            . border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,
+            java . awt. Color .red ) ,panel1. getBorder () ) ); panel1. addPropertyChangeListener( new java. beans .PropertyChangeListener ( )
+            { @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e. getPropertyName () ) )
+            throw new RuntimeException( ) ;} } );
 
             //======== scrollPane1 ========
             {
@@ -150,6 +158,13 @@ public class BasketScreen extends JFrame {
         //---- label50 ----
         label50.setText("Customer");
 
+        //---- btnSearch ----
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(e -> {
+			btnSearchClick(e);
+			btnSearchClick(e);
+		});
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
@@ -169,7 +184,9 @@ public class BasketScreen extends JFrame {
                     .addComponent(label50, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
                     .addGap(12, 12, 12)
                     .addComponent(cmbSaleCustomer, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(18, 18, 18)
+                    .addComponent(btnSearch)
+                    .addContainerGap(164, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -177,7 +194,9 @@ public class BasketScreen extends JFrame {
                     .addGap(8, 8, 8)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(label50)
-                        .addComponent(cmbSaleCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbSaleCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearch)))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(panel1, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -192,6 +211,7 @@ public class BasketScreen extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    // Generated using JFormDesigner Evaluation license - mrf
     private JPanel panel1;
     private JScrollPane scrollPane1;
     private JTable tblBasket;
@@ -199,5 +219,6 @@ public class BasketScreen extends JFrame {
     private JButton btnBuy;
     private JComboBox cmbSaleCustomer;
     private JLabel label50;
+    private JButton btnSearch;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

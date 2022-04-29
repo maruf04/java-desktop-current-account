@@ -14,6 +14,5 @@ public interface ICustomer {
     List<Customer> customerList();
     DefaultTableModel customerTableModel();
     List<ComboItem> listCustomer();
-
-
+    boolean customerDeleteControl(int customerId);
 }
