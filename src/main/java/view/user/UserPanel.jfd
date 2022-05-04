@@ -1,22 +1,24 @@
-JFDML JFormDesigner: "7.0.5.4.420" Java: "11.0.13" encoding: "UTF-8"
+JFDML JFormDesigner: "7.0.5.4.420" Java: "11.0.14.1" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:54:p, par l:::p {comp lblError::l:::x, seq l {comp btnForgetPassword:::p:113:p, space :::p, comp btnChangePassword:::p:107:p}, comp btnLogin::l:::x, seq t {comp label2:::p:40:p, space :::p, comp txtPassword:::::x}, seq l {comp label1:::p:40:p, space :::p, comp txtEmail:::::x}}, space ::48:x}, comp panel1::l:::x}"
-			"$verticalGroup": "par l {seq l {comp panel1:::p::p, space :p:81:p, par l {comp label1:::p:40:p, comp txtEmail:::::x}, space u:::p, par l {seq l {space :p:4:p, comp txtPassword:::p:40:p}, comp label2::l:p:41:p}, space u:::p, comp btnLogin:::p::p, space :p:35:p, par b {comp btnForgetPassword::b:p::p, comp btnChangePassword::b:p::p}, space :p:31:p, comp lblError:::p::p, space :p:27:p}}"
+			"$horizontalGroup": "par l {seq t {space :p:12:p, par t {comp lblError:::p:107:p, seq {comp btnForgetPassword:::::x, space u:::p, comp btnChangePassword:::p:141:p}}, space :p:19:p}, seq {space :::p, par l {seq {par t {comp label2:::p:82:p, comp label1:::p:88:p}, par t {seq l {space :p:24:p, comp btnLogin:::p::p, space :0:0:x}, seq t {space s:::x, par l {comp txtPassword::l:p:168:p, comp txtEmail:::p:168:p}}}, space :p:48:p}, seq l {comp label3:::::x, space :::p}}}}"
+			"$verticalGroup": "par l {seq l {space :::p, comp label3:::p:144:p, space :::x, par l:::p {comp txtEmail:::::x, comp label1:::p:48:p}, space :::p, par t {comp label2:::p:38:p, comp txtPassword:::p:40:p}, space u:::p, comp btnLogin:::p::p, space s:::p, par l {comp btnChangePassword:::p::p, comp btnForgetPassword:::::x}, space ::33:x, comp lblError:::p:28:p, space :p:1:p}}"
 		} ) {
 			name: "this"
 			"resizable": false
 			"defaultCloseOperation": 2
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/lblEmailIcon.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/mailcon.png" )
+				"horizontalAlignment": 0
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label2"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/lblPasswordIcon.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/passcon.png" )
+				"horizontalAlignment": 0
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "txtEmail"
@@ -29,31 +31,32 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnLogin"
 				"text": "LOGIN"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/login.png" )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnLoginClicked", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnChangePassword"
 				"text": "Change Password"
 				"font": new java.awt.Font( "Segoe UI", 0, 9 )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/32change.png" )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnChangePasswordClicked", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnForgetPassword"
 				"text": "Forget Password?"
 				"font": new java.awt.Font( "Segoe UI", 0, 9 )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/32brain.png" )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnForgetPasswordClicked", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "lblError"
 				"text": " "
 			} )
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {space :0:328:x}"
-				"$verticalGroup": "par l {space :0:130:x}"
-			} ) {
-				name: "panel1"
-				"foreground": sfield java.awt.SystemColor activeCaption
-				"background": sfield java.awt.SystemColor activeCaption
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/256shopy.png" )
+				"horizontalAlignment": 0
+				"background": new java.awt.Color( 255, 255, 0, 255 )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 155, 25 )

@@ -150,7 +150,7 @@ public class UserPanel extends JFrame {
         btnChangePassword = new JButton();
         btnForgetPassword = new JButton();
         lblError = new JLabel();
-        panel1 = new JPanel();
+        label3 = new JLabel();
 
         //======== this ========
         setResizable(false);
@@ -158,10 +158,12 @@ public class UserPanel extends JFrame {
         Container contentPane = getContentPane();
 
         //---- label1 ----
-        label1.setIcon(new ImageIcon(getClass().getResource("/lblEmailIcon.png")));
+        label1.setIcon(new ImageIcon(getClass().getResource("/mailcon.png")));
+        label1.setHorizontalAlignment(SwingConstants.CENTER);
 
         //---- label2 ----
-        label2.setIcon(new ImageIcon(getClass().getResource("/lblPasswordIcon.png")));
+        label2.setIcon(new ImageIcon(getClass().getResource("/passcon.png")));
+        label2.setHorizontalAlignment(SwingConstants.CENTER);
 
         //---- txtEmail ----
         txtEmail.addKeyListener(new KeyAdapter() {
@@ -181,85 +183,86 @@ public class UserPanel extends JFrame {
 
         //---- btnLogin ----
         btnLogin.setText("LOGIN");
+        btnLogin.setIcon(new ImageIcon(getClass().getResource("/login.png")));
         btnLogin.addActionListener(e -> btnLoginClicked(e));
 
         //---- btnChangePassword ----
         btnChangePassword.setText("Change Password");
         btnChangePassword.setFont(new Font("Segoe UI", Font.PLAIN, 9));
+        btnChangePassword.setIcon(new ImageIcon(getClass().getResource("/32change.png")));
         btnChangePassword.addActionListener(e -> btnChangePasswordClicked(e));
 
         //---- btnForgetPassword ----
         btnForgetPassword.setText("Forget Password?");
         btnForgetPassword.setFont(new Font("Segoe UI", Font.PLAIN, 9));
+        btnForgetPassword.setIcon(new ImageIcon(getClass().getResource("/32brain.png")));
         btnForgetPassword.addActionListener(e -> btnForgetPasswordClicked(e));
 
         //---- lblError ----
         lblError.setText(" ");
 
-        //======== panel1 ========
-        {
-            panel1.setForeground(SystemColor.activeCaption);
-            panel1.setBackground(SystemColor.activeCaption);
-
-            GroupLayout panel1Layout = new GroupLayout(panel1);
-            panel1.setLayout(panel1Layout);
-            panel1Layout.setHorizontalGroup(
-                panel1Layout.createParallelGroup()
-                    .addGap(0, 328, Short.MAX_VALUE)
-            );
-            panel1Layout.setVerticalGroup(
-                panel1Layout.createParallelGroup()
-                    .addGap(0, 130, Short.MAX_VALUE)
-            );
-        }
+        //---- label3 ----
+        label3.setIcon(new ImageIcon(getClass().getResource("/256shopy.png")));
+        label3.setHorizontalAlignment(SwingConstants.CENTER);
+        label3.setBackground(Color.yellow);
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
+                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                    .addGap(12, 12, 12)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblError, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addComponent(btnForgetPassword, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnChangePassword, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)))
+                    .addGap(19, 19, 19))
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(54, 54, 54)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblError, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()
+                    .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(btnForgetPassword, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnChangePassword, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
-                        .addComponent(btnLogin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtPassword))
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addComponent(label2, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label1, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addGroup(GroupLayout.Alignment.LEADING, contentPaneLayout.createSequentialGroup()
+                                    .addGap(24, 24, 24)
+                                    .addComponent(btnLogin)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addGap(18, 18, Short.MAX_VALUE)
+                                    .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))))
+                            .addGap(48, 48, 48))
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(label1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtEmail)))
-                    .addContainerGap(48, Short.MAX_VALUE))
-                .addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addContainerGap())))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(81, 81, 81)
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtEmail))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(4, 4, 4)
-                            .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap()
+                    .addComponent(label3, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtEmail)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(btnLogin)
-                    .addGap(35, 35, 35)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnForgetPassword)
-                        .addComponent(btnChangePassword))
-                    .addGap(31, 31, 31)
-                    .addComponent(lblError)
-                    .addGap(27, 27, 27))
+                    .addGap(18, 18, 18)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addComponent(btnChangePassword)
+                        .addComponent(btnForgetPassword, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                    .addComponent(lblError, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+                    .addGap(1, 1, 1))
         );
         pack();
         setLocationRelativeTo(getOwner());
@@ -275,6 +278,6 @@ public class UserPanel extends JFrame {
     private JButton btnChangePassword;
     private JButton btnForgetPassword;
     private JLabel lblError;
-    private JPanel panel1;
+    private JLabel label3;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
