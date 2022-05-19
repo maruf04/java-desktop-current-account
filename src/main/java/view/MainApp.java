@@ -96,10 +96,7 @@ public class MainApp extends JFrame {
                 lblAddProduct.setText("Product İnfo Empty");
             }
             else {
-
-                //int pid, String name, int categoryId, int buyPrice, int sellPrice, String info, int stock
                 String name=txtAddProductName.getText().toLowerCase(Locale.ROOT).trim();
-                //categoryId
                 int categoryId = Integer.parseInt(((ComboItem)cmbAddProductCategory.getSelectedItem()).getValue());
 
                 int buyPrice= Integer.parseInt(txtAddProductBuying.getText().toLowerCase(Locale.ROOT).trim());
@@ -139,10 +136,8 @@ public class MainApp extends JFrame {
             }
             else {
 
-                //int pid, String name, int categoryId, int buyPrice, int sellPrice, String info, int stock
                 int pid=Integer.parseInt(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 0)));
                 String name=txtEditProductName.getText().toLowerCase(Locale.ROOT).trim();
-                //categoryId
                 int categoryId = Integer.parseInt(((ComboItem)cmbEditProductCategory.getSelectedItem()).getValue());
 
                 int buyPrice= Integer.parseInt(txtEditProductBuying.getText().toLowerCase(Locale.ROOT).trim());
@@ -370,14 +365,11 @@ public class MainApp extends JFrame {
     }
 
     private void btnUpdateCategoryClick(ActionEvent e) {
-        //view.MainApp mainApp=new view.MainApp();
-       // row=tblCategory.getSelectedRow();
-
         String categoryName= txtCategoryName.getText();
         String categoryInfo= txtCategoryInfo.getText();
         ProductCategory productCategory1= new ProductCategory(value,categoryName,categoryInfo);
         if(row!=-1) {
-            int answer = JOptionPane.showConfirmDialog(this, "Are you sure you want to update the customer");
+            int answer = JOptionPane.showConfirmDialog(this, "Are you sure you want to update the category");
             if (answer==0){
                 productCategoryImpl.categoryUpdate(productCategory1);
                 tblCategory.setModel(productCategoryImpl.categoryTableModel());
@@ -423,11 +415,7 @@ public class MainApp extends JFrame {
     private void btnProductListEditClick(ActionEvent e) {
         if (tblProducts.getSelectedRow() != -1) {
             txtEditProductName.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 1)));
-
-            //bunda hata cıkıyordu duzenlenecek
             String  categoryId0 =String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 2));
-            //System.out.println("ct "+categoryId0);
-            //cmbEditProductCategory.setSelectedIndex(Integer.parseInt(categoryId0)-1);
 
             txtEditProductBuying.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 3)));
             txtEditProductSelling.setText(String.valueOf(tblProducts.getValueAt(tblProducts.getSelectedRow() , 4)));
@@ -561,7 +549,7 @@ public class MainApp extends JFrame {
             if (tblCustomer.getSelectedRow() != -1) {
                 System.out.println(tblCustomer.getValueAt(tblCustomer.getSelectedRow(), 0));
                 int input = JOptionPane.showConfirmDialog(this, "Are you sure you want to edit?", "edit process", JOptionPane.YES_NO_OPTION);
-                // 0=yes, 1=no, 2=cancel
+
                 if (input == 0) {
                     String name = txtEditCustomerName.getText();
                     String surname = txtEditCustomerSurname.getText();
@@ -570,7 +558,6 @@ public class MainApp extends JFrame {
                     String address = txtEditCustomerAddress.getText();
                     Customer customer = new Customer(Integer.parseInt(String.valueOf(tblCustomer.getValueAt(tblCustomer.getSelectedRow(), 0))), name, surname, email, phone, address);
                     customerImpl.customerUpdate(customer);
-                    //tablo yenilensin diye
                     CustomerImpl customer0 = new CustomerImpl();
                     tblCustomer.setModel(customer0.customerTableModel());
                     fncTextClear();
@@ -582,7 +569,6 @@ public class MainApp extends JFrame {
             pack();
             fncTextClear();
             JOptionPane.showMessageDialog(this, "Edit Succesful");
-            //lblError.setText("Updated proceses succesful");
         }
     }
 
@@ -610,7 +596,6 @@ public class MainApp extends JFrame {
         System.out.println(categoryId);
         System.out.println(categoryValue);
         ProductImpl product2=new ProductImpl(categoryId);
-
         tblSale.setModel(product2.productTable(null));
 
     }
@@ -625,7 +610,6 @@ public class MainApp extends JFrame {
 
     private void btnSaleProcessClick(ActionEvent e) {
         if (tblSale.getSelectedRow() != -1) {
-            //int sid, int customerID, int productID, String date,int count , int status,String uuid
             int customerId =Integer.parseInt(((ComboItem)cmbSaleCustomer.getSelectedItem()).getValue());
             int productID = Integer.parseInt(String.valueOf(tblSale.getValueAt(tblSale.getSelectedRow() , 0)));
             String date=utils.Util.dateTimeNow();
@@ -633,10 +617,6 @@ public class MainApp extends JFrame {
             count=Integer.parseInt(txtSalePiece.getText());
             int status=0;
 
-            //customerId ye gore uuid ve sepet düzenlendi
-            //sepete sorgu at
-            // şayet aynı customerId den statusu 0 olan varsa onun uuid sini al aşagıdaki uuid ye ata
-            //yoksa yeni bir uuid üret ve aşagıdaki uuid ye ata
             String uuid="";
             if(basketImpl.basketControl(customerId)!=null)
                 uuid=basketImpl.basketControl(customerId);
