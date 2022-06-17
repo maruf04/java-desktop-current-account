@@ -15,6 +15,7 @@ public class CustomerImpl implements ICustomer {
     DB db = new DB();
     List<Customer> ls = new ArrayList<>();
     List<Customer> lsSearch = new ArrayList<>();
+
     public CustomerImpl(){
         ls = customerList();
         lsSearch = ls;

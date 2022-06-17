@@ -18,7 +18,6 @@ public class Category extends JFrame {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - mrf
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -39,6 +38,5 @@ public class Category extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - mrf
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
